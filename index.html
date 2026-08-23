@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -9,20 +10,106 @@
         content="width=device-width, initial-scale=1.0"
     >
 
+    <!-- Theme -->
     <meta
         name="theme-color"
         content="#6c5ce7"
     >
 
-    <title>LeoDiary</title>
+    <!-- SEO -->
+    <meta
+        name="description"
+        content="LeoDiary - Your private and colorful personal diary. Save your thoughts, memories and special moments."
+    >
 
+    <meta
+        name="application-name"
+        content="LeoDiary"
+    >
+
+    <meta
+        name="apple-mobile-web-app-title"
+        content="LeoDiary"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <!-- Open Graph -->
+    <meta
+        property="og:title"
+        content="LeoDiary"
+    >
+
+    <meta
+        property="og:description"
+        content="Your memories. Your story. Your space."
+    >
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:url"
+        content="https://athi64.github.io/LeoDiaryApp/"
+    >
+
+    <meta
+        property="og:image"
+        content="https://athi64.github.io/LeoDiaryApp/Screenshot_2026-08-23-10-34-46-63_965bbf4d18d205f782c6b8409c5773a4~2.jpg"
+    >
+
+    <!-- Title -->
+    <title>LeoDiary — Your Personal Diary</title>
+
+
+    <!-- =================================================
+         FAVICON / LOGO
+    ================================================== -->
+
+    <link
+        rel="icon"
+        type="image/jpeg"
+        href="./Screenshot_2026-08-23-10-34-46-63_965bbf4d18d205f782c6b8409c5773a4~2.jpg"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="./Screenshot_2026-08-23-10-34-46-63_965bbf4d18d205f782c6b8409c5773a4~2.jpg"
+    >
+
+
+    <!-- =================================================
+         WEBSITE STRUCTURED DATA
+    ================================================== -->
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "LeoDiary",
+        "alternateName": "Leo Diary",
+        "url": "https://athi64.github.io/LeoDiaryApp/",
+        "description": "LeoDiary - Your private and colorful personal diary."
+    }
+    </script>
+
+
+    <!-- CSS -->
     <link
         rel="stylesheet"
         href="style.css"
     >
+
 </head>
 
+
 <body>
+
 
 <!-- =====================================================
      LOGIN PAGE
@@ -34,61 +121,78 @@
 >
 
     <div class="login-decoration decoration-one"></div>
+
     <div class="login-decoration decoration-two"></div>
+
 
     <div class="login-card">
 
-        <img 
-    src="./Screenshot_2026-08-23-10-34-46-63_965bbf4d18d205f782c6b8409c5773a4~2.jpg"
-    alt="LeoDiary Logo"
-    class="app-logo"
->
 
-<h1>LeoDiary</h1>
+        <!-- LOGO -->
+
+        <img
+            src="./Screenshot_2026-08-23-10-34-46-63_965bbf4d18d205f782c6b8409c5773a4~2.jpg"
+            alt="LeoDiary Logo"
+            class="app-logo"
+        >
+
+
+        <h1>
+            LeoDiary
+        </h1>
+
 
         <p class="login-subtitle">
             Your thoughts. Your memories. Your space.
         </p>
 
 
-        <!-- Google Login -->
+        <!-- GOOGLE LOGIN -->
 
         <button
             id="googleLoginBtn"
             class="google-login-btn"
             type="button"
         >
-            <span class="google-icon">G</span>
+
+            <span class="google-icon">
+                G
+            </span>
 
             <span>
                 Continue with Google
             </span>
+
         </button>
 
 
-        <!-- Divider -->
+        <!-- DIVIDER -->
 
         <div class="divider">
 
             <span></span>
 
-            <p>OR</p>
+            <p>
+                OR
+            </p>
 
             <span></span>
 
         </div>
 
 
-        <!-- Email Login -->
+        <!-- EMAIL FORM -->
 
         <form
             id="emailForm"
             class="email-form"
         >
 
+
             <label for="emailInput">
                 Email Address
             </label>
+
 
             <input
                 id="emailInput"
@@ -96,6 +200,7 @@
                 type="email"
                 placeholder="Enter your email"
                 autocomplete="email"
+                required
             >
 
 
@@ -103,14 +208,18 @@
                 Password
             </label>
 
+
             <input
                 id="passwordInput"
                 class="auth-input"
                 type="password"
                 placeholder="Enter your password"
                 autocomplete="current-password"
+                required
             >
 
+
+            <!-- LOGIN -->
 
             <button
                 id="emailLoginBtn"
@@ -121,6 +230,8 @@
             </button>
 
 
+            <!-- SIGN UP -->
+
             <button
                 id="emailSignupBtn"
                 class="secondary-btn"
@@ -130,6 +241,8 @@
             </button>
 
 
+            <!-- FORGOT PASSWORD -->
+
             <button
                 id="forgotPasswordBtn"
                 class="forgot-btn"
@@ -138,10 +251,11 @@
                 Forgot Password?
             </button>
 
+
         </form>
 
 
-        <!-- Auth Message -->
+        <!-- AUTH MESSAGE -->
 
         <div
             id="emailError"
@@ -153,6 +267,7 @@
         <p class="login-footer">
             🔒 Your diary is private and secure
         </p>
+
 
     </div>
 
@@ -170,19 +285,26 @@
 >
 
 
-    <!-- HEADER -->
+    <!-- =================================================
+         HEADER
+    ================================================== -->
 
     <header class="top-header">
 
+
         <div class="brand">
+
 
             <div class="brand-logo">
                 🦁
             </div>
 
+
             <div>
 
-                <h2>LeoDiary</h2>
+                <h2>
+                    LeoDiary
+                </h2>
 
                 <p>
                     My Personal Space
@@ -190,16 +312,20 @@
 
             </div>
 
+
         </div>
 
 
         <div class="header-right">
 
+
             <div class="user-info">
+
 
                 <div class="user-avatar">
                     👤
                 </div>
+
 
                 <span
                     id="userEmail"
@@ -207,6 +333,7 @@
                 >
                     User
                 </span>
+
 
             </div>
 
@@ -219,35 +346,46 @@
                 Logout
             </button>
 
+
         </div>
+
 
     </header>
 
 
 
-    <!-- MAIN -->
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
 
     <main class="main-container">
 
 
-        <!-- HERO -->
+        <!-- =================================================
+             HERO
+        ================================================== -->
 
         <section class="hero-card">
 
+
             <div class="hero-content">
+
 
                 <span class="hero-label">
                     ✨ Welcome back
                 </span>
 
+
                 <h1>
                     Capture your moments.
                 </h1>
+
 
                 <p>
                     Write your thoughts, memories and
                     everyday moments in your private diary.
                 </p>
+
 
             </div>
 
@@ -257,18 +395,28 @@
                 class="hero-note-btn"
                 type="button"
             >
-                <span>＋</span>
+
+                <span>
+                    ＋
+                </span>
+
                 New Note
+
             </button>
+
 
         </section>
 
 
 
-        <!-- QUICK ACTIONS -->
+        <!-- =================================================
+             QUICK ACTIONS
+        ================================================== -->
 
         <section class="quick-actions">
 
+
+            <!-- SEARCH -->
 
             <button
                 id="searchNotesBtn"
@@ -291,6 +439,8 @@
             </button>
 
 
+            <!-- FAVORITES -->
+
             <button
                 id="favoritesBtn"
                 class="quick-card quick-pink"
@@ -311,6 +461,8 @@
 
             </button>
 
+
+            <!-- PINNED -->
 
             <button
                 id="pinnedBtn"
@@ -333,6 +485,8 @@
             </button>
 
 
+            <!-- WRITE -->
+
             <button
                 id="addNoteBtn"
                 class="quick-card quick-purple"
@@ -353,11 +507,14 @@
 
             </button>
 
+
         </section>
 
 
 
-        <!-- NOTES SECTION -->
+        <!-- =================================================
+             NOTES
+        ================================================== -->
 
         <section
             id="notesSection"
@@ -366,6 +523,7 @@
 
 
             <div class="section-heading">
+
 
                 <div>
 
@@ -388,6 +546,7 @@
                     ＋ Add Note
                 </button>
 
+
             </div>
 
 
@@ -396,9 +555,11 @@
 
             <div class="search-container">
 
+
                 <span class="search-icon">
                     🔍
                 </span>
+
 
                 <input
                     id="noteSearchInput"
@@ -407,13 +568,15 @@
                     autocomplete="off"
                 >
 
+
             </div>
 
 
 
-            <!-- FILTER -->
+            <!-- FILTERS -->
 
             <div class="filter-buttons">
+
 
                 <button
                     id="allNotesFilter"
@@ -423,6 +586,7 @@
                     📚 All
                 </button>
 
+
                 <button
                     id="favoriteFilter"
                     class="filter-btn"
@@ -431,6 +595,7 @@
                     ⭐ Favorites
                 </button>
 
+
                 <button
                     id="pinnedFilter"
                     class="filter-btn"
@@ -438,6 +603,7 @@
                 >
                     📌 Pinned
                 </button>
+
 
             </div>
 
@@ -462,13 +628,16 @@
                         📔
                     </div>
 
+
                     <h3>
                         Your diary is empty
                     </h3>
 
+
                     <p>
                         Start writing your first memory.
                     </p>
+
 
                     <button
                         id="emptyAddNoteBtn"
@@ -478,17 +647,23 @@
                         ✍️ Write First Note
                     </button>
 
+
                 </div>
 
+
             </div>
+
 
         </section>
 
 
 
-        <!-- STATISTICS -->
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
 
         <section class="statistics-section">
+
 
             <h2>
                 📊 Your Diary
@@ -551,25 +726,33 @@
 
             </div>
 
+
         </section>
+
 
     </main>
 
 
 
-    <!-- FOOTER -->
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
 
     <footer class="footer">
+
 
         <p>
             🦁 LeoDiary
         </p>
 
+
         <p>
             Your memories. Your story. Your space.
         </p>
 
+
     </footer>
+
 
 </section>
 
@@ -584,16 +767,19 @@
     class="modal hidden"
 >
 
+
     <div class="modal-box">
 
 
         <div class="modal-header">
+
 
             <div>
 
                 <span class="modal-small">
                     ✨ Your Memory
                 </span>
+
 
                 <h2 id="noteModalTitle">
                     New Note
@@ -611,6 +797,7 @@
                 ×
             </button>
 
+
         </div>
 
 
@@ -618,6 +805,7 @@
         <label for="noteTitleInput">
             Note Title
         </label>
+
 
         <input
             id="noteTitleInput"
@@ -633,6 +821,7 @@
             Your Memory
         </label>
 
+
         <textarea
             id="noteContentInput"
             class="note-content-input"
@@ -641,16 +830,18 @@
 
 
 
-        <!-- OPTIONS -->
+        <!-- NOTE OPTIONS -->
 
         <div class="note-options">
 
 
             <div>
 
+
                 <label for="noteMoodInput">
                     Mood
                 </label>
+
 
                 <select
                     id="noteMoodInput"
@@ -695,15 +886,18 @@
 
                 </select>
 
+
             </div>
 
 
 
             <div>
 
+
                 <label for="noteColorInput">
                     Note Color
                 </label>
+
 
                 <select
                     id="noteColorInput"
@@ -736,7 +930,9 @@
 
                 </select>
 
+
             </div>
+
 
         </div>
 
@@ -746,6 +942,7 @@
 
         <div class="modal-buttons">
 
+
             <button
                 id="cancelNoteBtn"
                 class="cancel-btn"
@@ -753,6 +950,7 @@
             >
                 Cancel
             </button>
+
 
             <button
                 id="saveNoteBtn"
@@ -762,9 +960,12 @@
                 Save Note
             </button>
 
+
         </div>
 
+
     </div>
+
 
 </div>
 
@@ -779,16 +980,19 @@
     class="modal hidden"
 >
 
+
     <div class="modal-box view-modal-box">
 
 
         <div class="modal-header">
+
 
             <div>
 
                 <span class="modal-small">
                     📖 Memory
                 </span>
+
 
                 <h2 id="viewNoteTitle">
                     Note
@@ -806,6 +1010,7 @@
                 ×
             </button>
 
+
         </div>
 
 
@@ -821,19 +1026,18 @@
         <div
             id="viewNoteContent"
             class="view-content"
-        >
-        </div>
+        ></div>
 
 
         <div
             id="viewNoteDate"
             class="view-date"
-        >
-        </div>
+        ></div>
 
 
 
         <div class="modal-buttons">
+
 
             <button
                 id="deleteNoteBtn"
@@ -843,6 +1047,7 @@
                 🗑️ Delete
             </button>
 
+
             <button
                 id="editNoteBtn"
                 class="edit-btn"
@@ -851,22 +1056,26 @@
                 ✏️ Edit
             </button>
 
+
         </div>
 
+
     </div>
+
 
 </div>
 
 
 
 <!-- =====================================================
-     FIREBASE JAVASCRIPT
+     FIREBASE / JAVASCRIPT
 ===================================================== -->
 
 <script
     type="module"
     src="script.js"
 ></script>
+
 
 </body>
 
