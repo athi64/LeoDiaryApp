@@ -4,1190 +4,152 @@
 <head>
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <meta name="theme-color"
-          content="#1683ff">
+    <meta
+        name="theme-color"
+        content="#6c5ce7"
+    >
 
     <title>LeoDiary</title>
 
-    <style>
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #eef5ff,
-                    #f8f9ff
-                );
-
-            color: #172033;
-            min-height: 100vh;
-        }
-
-        button,
-        input,
-        textarea,
-        select {
-            font-family: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-
-        /* =================================================
-           LOGIN PAGE
-        ================================================= */
-
-        #loginPage {
-            min-height: 100vh;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            padding: 25px;
-        }
-
-        .login-card {
-            width: 100%;
-            max-width: 530px;
-
-            background: rgba(255,255,255,0.97);
-
-            border-radius: 30px;
-
-            padding: 45px 42px;
-
-            box-shadow:
-                0 20px 60px
-                rgba(40, 70, 120, 0.15);
-        }
-
-        .logo-area {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .logo-area img {
-            width: 90px;
-            height: 90px;
-            object-fit: contain;
-
-            margin-bottom: 12px;
-        }
-
-        .logo-text {
-            font-size: 48px;
-            font-weight: 800;
-            color: #172033;
-        }
-
-        .tagline {
-            margin-top: 12px;
-
-            color: #737b8c;
-
-            font-size: 23px;
-        }
-
-
-        /* GOOGLE */
-
-        #googleLoginBtn {
-            width: 100%;
-
-            min-height: 76px;
-
-            border: 2px solid #dfe2e7;
-
-            background: white;
-
-            border-radius: 22px;
-
-            font-size: 21px;
-            font-weight: 700;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-
-            transition: 0.2s;
-        }
-
-        #googleLoginBtn:hover {
-            background: #f7f9fc;
-        }
-
-        #googleLoginBtn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .google-letter {
-            color: #4285f4;
-            font-size: 38px;
-            font-weight: 700;
-        }
-
-
-        /* OR */
-
-        .or-divider {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-
-            margin: 30px 0;
-        }
-
-        .or-divider span {
-            height: 2px;
-            flex: 1;
-            background: #e3e6eb;
-        }
-
-        .or-divider strong {
-            color: #737b8c;
-            font-size: 20px;
-        }
-
-
-        /* INPUT */
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-
-            margin-bottom: 10px;
-
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .input-group input,
-        .input-group textarea,
-        .input-group select {
-            width: 100%;
-
-            border: 2px solid #dfe3e9;
-
-            border-radius: 17px;
-
-            padding: 17px;
-
-            font-size: 17px;
-
-            outline: none;
-
-            background: white;
-
-            transition: 0.2s;
-        }
-
-        .input-group input:focus,
-        .input-group textarea:focus,
-        .input-group select:focus {
-            border-color: #3989f5;
-
-            box-shadow:
-                0 0 0 4px
-                rgba(57,137,245,0.10);
-        }
-
-
-        /* LOGIN */
-
-        #emailLoginBtn {
-            width: 100%;
-
-            min-height: 64px;
-
-            border: none;
-
-            border-radius: 18px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #1683ff,
-                    #7058e8
-                );
-
-            color: white;
-
-            font-size: 21px;
-            font-weight: 700;
-
-            margin-top: 5px;
-        }
-
-        #emailLoginBtn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-
-        /* CREATE */
-
-        #emailSignupBtn {
-            width: 100%;
-
-            min-height: 64px;
-
-            margin-top: 16px;
-
-            border: 2px solid #d9dfe8;
-
-            border-radius: 18px;
-
-            background: white;
-
-            color: #172033;
-
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        #emailSignupBtn:hover {
-            background: #f7f9fd;
-        }
-
-
-        /* FORGOT */
-
-        #forgotPasswordBtn {
-            display: block;
-
-            width: 100%;
-
-            margin-top: 25px;
-
-            border: none;
-
-            background: transparent;
-
-            color: #2183dc;
-
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-
-        /* ERROR */
-
-        #emailError {
-            min-height: 28px;
-
-            margin-top: 18px;
-
-            text-align: center;
-
-            color: #d9534f;
-
-            font-size: 17px;
-            font-weight: 600;
-        }
-
-        .login-footer {
-            margin-top: 28px;
-
-            text-align: center;
-
-            color: #7a8190;
-
-            font-size: 17px;
-        }
-
-
-        /* =================================================
-           DIARY PAGE
-        ================================================= */
-
-        #diaryPage {
-            min-height: 100vh;
-        }
-
-        .topbar {
-            position: sticky;
-            top: 0;
-            z-index: 20;
-
-            background: rgba(255,255,255,0.95);
-
-            backdrop-filter: blur(12px);
-
-            border-bottom: 1px solid #e7eaf0;
-
-            padding: 15px 25px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 20px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand img {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-        }
-
-        .brand-name {
-            font-size: 27px;
-            font-weight: 800;
-        }
-
-        .user-area {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        #userEmail {
-            color: #5e6675;
-            font-size: 15px;
-        }
-
-        #logoutBtn {
-            border: none;
-
-            background: #172033;
-
-            color: white;
-
-            padding: 11px 18px;
-
-            border-radius: 12px;
-
-            font-weight: 700;
-        }
-
-
-        /* DASHBOARD */
-
-        .dashboard {
-            max-width: 1200px;
-
-            margin: auto;
-
-            padding: 35px 20px;
-        }
-
-        .welcome-box {
-            background:
-                linear-gradient(
-                    135deg,
-                    #1683ff,
-                    #7159e8
-                );
-
-            color: white;
-
-            border-radius: 25px;
-
-            padding: 30px;
-
-            margin-bottom: 25px;
-        }
-
-        .welcome-box h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .welcome-box p {
-            opacity: 0.9;
-        }
-
-
-        /* QUICK BUTTONS */
-
-        .quick-actions {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 15px;
-
-            margin-bottom: 25px;
-        }
-
-        .quick-btn {
-            border: none;
-
-            background: white;
-
-            padding: 20px;
-
-            border-radius: 18px;
-
-            box-shadow:
-                0 7px 25px
-                rgba(40,70,120,0.08);
-
-            font-size: 16px;
-
-            font-weight: 700;
-
-            color: #172033;
-        }
-
-
-        /* STATS */
-
-        .stats-grid {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 15px;
-
-            margin-bottom: 35px;
-        }
-
-        .stat-card {
-            background: white;
-
-            border-radius: 18px;
-
-            padding: 22px;
-
-            box-shadow:
-                0 7px 25px
-                rgba(40,70,120,0.07);
-        }
-
-        .stat-card span {
-            display: block;
-
-            color: #777f8f;
-
-            margin-bottom: 8px;
-        }
-
-        .stat-card strong {
-            font-size: 30px;
-        }
-
-
-        /* NOTES SECTION */
-
-        #notesSection {
-            background: white;
-
-            border-radius: 25px;
-
-            padding: 25px;
-
-            box-shadow:
-                0 10px 35px
-                rgba(40,70,120,0.08);
-        }
-
-        .section-header {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 15px;
-
-            margin-bottom: 20px;
-        }
-
-        .section-header h2 {
-            font-size: 25px;
-        }
-
-        #newNoteBtn,
-        #addNoteBtn,
-        #addNoteBtn2 {
-            border: none;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #1683ff,
-                    #7058e8
-                );
-
-            color: white;
-
-            padding: 12px 18px;
-
-            border-radius: 12px;
-
-            font-weight: 700;
-        }
-
-
-        /* SEARCH */
-
-        .search-row {
-            display: flex;
-
-            gap: 12px;
-
-            margin-bottom: 20px;
-        }
-
-        #noteSearchInput {
-            flex: 1;
-
-            border: 2px solid #e1e5eb;
-
-            border-radius: 13px;
-
-            padding: 14px;
-
-            font-size: 16px;
-
-            outline: none;
-        }
-
-        #searchNotesBtn {
-            border: none;
-
-            background: #172033;
-
-            color: white;
-
-            padding: 0 18px;
-
-            border-radius: 13px;
-
-            font-weight: 700;
-        }
-
-
-        /* FILTER */
-
-        .filter-row {
-            display: flex;
-
-            gap: 10px;
-
-            margin-bottom: 25px;
-
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            border: 1px solid #dfe3ea;
-
-            background: white;
-
-            padding: 10px 17px;
-
-            border-radius: 12px;
-
-            font-weight: 600;
-        }
-
-        .filter-btn.active {
-            background: #1683ff;
-
-            color: white;
-
-            border-color: #1683ff;
-        }
-
-
-        /* NOTES GRID */
-
-        #notesList {
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 18px;
-        }
-
-        .note-card {
-            background: #f9fbff;
-
-            border: 1px solid #e4e9f1;
-
-            border-radius: 18px;
-
-            padding: 20px;
-
-            cursor: pointer;
-
-            transition: 0.2s;
-        }
-
-        .note-card:hover {
-            transform: translateY(-3px);
-
-            box-shadow:
-                0 10px 25px
-                rgba(40,70,120,0.10);
-        }
-
-        .note-top {
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            margin-bottom: 15px;
-        }
-
-        .note-mood {
-            font-size: 25px;
-        }
-
-        .note-actions {
-            display: flex;
-
-            gap: 5px;
-        }
-
-        .note-action {
-            border: none;
-
-            background: transparent;
-
-            font-size: 21px;
-        }
-
-        .note-title {
-            font-size: 19px;
-
-            margin-bottom: 10px;
-
-            word-break: break-word;
-        }
-
-        .note-preview {
-            color: #697386;
-
-            line-height: 1.5;
-
-            min-height: 45px;
-
-            word-break: break-word;
-        }
-
-        .note-bottom {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 10px;
-
-            margin-top: 18px;
-        }
-
-        .note-date {
-            color: #8a92a0;
-
-            font-size: 12px;
-        }
-
-        .view-btn {
-            border: none;
-
-            background: #e8f2ff;
-
-            color: #1683ff;
-
-            padding: 8px 12px;
-
-            border-radius: 10px;
-
-            font-weight: 700;
-        }
-
-
-        /* EMPTY */
-
-        #emptyNotes {
-            text-align: center;
-
-            padding: 45px 20px;
-
-            color: #777f8f;
-        }
-
-        #emptyNotes h3 {
-            margin-bottom: 10px;
-
-            color: #172033;
-        }
-
-        #emptyAddNoteBtn {
-            margin-top: 18px;
-
-            border: none;
-
-            background: #1683ff;
-
-            color: white;
-
-            padding: 12px 20px;
-
-            border-radius: 12px;
-
-            font-weight: 700;
-        }
-
-
-        /* =================================================
-           MODALS
-        ================================================= */
-
-        .modal {
-            position: fixed;
-
-            inset: 0;
-
-            z-index: 100;
-
-            background:
-                rgba(10,20,40,0.55);
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 20px;
-        }
-
-        .modal-content {
-            width: 100%;
-
-            max-width: 600px;
-
-            max-height: 90vh;
-
-            overflow-y: auto;
-
-            background: white;
-
-            border-radius: 25px;
-
-            padding: 28px;
-
-            box-shadow:
-                0 20px 70px
-                rgba(0,0,0,0.25);
-        }
-
-        .modal-header {
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            margin-bottom: 22px;
-        }
-
-        .modal-header h2 {
-            font-size: 25px;
-        }
-
-        .close-modal {
-            border: none;
-
-            background: #f0f2f5;
-
-            width: 40px;
-
-            height: 40px;
-
-            border-radius: 50%;
-
-            font-size: 22px;
-        }
-
-        #noteContentInput {
-            min-height: 180px;
-
-            resize: vertical;
-        }
-
-        .modal-buttons {
-            display: flex;
-
-            gap: 10px;
-
-            justify-content: flex-end;
-
-            margin-top: 20px;
-        }
-
-        #cancelNoteBtn {
-            border: 1px solid #d9dfe7;
-
-            background: white;
-
-            padding: 12px 18px;
-
-            border-radius: 12px;
-
-            font-weight: 700;
-        }
-
-        #saveNoteBtn {
-            border: none;
-
-            background: #1683ff;
-
-            color: white;
-
-            padding: 12px 20px;
-
-            border-radius: 12px;
-
-            font-weight: 700;
-        }
-
-
-        /* VIEW MODAL */
-
-        .view-content {
-            white-space: pre-wrap;
-
-            line-height: 1.7;
-
-            color: #424b5c;
-
-            margin-top: 20px;
-
-            word-break: break-word;
-        }
-
-        .view-meta {
-            color: #7d8594;
-
-            margin-top: 10px;
-        }
-
-        .view-actions {
-            display: flex;
-
-            gap: 10px;
-
-            margin-top: 25px;
-        }
-
-        #editNoteBtn {
-            flex: 1;
-
-            border: none;
-
-            background: #1683ff;
-
-            color: white;
-
-            padding: 13px;
-
-            border-radius: 12px;
-
-            font-weight: 700;
-        }
-
-        #deleteNoteBtn {
-            flex: 1;
-
-            border: none;
-
-            background: #ef5350;
-
-            color: white;
-
-            padding: 13px;
-
-            border-radius: 12px;
-
-            font-weight: 700;
-        }
-
-
-        /* =================================================
-           MOBILE
-        ================================================= */
-
-        @media (max-width: 800px) {
-
-            .login-card {
-                padding: 35px 22px;
-            }
-
-            .logo-text {
-                font-size: 40px;
-            }
-
-            .tagline {
-                font-size: 18px;
-            }
-
-            .quick-actions,
-            .stats-grid,
-            #notesList {
-                grid-template-columns: 1fr;
-            }
-
-            .topbar {
-                padding: 12px 15px;
-            }
-
-            .user-area {
-                gap: 8px;
-            }
-
-            #userEmail {
-                display: none;
-            }
-
-            .dashboard {
-                padding: 20px 12px;
-            }
-
-            #notesSection {
-                padding: 18px;
-            }
-
-            .section-header {
-                align-items: flex-start;
-            }
-
-            .section-header h2 {
-                font-size: 21px;
-            }
-
-        }
-
-
-        @media (max-width: 480px) {
-
-            #loginPage {
-                padding: 10px;
-            }
-
-            .login-card {
-                border-radius: 24px;
-
-                padding: 32px 18px;
-            }
-
-            .logo-text {
-                font-size: 36px;
-            }
-
-            .tagline {
-                font-size: 17px;
-            }
-
-            #googleLoginBtn {
-                font-size: 18px;
-            }
-
-            .search-row {
-                flex-direction: column;
-            }
-
-            #searchNotesBtn {
-                min-height: 48px;
-            }
-
-            .section-header {
-                flex-direction: column;
-            }
-
-            #newNoteBtn {
-                width: 100%;
-            }
-
-        }
-
-    </style>
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 </head>
 
-
 <body>
-
 
 <!-- =====================================================
      LOGIN PAGE
 ===================================================== -->
 
-<section id="loginPage">
+<section
+    id="loginPage"
+    class="page login-page"
+>
+
+    <div class="login-decoration decoration-one"></div>
+    <div class="login-decoration decoration-two"></div>
 
     <div class="login-card">
 
-        <div class="logo-area">
-
-            <!--
-                If you already have logo.png,
-                keep logo.png in the same folder.
-            -->
-
-            <img
-                src="logo.png"
-                alt="LeoDiary Logo"
-                onerror="this.style.display='none';"
-            >
-
-            <div class="logo-text">
-                LeoDiary
-            </div>
-
-            <p class="tagline">
-                Your Thoughts. Your Space.
-            </p>
-
+        <div class="app-logo">
+            <span>🦁</span>
         </div>
 
+        <h1>LeoDiary</h1>
 
-        <!-- GOOGLE LOGIN -->
+        <p class="login-subtitle">
+            Your thoughts. Your memories. Your space.
+        </p>
+
+
+        <!-- Google Login -->
 
         <button
-            type="button"
             id="googleLoginBtn"
+            class="google-login-btn"
+            type="button"
         >
-
-            <span class="google-letter">
-                G
-            </span>
+            <span class="google-icon">G</span>
 
             <span>
                 Continue with Google
             </span>
-
         </button>
 
 
-        <!-- OR -->
+        <!-- Divider -->
 
-        <div class="or-divider">
+        <div class="divider">
 
             <span></span>
 
-            <strong>OR</strong>
+            <p>OR</p>
 
             <span></span>
 
         </div>
 
 
-        <!-- EMAIL -->
+        <!-- Email Login -->
 
-        <div class="input-group">
+        <form
+            id="emailForm"
+            class="email-form"
+        >
 
             <label for="emailInput">
                 Email Address
             </label>
 
             <input
-                type="email"
                 id="emailInput"
+                class="auth-input"
+                type="email"
                 placeholder="Enter your email"
                 autocomplete="email"
             >
 
-        </div>
-
-
-        <!-- PASSWORD -->
-
-        <div class="input-group">
 
             <label for="passwordInput">
                 Password
             </label>
 
             <input
-                type="password"
                 id="passwordInput"
+                class="auth-input"
+                type="password"
                 placeholder="Enter your password"
                 autocomplete="current-password"
             >
 
-        </div>
+
+            <button
+                id="emailLoginBtn"
+                class="primary-btn"
+                type="submit"
+            >
+                Login
+            </button>
 
 
-        <!-- LOGIN -->
-
-        <button
-            type="button"
-            id="emailLoginBtn"
-        >
-            Login
-        </button>
-
-
-        <!-- CREATE -->
-
-        <button
-            type="button"
-            id="emailSignupBtn"
-        >
-            Create Account
-        </button>
+            <button
+                id="emailSignupBtn"
+                class="secondary-btn"
+                type="button"
+            >
+                Create New Account
+            </button>
 
 
-        <!-- FORGOT -->
+            <button
+                id="forgotPasswordBtn"
+                class="forgot-btn"
+                type="button"
+            >
+                Forgot Password?
+            </button>
 
-        <button
-            type="button"
-            id="forgotPasswordBtn"
-        >
-            Forgot Password?
-        </button>
+        </form>
 
 
-        <!-- ERROR -->
+        <!-- Auth Message -->
 
-        <div id="emailError"></div>
+        <div
+            id="emailError"
+            class="auth-message"
+            aria-live="polite"
+        ></div>
 
 
         <p class="login-footer">
-            Your diary. Your memories. Your privacy.
+            🔒 Your diary is private and secure
         </p>
 
     </div>
@@ -1197,43 +159,60 @@
 
 
 <!-- =====================================================
-     DIARY PAGE
+     MAIN DIARY PAGE
 ===================================================== -->
 
 <section
     id="diaryPage"
-    class="hidden"
+    class="page diary-page hidden"
 >
 
 
-    <!-- TOP BAR -->
+    <!-- HEADER -->
 
-    <header class="topbar">
+    <header class="top-header">
 
         <div class="brand">
 
-            <img
-                src="logo.png"
-                alt="LeoDiary"
-                onerror="this.style.display='none';"
-            >
+            <div class="brand-logo">
+                🦁
+            </div>
 
-            <div class="brand-name">
-                LeoDiary
+            <div>
+
+                <h2>LeoDiary</h2>
+
+                <p>
+                    My Personal Space
+                </p>
+
             </div>
 
         </div>
 
 
-        <div class="user-area">
+        <div class="header-right">
 
-            <span id="userEmail">
-                Welcome
-            </span>
+            <div class="user-info">
+
+                <div class="user-avatar">
+                    👤
+                </div>
+
+                <span
+                    id="userEmail"
+                    class="user-email"
+                >
+                    User
+                </span>
+
+            </div>
+
 
             <button
-                type="button"
                 id="logoutBtn"
+                class="logout-btn"
+                type="button"
             >
                 Logout
             </button>
@@ -1244,175 +223,216 @@
 
 
 
-    <!-- DASHBOARD -->
+    <!-- MAIN -->
 
-    <main class="dashboard">
+    <main class="main-container">
 
 
-        <!-- WELCOME -->
+        <!-- HERO -->
 
-        <div class="welcome-box">
+        <section class="hero-card">
 
-            <h1>
-                Welcome to LeoDiary 👋
-            </h1>
+            <div class="hero-content">
 
-            <p>
-                Your thoughts, memories and moments — all in one place.
-            </p>
+                <span class="hero-label">
+                    ✨ Welcome back
+                </span>
 
-        </div>
+                <h1>
+                    Capture your moments.
+                </h1>
+
+                <p>
+                    Write your thoughts, memories and
+                    everyday moments in your private diary.
+                </p>
+
+            </div>
+
+
+            <button
+                id="newNoteBtn"
+                class="hero-note-btn"
+                type="button"
+            >
+                <span>＋</span>
+                New Note
+            </button>
+
+        </section>
+
 
 
         <!-- QUICK ACTIONS -->
 
-        <div class="quick-actions">
+        <section class="quick-actions">
+
 
             <button
-                type="button"
-                class="quick-btn"
                 id="searchNotesBtn"
+                class="quick-card quick-blue"
+                type="button"
             >
-                🔍 Search Notes
+
+                <span class="quick-icon">
+                    🔍
+                </span>
+
+                <strong>
+                    Search
+                </strong>
+
+                <small>
+                    Find your memories
+                </small>
+
             </button>
 
 
             <button
-                type="button"
-                class="quick-btn"
                 id="favoritesBtn"
+                class="quick-card quick-pink"
+                type="button"
             >
-                ⭐ Favorites
+
+                <span class="quick-icon">
+                    ⭐
+                </span>
+
+                <strong>
+                    Favorites
+                </strong>
+
+                <small>
+                    Your special notes
+                </small>
+
             </button>
 
 
             <button
-                type="button"
-                class="quick-btn"
                 id="pinnedBtn"
+                class="quick-card quick-yellow"
+                type="button"
             >
-                📌 Pinned
+
+                <span class="quick-icon">
+                    📌
+                </span>
+
+                <strong>
+                    Pinned
+                </strong>
+
+                <small>
+                    Important memories
+                </small>
+
             </button>
 
-        </div>
 
+            <button
+                id="addNoteBtn"
+                class="quick-card quick-purple"
+                type="button"
+            >
 
-
-        <!-- STATS -->
-
-        <div class="stats-grid">
-
-            <div class="stat-card">
-
-                <span>
-                    Total Notes
+                <span class="quick-icon">
+                    ✍️
                 </span>
 
-                <strong id="totalNotes">
-                    0
+                <strong>
+                    Write
                 </strong>
 
-            </div>
+                <small>
+                    Create a new memory
+                </small>
 
+            </button>
 
-            <div class="stat-card">
-
-                <span>
-                    Favorites
-                </span>
-
-                <strong id="favoriteNotes">
-                    0
-                </strong>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <span>
-                    Pinned
-                </span>
-
-                <strong id="pinnedNotes">
-                    0
-                </strong>
-
-            </div>
-
-        </div>
+        </section>
 
 
 
-        <!-- NOTES -->
+        <!-- NOTES SECTION -->
 
-        <section id="notesSection">
+        <section
+            id="notesSection"
+            class="notes-section"
+        >
 
-            <div class="section-header">
 
-                <h2>
-                    My Notes
-                </h2>
+            <div class="section-heading">
 
                 <div>
 
-                    <button
-                        type="button"
-                        id="addNoteBtn"
-                    >
-                        + New Note
-                    </button>
+                    <h2>
+                        📖 My Diary
+                    </h2>
+
+                    <p>
+                        All your memories in one place
+                    </p>
 
                 </div>
 
+
+                <button
+                    id="addNoteBtn2"
+                    class="small-primary-btn"
+                    type="button"
+                >
+                    ＋ Add Note
+                </button>
+
             </div>
+
 
 
             <!-- SEARCH -->
 
-            <div class="search-row">
+            <div class="search-container">
+
+                <span class="search-icon">
+                    🔍
+                </span>
 
                 <input
-                    type="search"
                     id="noteSearchInput"
+                    type="search"
                     placeholder="Search your notes..."
+                    autocomplete="off"
                 >
-
-                <button
-                    type="button"
-                    id="searchNotesBtn2"
-                    style="display:none;"
-                >
-                    Search
-                </button>
 
             </div>
 
 
+
             <!-- FILTER -->
 
-            <div class="filter-row">
+            <div class="filter-buttons">
 
                 <button
-                    type="button"
-                    class="filter-btn active"
                     id="allNotesFilter"
+                    class="filter-btn active"
+                    type="button"
                 >
-                    All
+                    📚 All
                 </button>
 
                 <button
-                    type="button"
-                    class="filter-btn"
                     id="favoriteFilter"
+                    class="filter-btn"
+                    type="button"
                 >
                     ⭐ Favorites
                 </button>
 
                 <button
-                    type="button"
-                    class="filter-btn"
                     id="pinnedFilter"
+                    class="filter-btn"
+                    type="button"
                 >
                     📌 Pinned
                 </button>
@@ -1420,54 +440,134 @@
             </div>
 
 
-            <!-- NOTES LIST -->
 
-            <div id="notesList"></div>
+            <!-- NOTES GRID -->
+
+            <div
+                id="notesList"
+                class="notes-grid"
+            >
 
 
-            <!-- EMPTY -->
+                <!-- EMPTY STATE -->
 
-            <div id="emptyNotes">
-
-                <h3>
-                    No notes yet
-                </h3>
-
-                <p>
-                    Start writing your first diary note.
-                </p>
-
-                <button
-                    type="button"
-                    id="emptyAddNoteBtn"
+                <div
+                    id="emptyNotes"
+                    class="empty-notes"
                 >
-                    + Create Note
-                </button>
+
+                    <div class="empty-icon">
+                        📔
+                    </div>
+
+                    <h3>
+                        Your diary is empty
+                    </h3>
+
+                    <p>
+                        Start writing your first memory.
+                    </p>
+
+                    <button
+                        id="emptyAddNoteBtn"
+                        class="small-primary-btn"
+                        type="button"
+                    >
+                        ✍️ Write First Note
+                    </button>
+
+                </div>
 
             </div>
 
+        </section>
 
-            <!-- SECOND ADD BUTTON -->
 
-            <div
-                style="
-                    text-align:center;
-                    margin-top:25px;
-                "
-            >
 
-                <button
-                    type="button"
-                    id="addNoteBtn2"
-                >
-                    + Add Note
-                </button>
+        <!-- STATISTICS -->
+
+        <section class="statistics-section">
+
+            <h2>
+                📊 Your Diary
+            </h2>
+
+
+            <div class="statistics-grid">
+
+
+                <div class="stat-card stat-blue">
+
+                    <span>
+                        📝
+                    </span>
+
+                    <strong id="totalNotes">
+                        0
+                    </strong>
+
+                    <small>
+                        Total Notes
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card stat-pink">
+
+                    <span>
+                        ⭐
+                    </span>
+
+                    <strong id="favoriteNotes">
+                        0
+                    </strong>
+
+                    <small>
+                        Favorites
+                    </small>
+
+                </div>
+
+
+                <div class="stat-card stat-yellow">
+
+                    <span>
+                        📌
+                    </span>
+
+                    <strong id="pinnedNotes">
+                        0
+                    </strong>
+
+                    <small>
+                        Pinned Notes
+                    </small>
+
+                </div>
+
 
             </div>
 
         </section>
 
     </main>
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <p>
+            🦁 LeoDiary
+        </p>
+
+        <p>
+            Your memories. Your story. Your space.
+        </p>
+
+    </footer>
 
 </section>
 
@@ -1482,19 +582,29 @@
     class="modal hidden"
 >
 
-    <div class="modal-content">
+    <div class="modal-box">
 
 
         <div class="modal-header">
 
-            <h2 id="noteModalTitle">
-                New Note
-            </h2>
+            <div>
+
+                <span class="modal-small">
+                    ✨ Your Memory
+                </span>
+
+                <h2 id="noteModalTitle">
+                    New Note
+                </h2>
+
+            </div>
+
 
             <button
-                type="button"
                 id="closeNoteModal"
                 class="close-modal"
+                type="button"
+                aria-label="Close"
             >
                 ×
             </button>
@@ -1502,124 +612,132 @@
         </div>
 
 
-        <!-- TITLE -->
 
-        <div class="input-group">
+        <label for="noteTitleInput">
+            Note Title
+        </label>
 
-            <label for="noteTitleInput">
-                Title
-            </label>
+        <input
+            id="noteTitleInput"
+            class="note-title-input"
+            type="text"
+            placeholder="Give your memory a title..."
+            maxlength="120"
+        >
 
-            <input
-                type="text"
-                id="noteTitleInput"
-                placeholder="Note title"
-                maxlength="150"
-            >
+
+
+        <label for="noteContentInput">
+            Your Memory
+        </label>
+
+        <textarea
+            id="noteContentInput"
+            class="note-content-input"
+            placeholder="Write whatever is on your mind..."
+        ></textarea>
+
+
+
+        <!-- OPTIONS -->
+
+        <div class="note-options">
+
+
+            <div>
+
+                <label for="noteMoodInput">
+                    Mood
+                </label>
+
+                <select
+                    id="noteMoodInput"
+                    class="note-select"
+                >
+
+                    <option value="😊">
+                        😊 Happy
+                    </option>
+
+                    <option value="😍">
+                        😍 Loved
+                    </option>
+
+                    <option value="😎">
+                        😎 Cool
+                    </option>
+
+                    <option value="🥰">
+                        🥰 Good
+                    </option>
+
+                    <option value="😌">
+                        😌 Peaceful
+                    </option>
+
+                    <option value="🤔">
+                        🤔 Thinking
+                    </option>
+
+                    <option value="😢">
+                        😢 Sad
+                    </option>
+
+                    <option value="😡">
+                        😡 Angry
+                    </option>
+
+                    <option value="😴">
+                        😴 Tired
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <div>
+
+                <label for="noteColorInput">
+                    Note Color
+                </label>
+
+                <select
+                    id="noteColorInput"
+                    class="note-select"
+                >
+
+                    <option value="blue">
+                        🔵 Ocean Blue
+                    </option>
+
+                    <option value="purple">
+                        🟣 Purple
+                    </option>
+
+                    <option value="pink">
+                        🩷 Pink
+                    </option>
+
+                    <option value="green">
+                        🟢 Green
+                    </option>
+
+                    <option value="yellow">
+                        🟡 Yellow
+                    </option>
+
+                    <option value="orange">
+                        🟠 Orange
+                    </option>
+
+                </select>
+
+            </div>
 
         </div>
 
-
-        <!-- CONTENT -->
-
-        <div class="input-group">
-
-            <label for="noteContentInput">
-                Your Note
-            </label>
-
-            <textarea
-                id="noteContentInput"
-                placeholder="Write your thoughts..."
-            ></textarea>
-
-        </div>
-
-
-        <!-- MOOD -->
-
-        <div class="input-group">
-
-            <label for="noteMoodInput">
-                Mood
-            </label>
-
-            <select id="noteMoodInput">
-
-                <option value="😊">
-                    😊 Happy
-                </option>
-
-                <option value="😍">
-                    😍 Loved
-                </option>
-
-                <option value="😎">
-                    😎 Cool
-                </option>
-
-                <option value="😢">
-                    😢 Sad
-                </option>
-
-                <option value="😡">
-                    😡 Angry
-                </option>
-
-                <option value="😴">
-                    😴 Tired
-                </option>
-
-                <option value="🤔">
-                    🤔 Thinking
-                </option>
-
-                <option value="🥳">
-                    🥳 Excited
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- COLOR -->
-
-        <div class="input-group">
-
-            <label for="noteColorInput">
-                Note Color
-            </label>
-
-            <select id="noteColorInput">
-
-                <option value="blue">
-                    Blue
-                </option>
-
-                <option value="purple">
-                    Purple
-                </option>
-
-                <option value="green">
-                    Green
-                </option>
-
-                <option value="yellow">
-                    Yellow
-                </option>
-
-                <option value="pink">
-                    Pink
-                </option>
-
-                <option value="orange">
-                    Orange
-                </option>
-
-            </select>
-
-        </div>
 
 
         <!-- BUTTONS -->
@@ -1627,15 +745,17 @@
         <div class="modal-buttons">
 
             <button
-                type="button"
                 id="cancelNoteBtn"
+                class="cancel-btn"
+                type="button"
             >
                 Cancel
             </button>
 
             <button
-                type="button"
                 id="saveNoteBtn"
+                class="save-btn"
+                type="button"
             >
                 Save Note
             </button>
@@ -1657,19 +777,29 @@
     class="modal hidden"
 >
 
-    <div class="modal-content">
+    <div class="modal-box view-modal-box">
 
 
         <div class="modal-header">
 
-            <h2 id="viewNoteTitle">
-                Note
-            </h2>
+            <div>
+
+                <span class="modal-small">
+                    📖 Memory
+                </span>
+
+                <h2 id="viewNoteTitle">
+                    Note
+                </h2>
+
+            </div>
+
 
             <button
-                type="button"
                 id="closeViewNoteModal"
                 class="close-modal"
+                type="button"
+                aria-label="Close"
             >
                 ×
             </button>
@@ -1677,21 +807,12 @@
         </div>
 
 
+
         <div
             id="viewNoteMood"
-            style="
-                font-size:32px;
-                margin-bottom:10px;
-            "
+            class="view-mood"
         >
             😊
-        </div>
-
-
-        <div
-            id="viewNoteDate"
-            class="view-meta"
-        >
         </div>
 
 
@@ -1702,20 +823,30 @@
         </div>
 
 
-        <div class="view-actions">
+        <div
+            id="viewNoteDate"
+            class="view-date"
+        >
+        </div>
+
+
+
+        <div class="modal-buttons">
 
             <button
+                id="deleteNoteBtn"
+                class="delete-btn"
                 type="button"
-                id="editNoteBtn"
             >
-                ✏️ Edit
+                🗑️ Delete
             </button>
 
             <button
+                id="editNoteBtn"
+                class="edit-btn"
                 type="button"
-                id="deleteNoteBtn"
             >
-                🗑️ Delete
+                ✏️ Edit
             </button>
 
         </div>
@@ -1735,6 +866,6 @@
     src="script.js"
 ></script>
 
-
 </body>
+
     </html>
