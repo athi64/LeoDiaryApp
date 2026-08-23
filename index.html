@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -20,29 +18,21 @@
         content="LeoDiary - Your private digital diary and notes space."
     >
 
-    <meta
-        name="google-site-verification"
-        content="IuPeVZWGodyjFH7UlvmCZedkTWleUSf-fXJrEoVYQxM"
-    >
-
     <title>LeoDiary - Your Thoughts. Your Space.</title>
 
     <link
         rel="icon"
-        type="image/png"
-        href="logo.png"
+        type="image/jpeg"
+        href="Screenshot_2026-08-23-10-34-46-63_965bbf4d18d205f782c6b8409c5773a4~2.jpg"
     >
 
     <link
         rel="stylesheet"
-        href="style.css"
+        href="./style.css"
     >
-
 </head>
 
-
 <body>
-
 
 <!-- =====================================================
      LOGIN PAGE
@@ -51,24 +41,29 @@
 <section
     id="loginPage"
     class="login-page"
+    style="display:flex;"
 >
 
     <div class="login-card">
 
-
         <div class="logo-box">
 
-            <img src="Screenshot_2026-08-23-10-34-46-63_965bbf4d18d205f782c6b8409c5773a4~2.jpg">
+            <img
+                src="Screenshot_2026-08-23-10-34-46-63_965bbf4d18d205f782c6b8409c5773a4~2.jpg"
+                alt="LeoDiary Logo"
+                class="login-logo"
+                onerror="this.style.display='none'; document.getElementById('logoFallback').style.display='flex';"
+            >
 
             <div
                 id="logoFallback"
                 class="logo-fallback"
+                style="display:none;"
             >
                 🦁
             </div>
 
         </div>
-
 
         <h1>LeoDiary</h1>
 
@@ -77,40 +72,31 @@
         </p>
 
 
-        <!-- GOOGLE -->
+        <!-- GOOGLE LOGIN -->
 
         <button
             id="googleLoginBtn"
             class="google-login-btn"
             type="button"
         >
-
-            <span class="google-letter">
-                G
-            </span>
+            <span class="google-letter">G</span>
 
             <span>
                 Continue with Google
             </span>
-
         </button>
 
 
         <div class="or-divider">
-
             <span></span>
-
             <p>OR</p>
-
             <span></span>
-
         </div>
 
 
-        <!-- EMAIL -->
+        <!-- EMAIL LOGIN -->
 
         <div class="email-form">
-
 
             <label for="emailInput">
                 Email Address
@@ -170,7 +156,6 @@
                 class="auth-error"
             ></p>
 
-
         </div>
 
 
@@ -178,44 +163,39 @@
             Your diary. Your memories. Your privacy.
         </p>
 
-
     </div>
 
 </section>
 
 
-
 <!-- =====================================================
-     DIARY APP
+     DIARY PAGE
 ===================================================== -->
 
 <section
     id="diaryPage"
     class="diary-page hidden"
+    style="display:none;"
 >
-
 
     <!-- HEADER -->
 
     <header class="top-header">
 
-
         <div class="brand">
 
             <img
-                src="logo.png"
+                src="Screenshot_2026-08-23-10-34-46-63_965bbf4d18d205f782c6b8409c5773a4~2.jpg"
                 alt="LeoDiary"
                 class="header-logo"
             >
 
             <div>
-
                 <h2>LeoDiary</h2>
 
                 <p>
                     Your Thoughts. Your Space.
                 </p>
-
             </div>
 
         </div>
@@ -230,7 +210,6 @@
                 Welcome
             </span>
 
-
             <button
                 id="logoutBtn"
                 class="logout-btn"
@@ -241,9 +220,7 @@
 
         </div>
 
-
     </header>
-
 
 
     <!-- MAIN -->
@@ -286,30 +263,20 @@
         </section>
 
 
-
         <!-- QUICK ACTIONS -->
 
         <section class="quick-actions">
-
 
             <button
                 id="addNoteBtn"
                 class="quick-card"
                 type="button"
             >
+                <span class="quick-icon">📝</span>
 
-                <span class="quick-icon">
-                    📝
-                </span>
+                <strong>New Note</strong>
 
-                <strong>
-                    New Note
-                </strong>
-
-                <small>
-                    Write something
-                </small>
-
+                <small>Write something</small>
             </button>
 
 
@@ -318,19 +285,11 @@
                 class="quick-card"
                 type="button"
             >
+                <span class="quick-icon">🔍</span>
 
-                <span class="quick-icon">
-                    🔍
-                </span>
+                <strong>Search</strong>
 
-                <strong>
-                    Search
-                </strong>
-
-                <small>
-                    Find your notes
-                </small>
-
+                <small>Find your notes</small>
             </button>
 
 
@@ -339,19 +298,11 @@
                 class="quick-card"
                 type="button"
             >
+                <span class="quick-icon">⭐</span>
 
-                <span class="quick-icon">
-                    ⭐
-                </span>
+                <strong>Favorites</strong>
 
-                <strong>
-                    Favorites
-                </strong>
-
-                <small>
-                    Favorite notes
-                </small>
-
+                <small>Favorite notes</small>
             </button>
 
 
@@ -360,24 +311,14 @@
                 class="quick-card"
                 type="button"
             >
+                <span class="quick-icon">📌</span>
 
-                <span class="quick-icon">
-                    📌
-                </span>
+                <strong>Pinned</strong>
 
-                <strong>
-                    Pinned
-                </strong>
-
-                <small>
-                    Important notes
-                </small>
-
+                <small>Important notes</small>
             </button>
 
-
         </section>
-
 
 
         <!-- NOTES -->
@@ -387,19 +328,14 @@
             class="notes-section"
         >
 
-
             <div class="section-heading">
 
                 <div>
-
-                    <h2>
-                        My Notes
-                    </h2>
+                    <h2>My Notes</h2>
 
                     <p>
                         Your personal thoughts and memories
                     </p>
-
                 </div>
 
 
@@ -412,7 +348,6 @@
                 </button>
 
             </div>
-
 
 
             <!-- SEARCH -->
@@ -429,7 +364,6 @@
             </div>
 
 
-
             <!-- FILTER -->
 
             <div class="filter-buttons">
@@ -442,7 +376,6 @@
                     All Notes
                 </button>
 
-
                 <button
                     id="favoriteFilter"
                     class="filter-btn"
@@ -450,7 +383,6 @@
                 >
                     ⭐ Favorites
                 </button>
-
 
                 <button
                     id="pinnedFilter"
@@ -463,14 +395,12 @@
             </div>
 
 
-
             <!-- NOTE LIST -->
 
             <div
                 id="notesList"
                 class="notes-grid"
             >
-
 
                 <div
                     id="emptyNotes"
@@ -499,12 +429,9 @@
 
                 </div>
 
-
             </div>
 
-
         </section>
-
 
 
         <!-- STATISTICS -->
@@ -515,15 +442,10 @@
                 Your Diary Statistics
             </h2>
 
-
             <div class="statistics-grid">
 
-
                 <div class="stat-card">
-
-                    <span>
-                        📝
-                    </span>
+                    <span>📝</span>
 
                     <strong id="totalNotes">
                         0
@@ -532,15 +454,11 @@
                     <small>
                         Total Notes
                     </small>
-
                 </div>
 
 
                 <div class="stat-card">
-
-                    <span>
-                        ⭐
-                    </span>
+                    <span>⭐</span>
 
                     <strong id="favoriteNotes">
                         0
@@ -549,15 +467,11 @@
                     <small>
                         Favorites
                     </small>
-
                 </div>
 
 
                 <div class="stat-card">
-
-                    <span>
-                        📌
-                    </span>
+                    <span>📌</span>
 
                     <strong id="pinnedNotes">
                         0
@@ -566,17 +480,13 @@
                     <small>
                         Pinned Notes
                     </small>
-
                 </div>
-
 
             </div>
 
         </section>
 
-
     </main>
-
 
 
     <!-- FOOTER -->
@@ -593,13 +503,11 @@
 
     </footer>
 
-
 </section>
 
 
-
 <!-- =====================================================
-     NOTE MODAL
+     NEW / EDIT NOTE MODAL
 ===================================================== -->
 
 <div
@@ -607,9 +515,7 @@
     class="modal hidden"
 >
 
-
     <div class="modal-box">
-
 
         <div class="modal-header">
 
@@ -654,7 +560,6 @@
 
         <div class="note-options">
 
-
             <div>
 
                 <label for="noteMoodInput">
@@ -665,39 +570,14 @@
                     id="noteMoodInput"
                     class="note-select"
                 >
-
-                    <option value="😊">
-                        😊 Happy
-                    </option>
-
-                    <option value="😍">
-                        😍 Love
-                    </option>
-
-                    <option value="😎">
-                        😎 Cool
-                    </option>
-
-                    <option value="😢">
-                        😢 Sad
-                    </option>
-
-                    <option value="😡">
-                        😡 Angry
-                    </option>
-
-                    <option value="🥰">
-                        🥰 Good
-                    </option>
-
-                    <option value="😴">
-                        😴 Tired
-                    </option>
-
-                    <option value="🤔">
-                        🤔 Thinking
-                    </option>
-
+                    <option value="😊">😊 Happy</option>
+                    <option value="😍">😍 Love</option>
+                    <option value="😎">😎 Cool</option>
+                    <option value="😢">😢 Sad</option>
+                    <option value="😡">😡 Angry</option>
+                    <option value="🥰">🥰 Good</option>
+                    <option value="😴">😴 Tired</option>
+                    <option value="🤔">🤔 Thinking</option>
                 </select>
 
             </div>
@@ -713,35 +593,15 @@
                     id="noteColorInput"
                     class="note-select"
                 >
-
-                    <option value="blue">
-                        Blue
-                    </option>
-
-                    <option value="purple">
-                        Purple
-                    </option>
-
-                    <option value="green">
-                        Green
-                    </option>
-
-                    <option value="yellow">
-                        Yellow
-                    </option>
-
-                    <option value="pink">
-                        Pink
-                    </option>
-
-                    <option value="orange">
-                        Orange
-                    </option>
-
+                    <option value="blue">Blue</option>
+                    <option value="purple">Purple</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="pink">Pink</option>
+                    <option value="orange">Orange</option>
                 </select>
 
             </div>
-
 
         </div>
 
@@ -756,7 +616,6 @@
                 Cancel
             </button>
 
-
             <button
                 id="saveNoteBtn"
                 class="save-btn"
@@ -767,11 +626,9 @@
 
         </div>
 
-
     </div>
 
 </div>
-
 
 
 <!-- =====================================================
@@ -783,9 +640,7 @@
     class="modal hidden"
 >
 
-
     <div class="modal-box view-box">
-
 
         <div class="modal-header">
 
@@ -826,7 +681,6 @@
 
         <div class="modal-buttons">
 
-
             <button
                 id="deleteNoteBtn"
                 class="delete-btn"
@@ -834,7 +688,6 @@
             >
                 Delete
             </button>
-
 
             <button
                 id="editNoteBtn"
@@ -844,22 +697,17 @@
                 Edit Note
             </button>
 
-
         </div>
-
 
     </div>
 
 </div>
 
 
-
 <script
     type="module"
-    src="script.js"
+    src="./script.js"
 ></script>
 
-
 </body>
-
-    </html>
+                </html>
