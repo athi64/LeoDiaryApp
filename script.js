@@ -1,6 +1,7 @@
 /* =====================================================
-   LeoDiary
+   LeoDiary - Complete JavaScript
    Firebase Authentication + Firestore
+   No Automatic Login After Refresh
 ===================================================== */
 
 import {
@@ -17,7 +18,7 @@ import {
     onAuthStateChanged,
     signOut,
     setPersistence,
-    browserSessionPersistence
+    inMemoryPersistence
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 import {
@@ -39,11 +40,15 @@ import {
 ===================================================== */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBTHBWU0Yw-dz54Uzva_FLkD_yN7Vlu5jg",
 
-    authDomain: "leodiary-app.firebaseapp.com",
+    apiKey:
+        "AIzaSyBTHBWU0Yw-dz54Uzva_FLkD_yN7Vlu5jg",
 
-    projectId: "leodiary-app",
+    authDomain:
+        "leodiary-app.firebaseapp.com",
+
+    projectId:
+        "leodiary-app",
 
     storageBucket:
         "leodiary-app.firebasestorage.app",
@@ -66,12 +71,8 @@ const firebaseConfig = {
 const app =
     initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
-
-await setPersistence(
-    auth,
-    browserSessionPersistence
-);
+const auth =
+    getAuth(app);
 
 const db =
     getFirestore(app);
@@ -79,9 +80,21 @@ const db =
 const googleProvider =
     new GoogleAuthProvider();
 
+
 googleProvider.setCustomParameters({
     prompt: "select_account"
 });
+
+
+/* =====================================================
+   IMPORTANT
+   LOGIN SESSION WILL NOT BE SAVED AFTER PAGE REFRESH
+===================================================== */
+
+await setPersistence(
+    auth,
+    inMemoryPersistence
+);
 
 
 /* =====================================================
@@ -93,6 +106,7 @@ const loginPage =
 
 const diaryPage =
     document.getElementById("diaryPage");
+
 
 const googleLoginBtn =
     document.getElementById("googleLoginBtn");
@@ -121,6 +135,11 @@ const logoutBtn =
 const userEmail =
     document.getElementById("userEmail");
 
+
+/* =====================================================
+   NOTE BUTTONS
+===================================================== */
+
 const newNoteBtn =
     document.getElementById("newNoteBtn");
 
@@ -133,11 +152,17 @@ const addNoteBtn2 =
 const emptyAddNoteBtn =
     document.getElementById("emptyAddNoteBtn");
 
+
+/* =====================================================
+   NOTES
+===================================================== */
+
 const notesList =
     document.getElementById("notesList");
 
 const emptyNotes =
     document.getElementById("emptyNotes");
+
 
 const noteSearchInput =
     document.getElementById("noteSearchInput");
@@ -151,6 +176,11 @@ const favoriteFilter =
 const pinnedFilter =
     document.getElementById("pinnedFilter");
 
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
 const totalNotes =
     document.getElementById("totalNotes");
 
@@ -159,6 +189,11 @@ const favoriteNotes =
 
 const pinnedNotes =
     document.getElementById("pinnedNotes");
+
+
+/* =====================================================
+   NOTE MODAL
+===================================================== */
 
 const noteModal =
     document.getElementById("noteModal");
@@ -186,6 +221,11 @@ const cancelNoteBtn =
 
 const saveNoteBtn =
     document.getElementById("saveNoteBtn");
+
+
+/* =====================================================
+   VIEW NOTE MODAL
+===================================================== */
 
 const viewNoteModal =
     document.getElementById("viewNoteModal");
@@ -230,19 +270,17 @@ let viewingNoteId = null;
 
 
 /* =====================================================
-   PAGE CONTROL
+   SHOW / HIDE PAGE
 ===================================================== */
 
 function showLoginPage() {
 
     if (loginPage) {
         loginPage.classList.remove("hidden");
-        loginPage.style.display = "flex";
     }
 
     if (diaryPage) {
         diaryPage.classList.add("hidden");
-        diaryPage.style.display = "none";
     }
 
 }
@@ -252,12 +290,10 @@ function showDiaryPage() {
 
     if (loginPage) {
         loginPage.classList.add("hidden");
-        loginPage.style.display = "none";
     }
 
     if (diaryPage) {
         diaryPage.classList.remove("hidden");
-        diaryPage.style.display = "block";
     }
 
 }
@@ -271,6 +307,7 @@ function authError(error) {
 
     const code =
         error?.code || "";
+
 
     const messages = {
 
@@ -308,9 +345,13 @@ function authError(error) {
             "Too many attempts. Try again later.",
 
         "auth/operation-not-allowed":
-            "This login method is not enabled in Firebase."
+            "This login method is not enabled in Firebase.",
+
+        "auth/account-exists-with-different-credential":
+            "An account already exists with another login method."
 
     };
+
 
     return (
         messages[code] ||
@@ -319,11 +360,17 @@ function authError(error) {
 }
 
 
+/* =====================================================
+   SHOW ERROR
+===================================================== */
+
 function showError(message) {
 
     if (emailError) {
+
         emailError.textContent =
             message || "";
+
     }
 
 }
@@ -339,10 +386,13 @@ googleLoginBtn?.addEventListener(
 
         showError("");
 
-        googleLoginBtn.disabled = true;
+        googleLoginBtn.disabled =
+            true;
 
-        googleLoginBtn.innerHTML =
-            "Signing in...";
+        googleLoginBtn.innerHTML = `
+            <span>Signing in...</span>
+        `;
+
 
         try {
 
@@ -354,13 +404,14 @@ googleLoginBtn?.addEventListener(
         } catch (error) {
 
             console.error(
-                "Google Login:",
+                "Google Login Error:",
                 error
             );
 
             showError(
                 authError(error)
             );
+
 
             googleLoginBtn.disabled =
                 false;
@@ -387,10 +438,11 @@ emailLoginBtn?.addEventListener(
         showError("");
 
         const email =
-            emailInput.value.trim();
+            emailInput?.value.trim() || "";
 
         const password =
-            passwordInput.value;
+            passwordInput?.value || "";
+
 
         if (!email) {
 
@@ -402,6 +454,7 @@ emailLoginBtn?.addEventListener(
 
         }
 
+
         if (!password) {
 
             showError(
@@ -412,10 +465,13 @@ emailLoginBtn?.addEventListener(
 
         }
 
-        emailLoginBtn.disabled = true;
+
+        emailLoginBtn.disabled =
+            true;
 
         emailLoginBtn.textContent =
             "Logging in...";
+
 
         try {
 
@@ -425,20 +481,29 @@ emailLoginBtn?.addEventListener(
                 password
             );
 
-            emailInput.value = "";
 
-            passwordInput.value = "";
+            if (emailInput) {
+                emailInput.value = "";
+            }
+
+            if (passwordInput) {
+                passwordInput.value = "";
+            }
+
 
         } catch (error) {
 
             console.error(
-                "Email Login:",
+                "Email Login Error:",
                 error
             );
 
             showError(
                 authError(error)
             );
+
+
+        } finally {
 
             emailLoginBtn.disabled =
                 false;
@@ -463,10 +528,11 @@ emailSignupBtn?.addEventListener(
         showError("");
 
         const email =
-            emailInput.value.trim();
+            emailInput?.value.trim() || "";
 
         const password =
-            passwordInput.value;
+            passwordInput?.value || "";
+
 
         if (!email) {
 
@@ -478,6 +544,7 @@ emailSignupBtn?.addEventListener(
 
         }
 
+
         if (password.length < 6) {
 
             showError(
@@ -488,11 +555,13 @@ emailSignupBtn?.addEventListener(
 
         }
 
+
         emailSignupBtn.disabled =
             true;
 
         emailSignupBtn.textContent =
             "Creating...";
+
 
         try {
 
@@ -502,20 +571,29 @@ emailSignupBtn?.addEventListener(
                 password
             );
 
-            emailInput.value = "";
 
-            passwordInput.value = "";
+            if (emailInput) {
+                emailInput.value = "";
+            }
+
+            if (passwordInput) {
+                passwordInput.value = "";
+            }
+
 
         } catch (error) {
 
             console.error(
-                "Signup:",
+                "Create Account Error:",
                 error
             );
 
             showError(
                 authError(error)
             );
+
+
+        } finally {
 
             emailSignupBtn.disabled =
                 false;
@@ -540,7 +618,8 @@ forgotPasswordBtn?.addEventListener(
         showError("");
 
         const email =
-            emailInput.value.trim();
+            emailInput?.value.trim() || "";
+
 
         if (!email) {
 
@@ -552,6 +631,11 @@ forgotPasswordBtn?.addEventListener(
 
         }
 
+
+        forgotPasswordBtn.disabled =
+            true;
+
+
         try {
 
             await sendPasswordResetEmail(
@@ -559,20 +643,28 @@ forgotPasswordBtn?.addEventListener(
                 email
             );
 
+
             showError(
                 "Password reset email sent."
             );
 
+
         } catch (error) {
 
             console.error(
-                "Password Reset:",
+                "Password Reset Error:",
                 error
             );
 
             showError(
                 authError(error)
             );
+
+
+        } finally {
+
+            forgotPasswordBtn.disabled =
+                false;
 
         }
 
@@ -582,39 +674,60 @@ forgotPasswordBtn?.addEventListener(
 
 /* =====================================================
    AUTH STATE
-   THIS CONTROLS LOGIN / DASHBOARD
 ===================================================== */
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(
+    auth,
+    async (user) => {
 
-    if (user) {
+        console.log(
+            "Firebase Auth State:",
+            user ? user.email : "Logged Out"
+        );
 
-        currentUser = user;
 
-        loginPage.classList.add("hidden");
-        diaryPage.classList.remove("hidden");
+        if (user) {
 
-        showUser(user);
+            currentUser =
+                user;
 
-        await loadNotes();
 
-    } else {
+            showDiaryPage();
 
-        currentUser = null;
-        notes = [];
-        editingNoteId = null;
-        viewingNoteId = null;
 
-        diaryPage.classList.add("hidden");
-        loginPage.classList.remove("hidden");
+            showUser(user);
 
-        renderNotes();
+
+            await loadNotes();
+
+
+        } else {
+
+            currentUser =
+                null;
+
+            notes = [];
+
+            editingNoteId =
+                null;
+
+            viewingNoteId =
+                null;
+
+
+            showLoginPage();
+
+
+            renderNotes();
+
+        }
+
     }
+);
 
-});
 
 /* =====================================================
-   USER
+   SHOW USER
 ===================================================== */
 
 function showUser(user) {
@@ -622,6 +735,7 @@ function showUser(user) {
     if (!userEmail) {
         return;
     }
+
 
     if (user.displayName) {
 
@@ -651,18 +765,31 @@ logoutBtn?.addEventListener(
     "click",
     async () => {
 
+        logoutBtn.disabled =
+            true;
+
+        logoutBtn.textContent =
+            "Logging out...";
+
+
         try {
 
             await signOut(auth);
 
-            showLoginPage();
-
         } catch (error) {
 
             console.error(
-                "Logout:",
+                "Logout Error:",
                 error
             );
+
+        } finally {
+
+            logoutBtn.disabled =
+                false;
+
+            logoutBtn.textContent =
+                "Logout";
 
         }
 
@@ -675,6 +802,11 @@ logoutBtn?.addEventListener(
 ===================================================== */
 
 function notesCollection() {
+
+    if (!currentUser) {
+        return null;
+    }
+
 
     return collection(
         db,
@@ -693,8 +825,15 @@ function notesCollection() {
 async function loadNotes() {
 
     if (!currentUser) {
+
+        notes = [];
+
+        renderNotes();
+
         return;
+
     }
+
 
     try {
 
@@ -707,16 +846,20 @@ async function loadNotes() {
                 )
             );
 
+
         const snapshot =
             await getDocs(q);
 
+
         notes = [];
+
 
         snapshot.forEach(
             item => {
 
                 const data =
                     item.data();
+
 
                 notes.push({
 
@@ -760,14 +903,19 @@ async function loadNotes() {
             }
         );
 
+
         renderNotes();
+
 
     } catch (error) {
 
         console.error(
-            "Load notes:",
+            "Load Notes Error:",
             error
         );
+
+
+        notes = [];
 
         renderNotes();
 
@@ -792,26 +940,36 @@ function timestampToMillis(timestamp) {
 
     }
 
+
     return Date.now();
 
 }
 
 
 /* =====================================================
-   NEW NOTE
+   OPEN NEW NOTE
 ===================================================== */
 
 function openNewNote() {
 
     if (!currentUser) {
+
+        showError(
+            "Please login first."
+        );
+
         return;
+
     }
+
 
     editingNoteId =
         null;
 
+
     noteModalTitle.textContent =
         "New Note";
+
 
     noteTitleInput.value =
         "";
@@ -825,17 +983,26 @@ function openNewNote() {
     noteColorInput.value =
         "blue";
 
+
     noteModal.classList.remove(
         "hidden"
     );
 
-    noteTitleInput.focus();
+
+    setTimeout(
+        () => {
+
+            noteTitleInput.focus();
+
+        },
+        100
+    );
 
 }
 
 
 /* =====================================================
-   EDIT NOTE
+   OPEN EDIT NOTE
 ===================================================== */
 
 function openEditNote(id) {
@@ -846,15 +1013,21 @@ function openEditNote(id) {
                 item.id === id
         );
 
+
     if (!note) {
+
         return;
+
     }
+
 
     editingNoteId =
         id;
 
+
     noteModalTitle.textContent =
         "Edit Note";
+
 
     noteTitleInput.value =
         note.title;
@@ -867,6 +1040,7 @@ function openEditNote(id) {
 
     noteColorInput.value =
         note.color;
+
 
     noteModal.classList.remove(
         "hidden"
@@ -881,7 +1055,7 @@ function openEditNote(id) {
 
 function closeNoteModalWindow() {
 
-    noteModal.classList.add(
+    noteModal?.classList.add(
         "hidden"
     );
 
@@ -900,8 +1074,15 @@ saveNoteBtn?.addEventListener(
     async () => {
 
         if (!currentUser) {
+
+            alert(
+                "Please login first."
+            );
+
             return;
+
         }
+
 
         const title =
             noteTitleInput.value.trim();
@@ -915,6 +1096,7 @@ saveNoteBtn?.addEventListener(
         const color =
             noteColorInput.value;
 
+
         if (!title && !content) {
 
             alert(
@@ -925,11 +1107,13 @@ saveNoteBtn?.addEventListener(
 
         }
 
+
         saveNoteBtn.disabled =
             true;
 
         saveNoteBtn.textContent =
             "Saving...";
+
 
         try {
 
@@ -944,17 +1128,22 @@ saveNoteBtn?.addEventListener(
                         editingNoteId
                     );
 
+
                 await updateDoc(
                     noteRef,
                     {
 
-                        title,
+                        title:
+                            title,
 
-                        content,
+                        content:
+                            content,
 
-                        mood,
+                        mood:
+                            mood,
 
-                        color,
+                        color:
+                            color,
 
                         updatedAt:
                             serverTimestamp()
@@ -962,19 +1151,24 @@ saveNoteBtn?.addEventListener(
                     }
                 );
 
+
             } else {
 
                 await addDoc(
                     notesCollection(),
                     {
 
-                        title,
+                        title:
+                            title,
 
-                        content,
+                        content:
+                            content,
 
-                        mood,
+                        mood:
+                            mood,
 
-                        color,
+                        color:
+                            color,
 
                         favorite:
                             false,
@@ -993,28 +1187,34 @@ saveNoteBtn?.addEventListener(
 
             }
 
+
             closeNoteModalWindow();
 
+
             await loadNotes();
+
 
         } catch (error) {
 
             console.error(
-                "Save Note:",
+                "Save Note Error:",
                 error
             );
+
 
             alert(
                 "Unable to save note. Check Firestore rules."
             );
 
+        } finally {
+
+            saveNoteBtn.disabled =
+                false;
+
+            saveNoteBtn.textContent =
+                "Save Note";
+
         }
-
-        saveNoteBtn.disabled =
-            false;
-
-        saveNoteBtn.textContent =
-            "Save Note";
 
     }
 );
@@ -1030,23 +1230,29 @@ async function deleteNote(id) {
         return;
     }
 
+
     const note =
         notes.find(
             item =>
                 item.id === id
         );
 
+
     if (!note) {
         return;
     }
 
-    if (
-        !confirm(
+
+    const confirmed =
+        confirm(
             "Delete this note?"
-        )
-    ) {
+        );
+
+
+    if (!confirmed) {
         return;
     }
+
 
     try {
 
@@ -1060,21 +1266,26 @@ async function deleteNote(id) {
             )
         );
 
-        viewNoteModal.classList.add(
-            "hidden"
-        );
 
         viewingNoteId =
             null;
 
+
+        viewNoteModal.classList.add(
+            "hidden"
+        );
+
+
         await loadNotes();
+
 
     } catch (error) {
 
         console.error(
-            "Delete:",
+            "Delete Note Error:",
             error
         );
+
 
         alert(
             "Unable to delete note."
@@ -1086,7 +1297,7 @@ async function deleteNote(id) {
 
 
 /* =====================================================
-   FAVORITE
+   TOGGLE FAVORITE
 ===================================================== */
 
 async function toggleFavorite(id) {
@@ -1095,15 +1306,18 @@ async function toggleFavorite(id) {
         return;
     }
 
+
     const note =
         notes.find(
             item =>
                 item.id === id
         );
 
+
     if (!note) {
         return;
     }
+
 
     try {
 
@@ -1126,12 +1340,14 @@ async function toggleFavorite(id) {
             }
         );
 
+
         await loadNotes();
+
 
     } catch (error) {
 
         console.error(
-            "Favorite:",
+            "Favorite Error:",
             error
         );
 
@@ -1141,7 +1357,7 @@ async function toggleFavorite(id) {
 
 
 /* =====================================================
-   PIN
+   TOGGLE PIN
 ===================================================== */
 
 async function togglePin(id) {
@@ -1150,15 +1366,18 @@ async function togglePin(id) {
         return;
     }
 
+
     const note =
         notes.find(
             item =>
                 item.id === id
         );
 
+
     if (!note) {
         return;
     }
+
 
     try {
 
@@ -1181,12 +1400,14 @@ async function togglePin(id) {
             }
         );
 
+
         await loadNotes();
+
 
     } catch (error) {
 
         console.error(
-            "Pin:",
+            "Pin Error:",
             error
         );
 
@@ -1205,18 +1426,23 @@ function renderNotes() {
         return;
     }
 
+
     const oldCards =
         notesList.querySelectorAll(
             ".note-card"
         );
 
+
     oldCards.forEach(
-        card =>
-            card.remove()
+        card => card.remove()
     );
+
 
     let filtered =
         [...notes];
+
+
+    /* FILTER */
 
     if (
         currentFilter ===
@@ -1231,6 +1457,7 @@ function renderNotes() {
 
     }
 
+
     if (
         currentFilter ===
         "pinned"
@@ -1244,54 +1471,76 @@ function renderNotes() {
 
     }
 
+
+    /* SEARCH */
+
     if (searchText) {
 
         const search =
             searchText.toLowerCase();
 
+
         filtered =
             filtered.filter(
-                note =>
+                note => {
 
-                    note.title
-                        .toLowerCase()
-                        .includes(search)
+                    const title =
+                        note.title
+                            .toLowerCase();
 
-                    ||
+                    const content =
+                        note.content
+                            .toLowerCase();
 
-                    note.content
-                        .toLowerCase()
-                        .includes(search)
 
+                    return (
+                        title.includes(
+                            search
+                        )
+                        ||
+                        content.includes(
+                            search
+                        )
+                    );
+
+                }
             );
 
     }
+
+
+    /* EMPTY */
 
     if (
         filtered.length === 0
     ) {
 
-        emptyNotes.classList.remove(
+        emptyNotes?.classList.remove(
             "hidden"
         );
+
 
     } else {
 
-        emptyNotes.classList.add(
+        emptyNotes?.classList.add(
             "hidden"
         );
+
 
         filtered.forEach(
             note => {
 
                 notesList.appendChild(
-                    createNoteCard(note)
+                    createNoteCard(
+                        note
+                    )
                 );
 
             }
         );
 
     }
+
 
     updateStats();
 
@@ -1309,11 +1558,14 @@ function createNoteCard(note) {
             "article"
         );
 
+
     card.className =
         "note-card";
 
+
     card.dataset.color =
         note.color;
+
 
     const title =
         escapeHtml(
@@ -1321,16 +1573,22 @@ function createNoteCard(note) {
             "Untitled Note"
         );
 
+
     const content =
         escapeHtml(
             note.content ||
             "No content"
         );
 
+
     const preview =
         content.length > 150
-            ? content.substring(0, 150) + "..."
+            ? content.substring(
+                0,
+                150
+              ) + "..."
             : content;
+
 
     card.innerHTML = `
 
@@ -1345,6 +1603,7 @@ function createNoteCard(note) {
                 <button
                     class="note-action favorite-button"
                     type="button"
+                    aria-label="Favorite"
                 >
                     ${note.favorite ? "⭐" : "☆"}
                 </button>
@@ -1352,6 +1611,7 @@ function createNoteCard(note) {
                 <button
                     class="note-action pin-button"
                     type="button"
+                    aria-label="Pin"
                 >
                     ${note.pinned ? "📌" : "📍"}
                 </button>
@@ -1360,18 +1620,23 @@ function createNoteCard(note) {
 
         </div>
 
+
         <h3 class="note-title">
             ${title}
         </h3>
+
 
         <p class="note-preview">
             ${preview}
         </p>
 
+
         <div class="note-bottom">
 
             <span class="note-date">
-                ${formatDate(note.updatedAt)}
+                ${formatDate(
+                    note.updatedAt
+                )}
             </span>
 
             <button
@@ -1382,12 +1647,29 @@ function createNoteCard(note) {
             </button>
 
         </div>
+
     `;
 
 
-    card.querySelector(
-        ".favorite-button"
-    ).addEventListener(
+    const favoriteButton =
+        card.querySelector(
+            ".favorite-button"
+        );
+
+
+    const pinButton =
+        card.querySelector(
+            ".pin-button"
+        );
+
+
+    const viewButton =
+        card.querySelector(
+            ".view-btn"
+        );
+
+
+    favoriteButton?.addEventListener(
         "click",
         event => {
 
@@ -1401,9 +1683,7 @@ function createNoteCard(note) {
     );
 
 
-    card.querySelector(
-        ".pin-button"
-    ).addEventListener(
+    pinButton?.addEventListener(
         "click",
         event => {
 
@@ -1417,9 +1697,7 @@ function createNoteCard(note) {
     );
 
 
-    card.querySelector(
-        ".view-btn"
-    ).addEventListener(
+    viewButton?.addEventListener(
         "click",
         event => {
 
@@ -1462,28 +1740,35 @@ function openViewNote(id) {
                 item.id === id
         );
 
+
     if (!note) {
         return;
     }
 
+
     viewingNoteId =
         id;
+
 
     viewNoteTitle.textContent =
         note.title ||
         "Untitled Note";
 
+
     viewNoteMood.textContent =
         note.mood;
+
 
     viewNoteContent.textContent =
         note.content ||
         "No content";
 
+
     viewNoteDate.textContent =
         formatDate(
             note.updatedAt
         );
+
 
     viewNoteModal.classList.remove(
         "hidden"
@@ -1498,20 +1783,34 @@ function openViewNote(id) {
 
 function updateStats() {
 
-    totalNotes.textContent =
-        notes.length;
+    if (totalNotes) {
 
-    favoriteNotes.textContent =
-        notes.filter(
-            note =>
-                note.favorite
-        ).length;
+        totalNotes.textContent =
+            notes.length;
 
-    pinnedNotes.textContent =
-        notes.filter(
-            note =>
-                note.pinned
-        ).length;
+    }
+
+
+    if (favoriteNotes) {
+
+        favoriteNotes.textContent =
+            notes.filter(
+                note =>
+                    note.favorite
+            ).length;
+
+    }
+
+
+    if (pinnedNotes) {
+
+        pinnedNotes.textContent =
+            notes.filter(
+                note =>
+                    note.pinned
+            ).length;
+
+    }
 
 }
 
@@ -1526,16 +1825,28 @@ function formatDate(timestamp) {
         return "";
     }
 
+
     return new Date(
         timestamp
     ).toLocaleString(
         "en-IN",
         {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
+
+            day:
+                "2-digit",
+
+            month:
+                "short",
+
+            year:
+                "numeric",
+
+            hour:
+                "2-digit",
+
+            minute:
+                "2-digit"
+
         }
     );
 
@@ -1587,15 +1898,18 @@ newNoteBtn?.addEventListener(
     openNewNote
 );
 
+
 addNoteBtn?.addEventListener(
     "click",
     openNewNote
 );
 
+
 addNoteBtn2?.addEventListener(
     "click",
     openNewNote
 );
+
 
 emptyAddNoteBtn?.addEventListener(
     "click",
@@ -1612,10 +1926,16 @@ closeNoteModal?.addEventListener(
     closeNoteModalWindow
 );
 
+
 cancelNoteBtn?.addEventListener(
     "click",
     closeNoteModalWindow
 );
+
+
+/* =====================================================
+   CLOSE VIEW MODAL
+===================================================== */
 
 closeViewNoteModal?.addEventListener(
     "click",
@@ -1625,21 +1945,30 @@ closeViewNoteModal?.addEventListener(
             "hidden"
         );
 
+        viewingNoteId =
+            null;
+
     }
 );
 
 
 /* =====================================================
-   EDIT
+   EDIT NOTE
 ===================================================== */
 
 editNoteBtn?.addEventListener(
     "click",
     () => {
 
+        if (!viewingNoteId) {
+            return;
+        }
+
+
         viewNoteModal.classList.add(
             "hidden"
         );
+
 
         openEditNote(
             viewingNoteId
@@ -1650,12 +1979,17 @@ editNoteBtn?.addEventListener(
 
 
 /* =====================================================
-   DELETE
+   DELETE NOTE
 ===================================================== */
 
 deleteNoteBtn?.addEventListener(
     "click",
     () => {
+
+        if (!viewingNoteId) {
+            return;
+        }
+
 
         deleteNote(
             viewingNoteId
@@ -1678,6 +2012,7 @@ noteSearchInput?.addEventListener(
                 .trim()
                 .toLowerCase();
 
+
         renderNotes();
 
     }
@@ -1693,41 +2028,46 @@ function setFilter(filter) {
     currentFilter =
         filter;
 
-    allNotesFilter.classList.remove(
+
+    allNotesFilter?.classList.remove(
         "active"
     );
 
-    favoriteFilter.classList.remove(
+    favoriteFilter?.classList.remove(
         "active"
     );
 
-    pinnedFilter.classList.remove(
+    pinnedFilter?.classList.remove(
         "active"
     );
+
 
     if (filter === "all") {
 
-        allNotesFilter.classList.add(
+        allNotesFilter?.classList.add(
             "active"
         );
 
     }
+
 
     if (filter === "favorite") {
 
-        favoriteFilter.classList.add(
+        favoriteFilter?.classList.add(
             "active"
         );
 
     }
+
 
     if (filter === "pinned") {
 
-        pinnedFilter.classList.add(
+        pinnedFilter?.classList.add(
             "active"
         );
 
     }
+
 
     renderNotes();
 
@@ -1739,10 +2079,12 @@ allNotesFilter?.addEventListener(
     () => setFilter("all")
 );
 
+
 favoriteFilter?.addEventListener(
     "click",
     () => setFilter("favorite")
 );
+
 
 pinnedFilter?.addEventListener(
     "click",
@@ -1755,18 +2097,31 @@ pinnedFilter?.addEventListener(
 ===================================================== */
 
 document
-    .getElementById("searchNotesBtn")
+    .getElementById(
+        "searchNotesBtn"
+    )
     ?.addEventListener(
         "click",
         () => {
 
-            noteSearchInput.focus();
-
             document
-                .getElementById("notesSection")
-                .scrollIntoView({
-                    behavior: "smooth"
+                .getElementById(
+                    "notesSection"
+                )
+                ?.scrollIntoView({
+                    behavior:
+                        "smooth"
                 });
+
+
+            setTimeout(
+                () => {
+
+                    noteSearchInput?.focus();
+
+                },
+                500
+            );
 
         }
     );
@@ -1777,17 +2132,25 @@ document
 ===================================================== */
 
 document
-    .getElementById("favoritesBtn")
+    .getElementById(
+        "favoritesBtn"
+    )
     ?.addEventListener(
         "click",
         () => {
 
-            setFilter("favorite");
+            setFilter(
+                "favorite"
+            );
+
 
             document
-                .getElementById("notesSection")
-                .scrollIntoView({
-                    behavior: "smooth"
+                .getElementById(
+                    "notesSection"
+                )
+                ?.scrollIntoView({
+                    behavior:
+                        "smooth"
                 });
 
         }
@@ -1799,17 +2162,25 @@ document
 ===================================================== */
 
 document
-    .getElementById("pinnedBtn")
+    .getElementById(
+        "pinnedBtn"
+    )
     ?.addEventListener(
         "click",
         () => {
 
-            setFilter("pinned");
+            setFilter(
+                "pinned"
+            );
+
 
             document
-                .getElementById("notesSection")
-                .scrollIntoView({
-                    behavior: "smooth"
+                .getElementById(
+                    "notesSection"
+                )
+                ?.scrollIntoView({
+                    behavior:
+                        "smooth"
                 });
 
         }
@@ -1817,7 +2188,7 @@ document
 
 
 /* =====================================================
-   OUTSIDE CLICK
+   OUTSIDE CLICK - NOTE MODAL
 ===================================================== */
 
 noteModal?.addEventListener(
@@ -1837,6 +2208,10 @@ noteModal?.addEventListener(
 );
 
 
+/* =====================================================
+   OUTSIDE CLICK - VIEW MODAL
+===================================================== */
+
 viewNoteModal?.addEventListener(
     "click",
     event => {
@@ -1850,6 +2225,9 @@ viewNoteModal?.addEventListener(
                 "hidden"
             );
 
+            viewingNoteId =
+                null;
+
         }
 
     }
@@ -1857,7 +2235,7 @@ viewNoteModal?.addEventListener(
 
 
 /* =====================================================
-   ESCAPE
+   ESCAPE KEY
 ===================================================== */
 
 document.addEventListener(
@@ -1865,26 +2243,37 @@ document.addEventListener(
     event => {
 
         if (
-            event.key ===
+            event.key !==
             "Escape"
         ) {
 
-            noteModal.classList.add(
-                "hidden"
-            );
-
-            viewNoteModal.classList.add(
-                "hidden"
-            );
+            return;
 
         }
+
+
+        noteModal?.classList.add(
+            "hidden"
+        );
+
+
+        viewNoteModal?.classList.add(
+            "hidden"
+        );
+
+
+        editingNoteId =
+            null;
+
+        viewingNoteId =
+            null;
 
     }
 );
 
 
 /* =====================================================
-   ENTER LOGIN
+   ENTER = LOGIN
 ===================================================== */
 
 passwordInput?.addEventListener(
@@ -1896,7 +2285,9 @@ passwordInput?.addEventListener(
             "Enter"
         ) {
 
-            emailLoginBtn.click();
+            event.preventDefault();
+
+            emailLoginBtn?.click();
 
         }
 
@@ -1905,11 +2296,17 @@ passwordInput?.addEventListener(
 
 
 /* =====================================================
-   START
+   INITIAL PAGE
 ===================================================== */
+
+/*
+   Until Firebase checks authentication,
+   show LOGIN page.
+*/
 
 showLoginPage();
 
+
 console.log(
-    "LeoDiary Firebase App loaded successfully."
+    "LeoDiary Firebase initialized successfully."
 );
