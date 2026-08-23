@@ -38,29 +38,14 @@ import {
 /* =====================================================
    FIREBASE CONFIG
 ===================================================== */
-
 const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyBTHBWU0Yw-dz54Uzva_FLkD_yN7Vlu5jg",
-
-    authDomain:
-        "leodiary-app.firebaseapp.com",
-
-    projectId:
-        "leodiary-app",
-
-    storageBucket:
-        "leodiary-app.firebasestorage.app",
-
-    messagingSenderId:
-        "1098958390836",
-
-    appId:
-        "1:1098958390836:web:8ee2c1e81b9cb042c8ac61",
-
-    measurementId:
-        "G-S6M5ED5ME7"
+    apiKey: "AIzaSyCFR9EzIQ9O6UAZpbURCC9VlyFqpifNJz0",
+    authDomain: "leodiary-app-6eff0.firebaseapp.com",
+    projectId: "leodiary-app-6eff0",
+    storageBucket: "leodiary-app-6eff0.firebasestorage.app",
+    messagingSenderId: "584697796566",
+    appId: "1:584697796566:web:a2d7e223c20b5bef5d3677",
+    measurementId: "G-8WQVR40LV8"
 };
 
 
