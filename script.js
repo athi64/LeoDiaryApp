@@ -1,7 +1,11 @@
 /* =====================================================
-   LeoDiary - Complete JavaScript
+   LEODIARY
    Firebase Authentication + Firestore
-   No Automatic Login After Refresh
+   Google Login
+   Email Login
+   Create Account
+   Forgot Password
+   Notes / Search / Favorite / Pin
 ===================================================== */
 
 import {
@@ -38,14 +42,30 @@ import {
 /* =====================================================
    FIREBASE CONFIG
 ===================================================== */
+
 const firebaseConfig = {
-    apiKey: "AIzaSyCFR9EzIQ9O6UAZpbURCC9VlyFqpifNJz0",
-    authDomain: "leodiary-app-6eff0.firebaseapp.com",
-    projectId: "leodiary-app-6eff0",
-    storageBucket: "leodiary-app-6eff0.firebasestorage.app",
-    messagingSenderId: "584697796566",
-    appId: "1:584697796566:web:a2d7e223c20b5bef5d3677",
-    measurementId: "G-8WQVR40LV8"
+
+    apiKey:
+        "AIzaSyCFR9EzIQ9O6UAZpbURCC9VlyFqpifNJz0",
+
+    authDomain:
+        "leodiary-app-6eff0.firebaseapp.com",
+
+    projectId:
+        "leodiary-app-6eff0",
+
+    storageBucket:
+        "leodiary-app-6eff0.firebasestorage.app",
+
+    messagingSenderId:
+        "584697796566",
+
+    appId:
+        "1:584697796566:web:a2d7e223c20b5bef5d3677",
+
+    measurementId:
+        "G-8WQVR40LV8"
+
 };
 
 
@@ -72,8 +92,7 @@ googleProvider.setCustomParameters({
 
 
 /* =====================================================
-   IMPORTANT
-   LOGIN SESSION WILL NOT BE SAVED AFTER PAGE REFRESH
+   SESSION
 ===================================================== */
 
 await setPersistence(
@@ -96,6 +115,9 @@ const diaryPage =
 const googleLoginBtn =
     document.getElementById("googleLoginBtn");
 
+const emailForm =
+    document.getElementById("emailForm");
+
 const emailInput =
     document.getElementById("emailInput");
 
@@ -114,6 +136,7 @@ const forgotPasswordBtn =
 const emailError =
     document.getElementById("emailError");
 
+
 const logoutBtn =
     document.getElementById("logoutBtn");
 
@@ -122,7 +145,7 @@ const userEmail =
 
 
 /* =====================================================
-   NOTE BUTTONS
+   NOTE ELEMENTS
 ===================================================== */
 
 const newNoteBtn =
@@ -138,10 +161,6 @@ const emptyAddNoteBtn =
     document.getElementById("emptyAddNoteBtn");
 
 
-/* =====================================================
-   NOTES
-===================================================== */
-
 const notesList =
     document.getElementById("notesList");
 
@@ -151,6 +170,7 @@ const emptyNotes =
 
 const noteSearchInput =
     document.getElementById("noteSearchInput");
+
 
 const allNotesFilter =
     document.getElementById("allNotesFilter");
@@ -209,7 +229,7 @@ const saveNoteBtn =
 
 
 /* =====================================================
-   VIEW NOTE MODAL
+   VIEW MODAL
 ===================================================== */
 
 const viewNoteModal =
@@ -255,40 +275,65 @@ let viewingNoteId = null;
 
 
 /* =====================================================
-   SHOW / HIDE PAGE
+   PAGE CONTROL
 ===================================================== */
 
 function showLoginPage() {
 
-    if (loginPage) {
-        loginPage.classList.remove("hidden");
-    }
+    loginPage?.classList.remove("hidden");
 
-    if (diaryPage) {
-        diaryPage.classList.add("hidden");
-    }
+    diaryPage?.classList.add("hidden");
 
 }
 
 
 function showDiaryPage() {
 
-    if (loginPage) {
-        loginPage.classList.add("hidden");
+    loginPage?.classList.add("hidden");
+
+    diaryPage?.classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   ERROR MESSAGE
+===================================================== */
+
+function showMessage(
+    message,
+    type = "error"
+) {
+
+    if (!emailError) {
+        return;
     }
 
-    if (diaryPage) {
-        diaryPage.classList.remove("hidden");
+
+    emailError.textContent =
+        message || "";
+
+
+    if (type === "success") {
+
+        emailError.style.color =
+            "#16a34a";
+
+    } else {
+
+        emailError.style.color =
+            "#e11d48";
+
     }
 
 }
 
 
 /* =====================================================
-   AUTH ERROR
+   FIREBASE ERROR HANDLER
 ===================================================== */
 
-function authError(error) {
+function getAuthErrorMessage(error) {
 
     const code =
         error?.code || "";
@@ -297,7 +342,10 @@ function authError(error) {
     const messages = {
 
         "auth/invalid-email":
-            "Enter a valid email address.",
+            "Please enter a valid email address.",
+
+        "auth/missing-password":
+            "Please enter your password.",
 
         "auth/weak-password":
             "Password must contain at least 6 characters.",
@@ -308,32 +356,41 @@ function authError(error) {
         "auth/invalid-credential":
             "Incorrect email or password.",
 
+        "auth/wrong-password":
+            "Incorrect password.",
+
         "auth/user-not-found":
             "No account found with this email.",
 
-        "auth/wrong-password":
-            "Incorrect password.",
+        "auth/user-disabled":
+            "This account has been disabled.",
 
         "auth/popup-closed-by-user":
             "Google login was cancelled.",
 
         "auth/popup-blocked":
-            "Google popup was blocked.",
+            "Google popup was blocked by the browser.",
 
         "auth/unauthorized-domain":
             "This website is not authorized in Firebase.",
 
         "auth/network-request-failed":
-            "Network error. Check your internet.",
+            "Network error. Check your internet connection.",
 
         "auth/too-many-requests":
-            "Too many attempts. Try again later.",
+            "Too many attempts. Please try again later.",
 
         "auth/operation-not-allowed":
             "This login method is not enabled in Firebase.",
 
         "auth/account-exists-with-different-credential":
-            "An account already exists with another login method."
+            "This email already uses another login method.",
+
+        "auth/invalid-action-code":
+            "This password reset link is invalid or expired.",
+
+        "auth/expired-action-code":
+            "This password reset link has expired."
 
     };
 
@@ -342,21 +399,6 @@ function authError(error) {
         messages[code] ||
         "Something went wrong. Please try again."
     );
-}
-
-
-/* =====================================================
-   SHOW ERROR
-===================================================== */
-
-function showError(message) {
-
-    if (emailError) {
-
-        emailError.textContent =
-            message || "";
-
-    }
 
 }
 
@@ -369,14 +411,13 @@ googleLoginBtn?.addEventListener(
     "click",
     async () => {
 
-        showError("");
+        showMessage("");
 
         googleLoginBtn.disabled =
             true;
 
-        googleLoginBtn.innerHTML = `
-            <span>Signing in...</span>
-        `;
+        googleLoginBtn.innerHTML =
+            "Signing in...";
 
 
         try {
@@ -386,6 +427,7 @@ googleLoginBtn?.addEventListener(
                 googleProvider
             );
 
+
         } catch (error) {
 
             console.error(
@@ -393,16 +435,19 @@ googleLoginBtn?.addEventListener(
                 error
             );
 
-            showError(
-                authError(error)
+
+            showMessage(
+                getAuthErrorMessage(error)
             );
 
+
+        } finally {
 
             googleLoginBtn.disabled =
                 false;
 
             googleLoginBtn.innerHTML = `
-                <span class="google-letter">G</span>
+                <span class="google-icon">G</span>
                 <span>Continue with Google</span>
             `;
 
@@ -416,11 +461,14 @@ googleLoginBtn?.addEventListener(
    EMAIL LOGIN
 ===================================================== */
 
-emailLoginBtn?.addEventListener(
-    "click",
-    async () => {
+emailForm?.addEventListener(
+    "submit",
+    async event => {
 
-        showError("");
+        event.preventDefault();
+
+        showMessage("");
+
 
         const email =
             emailInput?.value.trim() || "";
@@ -431,9 +479,11 @@ emailLoginBtn?.addEventListener(
 
         if (!email) {
 
-            showError(
-                "Enter your email."
+            showMessage(
+                "Enter your email address."
             );
+
+            emailInput?.focus();
 
             return;
 
@@ -442,9 +492,11 @@ emailLoginBtn?.addEventListener(
 
         if (!password) {
 
-            showError(
+            showMessage(
                 "Enter your password."
             );
+
+            passwordInput?.focus();
 
             return;
 
@@ -483,8 +535,9 @@ emailLoginBtn?.addEventListener(
                 error
             );
 
-            showError(
-                authError(error)
+
+            showMessage(
+                getAuthErrorMessage(error)
             );
 
 
@@ -510,7 +563,8 @@ emailSignupBtn?.addEventListener(
     "click",
     async () => {
 
-        showError("");
+        showMessage("");
+
 
         const email =
             emailInput?.value.trim() || "";
@@ -521,9 +575,11 @@ emailSignupBtn?.addEventListener(
 
         if (!email) {
 
-            showError(
-                "Enter your email."
+            showMessage(
+                "Enter your email address."
             );
+
+            emailInput?.focus();
 
             return;
 
@@ -532,9 +588,11 @@ emailSignupBtn?.addEventListener(
 
         if (password.length < 6) {
 
-            showError(
+            showMessage(
                 "Password must contain at least 6 characters."
             );
+
+            passwordInput?.focus();
 
             return;
 
@@ -573,8 +631,9 @@ emailSignupBtn?.addEventListener(
                 error
             );
 
-            showError(
-                authError(error)
+
+            showMessage(
+                getAuthErrorMessage(error)
             );
 
 
@@ -584,7 +643,7 @@ emailSignupBtn?.addEventListener(
                 false;
 
             emailSignupBtn.textContent =
-                "Create Account";
+                "Create New Account";
 
         }
 
@@ -600,7 +659,8 @@ forgotPasswordBtn?.addEventListener(
     "click",
     async () => {
 
-        showError("");
+        showMessage("");
+
 
         const email =
             emailInput?.value.trim() || "";
@@ -608,9 +668,11 @@ forgotPasswordBtn?.addEventListener(
 
         if (!email) {
 
-            showError(
+            showMessage(
                 "Enter your email first."
             );
+
+            emailInput?.focus();
 
             return;
 
@@ -619,6 +681,9 @@ forgotPasswordBtn?.addEventListener(
 
         forgotPasswordBtn.disabled =
             true;
+
+        forgotPasswordBtn.textContent =
+            "Sending...";
 
 
         try {
@@ -629,8 +694,9 @@ forgotPasswordBtn?.addEventListener(
             );
 
 
-            showError(
-                "Password reset email sent."
+            showMessage(
+                "Password reset email has been sent.",
+                "success"
             );
 
 
@@ -641,8 +707,9 @@ forgotPasswordBtn?.addEventListener(
                 error
             );
 
-            showError(
-                authError(error)
+
+            showMessage(
+                getAuthErrorMessage(error)
             );
 
 
@@ -650,6 +717,9 @@ forgotPasswordBtn?.addEventListener(
 
             forgotPasswordBtn.disabled =
                 false;
+
+            forgotPasswordBtn.textContent =
+                "Forgot Password?";
 
         }
 
@@ -663,11 +733,13 @@ forgotPasswordBtn?.addEventListener(
 
 onAuthStateChanged(
     auth,
-    async (user) => {
+    async user => {
 
         console.log(
-            "Firebase Auth State:",
-            user ? user.email : "Logged Out"
+            "Firebase Auth:",
+            user
+                ? user.email
+                : "Logged Out"
         );
 
 
@@ -679,9 +751,7 @@ onAuthStateChanged(
 
             showDiaryPage();
 
-
             showUser(user);
-
 
             await loadNotes();
 
@@ -701,7 +771,6 @@ onAuthStateChanged(
 
 
             showLoginPage();
-
 
             renderNotes();
 
@@ -822,9 +891,18 @@ async function loadNotes() {
 
     try {
 
+        const notesRef =
+            notesCollection();
+
+
+        if (!notesRef) {
+            return;
+        }
+
+
         const q =
             query(
-                notesCollection(),
+                notesRef,
                 orderBy(
                     "updatedAt",
                     "desc"
@@ -939,10 +1017,6 @@ function openNewNote() {
 
     if (!currentUser) {
 
-        showError(
-            "Please login first."
-        );
-
         return;
 
     }
@@ -977,7 +1051,7 @@ function openNewNote() {
     setTimeout(
         () => {
 
-            noteTitleInput.focus();
+            noteTitleInput?.focus();
 
         },
         100
@@ -1000,9 +1074,7 @@ function openEditNote(id) {
 
 
     if (!note) {
-
         return;
-
     }
 
 
@@ -1059,13 +1131,7 @@ saveNoteBtn?.addEventListener(
     async () => {
 
         if (!currentUser) {
-
-            alert(
-                "Please login first."
-            );
-
             return;
-
         }
 
 
@@ -1139,8 +1205,12 @@ saveNoteBtn?.addEventListener(
 
             } else {
 
+                const notesRef =
+                    notesCollection();
+
+
                 await addDoc(
-                    notesCollection(),
+                    notesRef,
                     {
 
                         title:
@@ -1175,7 +1245,6 @@ saveNoteBtn?.addEventListener(
 
             closeNoteModalWindow();
 
-
             await loadNotes();
 
 
@@ -1188,7 +1257,7 @@ saveNoteBtn?.addEventListener(
 
 
             alert(
-                "Unable to save note. Check Firestore rules."
+                "Unable to save the note."
             );
 
         } finally {
@@ -1212,18 +1281,6 @@ saveNoteBtn?.addEventListener(
 async function deleteNote(id) {
 
     if (!currentUser) {
-        return;
-    }
-
-
-    const note =
-        notes.find(
-            item =>
-                item.id === id
-        );
-
-
-    if (!note) {
         return;
     }
 
@@ -1256,7 +1313,7 @@ async function deleteNote(id) {
             null;
 
 
-        viewNoteModal.classList.add(
+        viewNoteModal?.classList.add(
             "hidden"
         );
 
@@ -1273,7 +1330,7 @@ async function deleteNote(id) {
 
 
         alert(
-            "Unable to delete note."
+            "Unable to delete this note."
         );
 
     }
@@ -1282,7 +1339,7 @@ async function deleteNote(id) {
 
 
 /* =====================================================
-   TOGGLE FAVORITE
+   FAVORITE
 ===================================================== */
 
 async function toggleFavorite(id) {
@@ -1342,7 +1399,7 @@ async function toggleFavorite(id) {
 
 
 /* =====================================================
-   TOGGLE PIN
+   PIN
 ===================================================== */
 
 async function togglePin(id) {
@@ -1412,14 +1469,15 @@ function renderNotes() {
     }
 
 
-    const oldCards =
+    const cards =
         notesList.querySelectorAll(
             ".note-card"
         );
 
 
-    oldCards.forEach(
-        card => card.remove()
+    cards.forEach(
+        card =>
+            card.remove()
     );
 
 
@@ -1461,10 +1519,6 @@ function renderNotes() {
 
     if (searchText) {
 
-        const search =
-            searchText.toLowerCase();
-
-
         filtered =
             filtered.filter(
                 note => {
@@ -1480,11 +1534,11 @@ function renderNotes() {
 
                     return (
                         title.includes(
-                            search
+                            searchText
                         )
                         ||
                         content.includes(
-                            search
+                            searchText
                         )
                     );
 
@@ -1493,8 +1547,6 @@ function renderNotes() {
 
     }
 
-
-    /* EMPTY */
 
     if (
         filtered.length === 0
@@ -1552,14 +1604,14 @@ function createNoteCard(note) {
         note.color;
 
 
-    const title =
+    const safeTitle =
         escapeHtml(
             note.title ||
             "Untitled Note"
         );
 
 
-    const content =
+    const safeContent =
         escapeHtml(
             note.content ||
             "No content"
@@ -1567,12 +1619,12 @@ function createNoteCard(note) {
 
 
     const preview =
-        content.length > 150
-            ? content.substring(
+        safeContent.length > 150
+            ? safeContent.substring(
                 0,
                 150
-              ) + "..."
-            : content;
+            ) + "..."
+            : safeContent;
 
 
     card.innerHTML = `
@@ -1607,7 +1659,7 @@ function createNoteCard(note) {
 
 
         <h3 class="note-title">
-            ${title}
+            ${safeTitle}
         </h3>
 
 
@@ -1641,12 +1693,10 @@ function createNoteCard(note) {
             ".favorite-button"
         );
 
-
     const pinButton =
         card.querySelector(
             ".pin-button"
         );
-
 
     const viewButton =
         card.querySelector(
@@ -1883,18 +1933,15 @@ newNoteBtn?.addEventListener(
     openNewNote
 );
 
-
 addNoteBtn?.addEventListener(
     "click",
     openNewNote
 );
 
-
 addNoteBtn2?.addEventListener(
     "click",
     openNewNote
 );
-
 
 emptyAddNoteBtn?.addEventListener(
     "click",
@@ -1911,7 +1958,6 @@ closeNoteModal?.addEventListener(
     closeNoteModalWindow
 );
 
-
 cancelNoteBtn?.addEventListener(
     "click",
     closeNoteModalWindow
@@ -1926,7 +1972,7 @@ closeViewNoteModal?.addEventListener(
     "click",
     () => {
 
-        viewNoteModal.classList.add(
+        viewNoteModal?.classList.add(
             "hidden"
         );
 
@@ -1950,7 +1996,7 @@ editNoteBtn?.addEventListener(
         }
 
 
-        viewNoteModal.classList.add(
+        viewNoteModal?.classList.add(
             "hidden"
         );
 
@@ -2061,19 +2107,20 @@ function setFilter(filter) {
 
 allNotesFilter?.addEventListener(
     "click",
-    () => setFilter("all")
+    () =>
+        setFilter("all")
 );
-
 
 favoriteFilter?.addEventListener(
     "click",
-    () => setFilter("favorite")
+    () =>
+        setFilter("favorite")
 );
-
 
 pinnedFilter?.addEventListener(
     "click",
-    () => setFilter("pinned")
+    () =>
+        setFilter("pinned")
 );
 
 
@@ -2088,6 +2135,9 @@ document
     ?.addEventListener(
         "click",
         () => {
+
+            setFilter("all");
+
 
             document
                 .getElementById(
@@ -2105,7 +2155,7 @@ document
                     noteSearchInput?.focus();
 
                 },
-                500
+                400
             );
 
         }
@@ -2173,7 +2223,7 @@ document
 
 
 /* =====================================================
-   OUTSIDE CLICK - NOTE MODAL
+   OUTSIDE CLICK — NOTE MODAL
 ===================================================== */
 
 noteModal?.addEventListener(
@@ -2194,7 +2244,7 @@ noteModal?.addEventListener(
 
 
 /* =====================================================
-   OUTSIDE CLICK - VIEW MODAL
+   OUTSIDE CLICK — VIEW MODAL
 ===================================================== */
 
 viewNoteModal?.addEventListener(
@@ -2220,7 +2270,7 @@ viewNoteModal?.addEventListener(
 
 
 /* =====================================================
-   ESCAPE KEY
+   ESC KEY
 ===================================================== */
 
 document.addEventListener(
@@ -2241,7 +2291,6 @@ document.addEventListener(
             "hidden"
         );
 
-
         viewNoteModal?.classList.add(
             "hidden"
         );
@@ -2258,40 +2307,12 @@ document.addEventListener(
 
 
 /* =====================================================
-   ENTER = LOGIN
-===================================================== */
-
-passwordInput?.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key ===
-            "Enter"
-        ) {
-
-            event.preventDefault();
-
-            emailLoginBtn?.click();
-
-        }
-
-    }
-);
-
-
-/* =====================================================
    INITIAL PAGE
 ===================================================== */
-
-/*
-   Until Firebase checks authentication,
-   show LOGIN page.
-*/
 
 showLoginPage();
 
 
 console.log(
-    "LeoDiary Firebase initialized successfully."
+    "🦁 LeoDiary initialized successfully."
 );
