@@ -1,18 +1,11 @@
-/* =========================================================
-   LeoDiary - COMPLETE SCRIPT
-   Firebase Authentication + Firestore
-========================================================= */
-
-
-/* =========================================================
-   FIREBASE IMPORTS
-========================================================= */
+/* =====================================================
+   LeoDiary - Complete JavaScript
+   Google + Email + Firestore
+===================================================== */
 
 import {
     initializeApp
-} from
-"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 import {
     getAuth,
@@ -23,9 +16,7 @@ import {
     sendPasswordResetEmail,
     onAuthStateChanged,
     signOut
-} from
-"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 import {
     getFirestore,
@@ -38,13 +29,12 @@ import {
     query,
     orderBy,
     serverTimestamp
-} from
-"https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
-/* =========================================================
+/* =====================================================
    FIREBASE CONFIG
-========================================================= */
+===================================================== */
 
 const firebaseConfig = {
 
@@ -71,25 +61,18 @@ const firebaseConfig = {
 };
 
 
-/* =========================================================
-   INITIALIZE FIREBASE
-========================================================= */
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
 const app =
     initializeApp(firebaseConfig);
 
-
 const auth =
     getAuth(app);
 
-
 const db =
     getFirestore(app);
-
-
-/* =========================================================
-   GOOGLE PROVIDER
-========================================================= */
 
 const googleProvider =
     new GoogleAuthProvider();
@@ -100,85 +83,59 @@ googleProvider.setCustomParameters({
 });
 
 
-/* =========================================================
-   HTML ELEMENTS
-========================================================= */
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
 const loginPage =
     document.getElementById("loginPage");
 
-
 const diaryPage =
     document.getElementById("diaryPage");
-
 
 const googleLoginBtn =
     document.getElementById("googleLoginBtn");
 
-
 const emailInput =
     document.getElementById("emailInput");
-
 
 const passwordInput =
     document.getElementById("passwordInput");
 
-
 const emailLoginBtn =
     document.getElementById("emailLoginBtn");
-
 
 const emailSignupBtn =
     document.getElementById("emailSignupBtn");
 
-
 const forgotPasswordBtn =
     document.getElementById("forgotPasswordBtn");
-
 
 const emailError =
     document.getElementById("emailError");
 
-
 const logoutBtn =
     document.getElementById("logoutBtn");
-
 
 const userEmail =
     document.getElementById("userEmail");
 
 
-/* =========================================================
-   DIARY ELEMENTS
-========================================================= */
-
 const newNoteBtn =
     document.getElementById("newNoteBtn");
-
 
 const addNoteBtn =
     document.getElementById("addNoteBtn");
 
+const addNoteBtn2 =
+    document.getElementById("addNoteBtn2");
 
 const emptyAddNoteBtn =
     document.getElementById("emptyAddNoteBtn");
 
 
-const searchNotesBtn =
-    document.getElementById("searchNotesBtn");
-
-
-const favoritesBtn =
-    document.getElementById("favoritesBtn");
-
-
-const pinnedBtn =
-    document.getElementById("pinnedBtn");
-
-
 const notesList =
     document.getElementById("notesList");
-
 
 const emptyNotes =
     document.getElementById("emptyNotes");
@@ -187,732 +144,420 @@ const emptyNotes =
 const noteSearchInput =
     document.getElementById("noteSearchInput");
 
-
 const allNotesFilter =
     document.getElementById("allNotesFilter");
 
-
 const favoriteFilter =
     document.getElementById("favoriteFilter");
-
 
 const pinnedFilter =
     document.getElementById("pinnedFilter");
 
 
-/* =========================================================
-   STATISTICS
-========================================================= */
-
 const totalNotes =
     document.getElementById("totalNotes");
 
-
 const favoriteNotes =
     document.getElementById("favoriteNotes");
-
 
 const pinnedNotes =
     document.getElementById("pinnedNotes");
 
 
-/* =========================================================
-   NOTE MODAL
-========================================================= */
-
 const noteModal =
     document.getElementById("noteModal");
-
-
-const closeNoteModal =
-    document.getElementById("closeNoteModal");
-
 
 const noteModalTitle =
     document.getElementById("noteModalTitle");
 
+const closeNoteModal =
+    document.getElementById("closeNoteModal");
 
 const noteTitleInput =
     document.getElementById("noteTitleInput");
 
-
 const noteContentInput =
     document.getElementById("noteContentInput");
-
 
 const noteMoodInput =
     document.getElementById("noteMoodInput");
 
-
 const noteColorInput =
     document.getElementById("noteColorInput");
 
-
 const cancelNoteBtn =
     document.getElementById("cancelNoteBtn");
-
 
 const saveNoteBtn =
     document.getElementById("saveNoteBtn");
 
 
-/* =========================================================
-   VIEW NOTE MODAL
-========================================================= */
-
 const viewNoteModal =
     document.getElementById("viewNoteModal");
-
 
 const closeViewNoteModal =
     document.getElementById("closeViewNoteModal");
 
-
 const viewNoteTitle =
     document.getElementById("viewNoteTitle");
-
 
 const viewNoteMood =
     document.getElementById("viewNoteMood");
 
-
 const viewNoteContent =
     document.getElementById("viewNoteContent");
-
 
 const viewNoteDate =
     document.getElementById("viewNoteDate");
 
-
 const editNoteBtn =
     document.getElementById("editNoteBtn");
-
 
 const deleteNoteBtn =
     document.getElementById("deleteNoteBtn");
 
 
-/* =========================================================
-   APPLICATION STATE
-========================================================= */
+/* =====================================================
+   STATE
+===================================================== */
 
-let currentUser =
-    null;
+let currentUser = null;
 
+let notes = [];
 
-let notes =
-    [];
+let currentFilter = "all";
 
+let searchText = "";
 
-let currentEditingNoteId =
-    null;
+let editingNoteId = null;
 
-
-let currentViewingNoteId =
-    null;
+let viewingNoteId = null;
 
 
-let currentFilter =
-    "all";
+/* =====================================================
+   AUTH ERROR
+===================================================== */
 
-
-let searchText =
-    "";
-
-
-/* =========================================================
-   LOCAL STORAGE KEY
-========================================================= */
-
-function getLocalStorageKey() {
-
-    if (!currentUser) {
-
-        return "leoDiaryNotes_guest";
-
-    }
-
-    return (
-        "leoDiaryNotes_" +
-        currentUser.uid
-    );
-
-}
-
-
-/* =========================================================
-   SAVE LOCAL BACKUP
-========================================================= */
-
-function saveLocalBackup() {
-
-    try {
-
-        localStorage.setItem(
-            getLocalStorageKey(),
-            JSON.stringify(notes)
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Local backup error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   LOAD LOCAL BACKUP
-========================================================= */
-
-function loadLocalBackup() {
-
-    try {
-
-        const data =
-            localStorage.getItem(
-                getLocalStorageKey()
-            );
-
-
-        if (!data) {
-
-            return [];
-
-        }
-
-
-        const parsed =
-            JSON.parse(data);
-
-
-        return Array.isArray(parsed)
-            ? parsed
-            : [];
-
-    } catch (error) {
-
-        console.error(
-            "Local load error:",
-            error
-        );
-
-        return [];
-
-    }
-
-}
-
-
-/* =========================================================
-   ERROR MESSAGE
-========================================================= */
-
-function getAuthErrorMessage(error) {
+function authError(error) {
 
     const code =
         error?.code || "";
 
 
-    switch (code) {
+    const messages = {
 
-        case "auth/invalid-email":
+        "auth/invalid-email":
+            "Enter a valid email address.",
 
-            return "Please enter a valid email address.";
+        "auth/weak-password":
+            "Password must contain at least 6 characters.",
 
+        "auth/email-already-in-use":
+            "This email is already registered.",
 
-        case "auth/missing-password":
+        "auth/invalid-credential":
+            "Incorrect email or password.",
 
-            return "Please enter your password.";
+        "auth/user-not-found":
+            "No account found with this email.",
 
+        "auth/wrong-password":
+            "Incorrect password.",
 
-        case "auth/weak-password":
+        "auth/popup-closed-by-user":
+            "Google login was cancelled.",
 
-            return "Password must be at least 6 characters.";
+        "auth/popup-blocked":
+            "Google popup was blocked.",
 
+        "auth/unauthorized-domain":
+            "This website is not authorized in Firebase.",
 
-        case "auth/email-already-in-use":
+        "auth/network-request-failed":
+            "Network error. Check your internet.",
 
-            return "This email is already registered.";
+        "auth/too-many-requests":
+            "Too many attempts. Try again later."
 
-
-        case "auth/invalid-credential":
-
-            return "Incorrect email or password.";
-
-
-        case "auth/user-not-found":
-
-            return "No account found with this email.";
-
-
-        case "auth/wrong-password":
-
-            return "Incorrect password.";
-
-
-        case "auth/popup-closed-by-user":
-
-            return "Google sign-in was cancelled.";
+    };
 
 
-        case "auth/popup-blocked":
-
-            return "Google login popup was blocked. Allow popups and try again.";
-
-
-        case "auth/unauthorized-domain":
-
-            return "This website domain is not authorized in Firebase.";
+    return (
+        messages[code] ||
+        "Something went wrong. Please try again."
+    );
+}
 
 
-        case "auth/network-request-failed":
+function showError(message) {
 
-            return "Network error. Check your internet connection.";
+    if (emailError) {
+
+        emailError.textContent =
+            message || "";
+
+    }
+
+}
 
 
-        case "auth/too-many-requests":
+/* =====================================================
+   GOOGLE LOGIN
+===================================================== */
 
-            return "Too many attempts. Please try again later.";
+googleLoginBtn?.addEventListener(
+    "click",
+    async () => {
+
+        showError("");
+
+        googleLoginBtn.disabled =
+            true;
+
+        googleLoginBtn.innerHTML =
+            "Signing in...";
 
 
-        default:
+        try {
 
-            return (
-                error?.message ||
-                "Something went wrong. Please try again."
+            await signInWithPopup(
+                auth,
+                googleProvider
             );
 
-    }
 
-}
+        } catch (error) {
 
+            console.error(error);
 
-/* =========================================================
-   SHOW EMAIL ERROR
-========================================================= */
+            showError(
+                authError(error)
+            );
 
-function showEmailError(message) {
-
-    if (!emailError) {
-
-        return;
-
-    }
-
-    emailError.textContent =
-        message || "";
-
-}
-
-
-/* =========================================================
-   GOOGLE LOGIN
-========================================================= */
-
-if (googleLoginBtn) {
-
-    googleLoginBtn.addEventListener(
-        "click",
-        async () => {
-
-            showEmailError("");
 
             googleLoginBtn.disabled =
-                true;
+                false;
 
-
-            googleLoginBtn.innerHTML =
-                "Signing in...";
-
-
-            try {
-
-                await signInWithPopup(
-                    auth,
-                    googleProvider
-                );
-
-            } catch (error) {
-
-                console.error(
-                    "Google login error:",
-                    error
-                );
-
-
-                showEmailError(
-                    getAuthErrorMessage(
-                        error
-                    )
-                );
-
-
-                googleLoginBtn.disabled =
-                    false;
-
-
-                googleLoginBtn.innerHTML = `
-                    <span class="google-icon">
-                        G
-                    </span>
-
-                    <span>
-                        Continue with Google
-                    </span>
-                `;
-
-            }
+            googleLoginBtn.innerHTML = `
+                <span class="google-letter">G</span>
+                <span>Continue with Google</span>
+            `;
 
         }
-    );
 
-}
+    }
+);
 
 
-/* =========================================================
+/* =====================================================
    EMAIL LOGIN
-========================================================= */
+===================================================== */
 
-if (emailLoginBtn) {
+emailLoginBtn?.addEventListener(
+    "click",
+    async () => {
 
-    emailLoginBtn.addEventListener(
-        "click",
-        async () => {
+        showError("");
 
-            showEmailError("");
+        const email =
+            emailInput.value.trim();
 
-            const email =
-                emailInput.value.trim();
-
-
-            const password =
-                passwordInput.value;
+        const password =
+            passwordInput.value;
 
 
-            if (!email) {
+        if (!email) {
 
-                showEmailError(
-                    "Please enter your email."
-                );
+            showError(
+                "Enter your email."
+            );
 
-                emailInput.focus();
+            return;
 
-                return;
-
-            }
+        }
 
 
-            if (!password) {
+        if (!password) {
 
-                showEmailError(
-                    "Please enter your password."
-                );
+            showError(
+                "Enter your password."
+            );
 
-                passwordInput.focus();
+            return;
 
-                return;
+        }
 
-            }
 
+        emailLoginBtn.disabled =
+            true;
+
+        emailLoginBtn.textContent =
+            "Logging in...";
+
+
+        try {
+
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+
+            emailInput.value =
+                "";
+
+            passwordInput.value =
+                "";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showError(
+                authError(error)
+            );
 
             emailLoginBtn.disabled =
-                true;
-
+                false;
 
             emailLoginBtn.textContent =
-                "Logging in...";
-
-
-            try {
-
-                await signInWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-
-
-                emailInput.value =
-                    "";
-
-                passwordInput.value =
-                    "";
-
-
-            } catch (error) {
-
-                console.error(
-                    "Email login error:",
-                    error
-                );
-
-
-                showEmailError(
-                    getAuthErrorMessage(
-                        error
-                    )
-                );
-
-
-                emailLoginBtn.disabled =
-                    false;
-
-
-                emailLoginBtn.textContent =
-                    "Login";
-
-            }
+                "Login";
 
         }
-    );
 
-}
+    }
+);
 
 
-/* =========================================================
+/* =====================================================
    CREATE ACCOUNT
-========================================================= */
+===================================================== */
 
-if (emailSignupBtn) {
+emailSignupBtn?.addEventListener(
+    "click",
+    async () => {
 
-    emailSignupBtn.addEventListener(
-        "click",
-        async () => {
+        showError("");
 
-            showEmailError("");
+        const email =
+            emailInput.value.trim();
 
-            const email =
-                emailInput.value.trim();
-
-
-            const password =
-                passwordInput.value;
+        const password =
+            passwordInput.value;
 
 
-            if (!email) {
+        if (!email) {
 
-                showEmailError(
-                    "Please enter your email."
-                );
+            showError(
+                "Enter your email."
+            );
 
-                emailInput.focus();
+            return;
 
-                return;
-
-            }
+        }
 
 
-            if (!password) {
+        if (password.length < 6) {
 
-                showEmailError(
-                    "Please enter a password."
-                );
+            showError(
+                "Password must contain at least 6 characters."
+            );
 
-                passwordInput.focus();
+            return;
 
-                return;
-
-            }
+        }
 
 
-            if (password.length < 6) {
+        emailSignupBtn.disabled =
+            true;
 
-                showEmailError(
-                    "Password must be at least 6 characters."
-                );
+        emailSignupBtn.textContent =
+            "Creating...";
 
-                return;
 
-            }
+        try {
+
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+
+            emailInput.value =
+                "";
+
+            passwordInput.value =
+                "";
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            showError(
+                authError(error)
+            );
 
 
             emailSignupBtn.disabled =
-                true;
-
-
-            emailSignupBtn.textContent =
-                "Creating account...";
-
-
-            try {
-
-                await createUserWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-
-
-                emailInput.value =
-                    "";
-
-                passwordInput.value =
-                    "";
-
-
-            } catch (error) {
-
-                console.error(
-                    "Signup error:",
-                    error
-                );
-
-
-                showEmailError(
-                    getAuthErrorMessage(
-                        error
-                    )
-                );
-
-
-                emailSignupBtn.disabled =
-                    false;
-
-
-                emailSignupBtn.textContent =
-                    "Create Account";
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   FORGOT PASSWORD
-========================================================= */
-
-if (forgotPasswordBtn) {
-
-    forgotPasswordBtn.addEventListener(
-        "click",
-        async () => {
-
-            showEmailError("");
-
-            const email =
-                emailInput.value.trim();
-
-
-            if (!email) {
-
-                showEmailError(
-                    "Enter your email first."
-                );
-
-                emailInput.focus();
-
-                return;
-
-            }
-
-
-            forgotPasswordBtn.disabled =
-                true;
-
-
-            forgotPasswordBtn.textContent =
-                "Sending...";
-
-
-            try {
-
-                await sendPasswordResetEmail(
-                    auth,
-                    email
-                );
-
-
-                showEmailError(
-                    "Password reset email sent. Check your inbox."
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "Password reset error:",
-                    error
-                );
-
-
-                showEmailError(
-                    getAuthErrorMessage(
-                        error
-                    )
-                );
-
-            }
-
-
-            forgotPasswordBtn.disabled =
                 false;
 
-
-            forgotPasswordBtn.textContent =
-                "Forgot Password?";
+            emailSignupBtn.textContent =
+                "Create Account";
 
         }
-    );
 
-}
-
-
-/* =========================================================
-   AUTH STATE
-========================================================= */
-
-onAuthStateChanged(
-    auth,
-    async user => {
-
-        if (user) {
-
-            currentUser =
-                user;
+    }
+);
 
 
-            loginPage?.classList.add(
-                "hidden"
+/* =====================================================
+   FORGOT PASSWORD
+===================================================== */
+
+forgotPasswordBtn?.addEventListener(
+    "click",
+    async () => {
+
+        showError("");
+
+        const email =
+            emailInput.value.trim();
+
+
+        if (!email) {
+
+            showError(
+                "Enter your email first."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            await sendPasswordResetEmail(
+                auth,
+                email
             );
 
 
-            diaryPage?.classList.remove(
-                "hidden"
+            showError(
+                "Password reset email sent."
             );
 
 
-            updateUserInformation(
-                user
-            );
+        } catch (error) {
 
+            console.error(error);
 
-            await loadNotes();
-
-        } else {
-
-            currentUser =
-                null;
-
-
-            notes =
-                [];
-
-
-            diaryPage?.classList.add(
-                "hidden"
-            );
-
-
-            loginPage?.classList.remove(
-                "hidden"
+            showError(
+                authError(error)
             );
 
         }
@@ -921,68 +566,122 @@ onAuthStateChanged(
 );
 
 
-/* =========================================================
-   USER INFORMATION
-========================================================= */
+/* =====================================================
+   AUTH STATE
+   IMPORTANT:
+   USER இல்லையென்றால் DASHBOARD HIDDEN
+===================================================== */
 
-function updateUserInformation(user) {
+onAuthStateChanged(
+    auth,
+    async (user) => {
 
-    if (!userEmail) {
+        if (user) {
 
-        return;
+            currentUser =
+                user;
+
+
+            loginPage.classList.add(
+                "hidden"
+            );
+
+
+            diaryPage.classList.remove(
+                "hidden"
+            );
+
+
+            showUser(user);
+
+            await loadNotes();
+
+
+        } else {
+
+            currentUser =
+                null;
+
+            notes = [];
+
+            editingNoteId =
+                null;
+
+            viewingNoteId =
+                null;
+
+
+            diaryPage.classList.add(
+                "hidden"
+            );
+
+
+            loginPage.classList.remove(
+                "hidden"
+            );
+
+
+            renderNotes();
+
+        }
 
     }
+);
 
+
+/* =====================================================
+   USER
+===================================================== */
+
+function showUser(user) {
 
     if (user.displayName) {
 
         userEmail.textContent =
-            "Welcome, " +
             user.displayName;
 
-        return;
-
-    }
-
-
-    if (user.email) {
+    } else if (user.email) {
 
         userEmail.textContent =
             user.email;
 
-        return;
-
-    }
-
-
-    if (user.phoneNumber) {
+    } else {
 
         userEmail.textContent =
-            user.phoneNumber;
-
-        return;
+            "Welcome";
 
     }
-
-
-    userEmail.textContent =
-        "Welcome to LeoDiary";
 
 }
 
 
-/* =========================================================
-   USER NOTES COLLECTION
-========================================================= */
+/* =====================================================
+   LOGOUT
+===================================================== */
 
-function getNotesCollection() {
+logoutBtn?.addEventListener(
+    "click",
+    async () => {
 
-    if (!currentUser) {
+        try {
 
-        return null;
+            await signOut(auth);
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
 
     }
+);
 
+
+/* =====================================================
+   FIRESTORE COLLECTION
+===================================================== */
+
+function notesCollection() {
 
     return collection(
         db,
@@ -994,9 +693,9 @@ function getNotesCollection() {
 }
 
 
-/* =========================================================
+/* =====================================================
    LOAD NOTES
-========================================================= */
+===================================================== */
 
 async function loadNotes() {
 
@@ -1007,29 +706,11 @@ async function loadNotes() {
     }
 
 
-    notes =
-        loadLocalBackup();
-
-
-    renderNotes();
-
-
     try {
-
-        const notesCollection =
-            getNotesCollection();
-
-
-        if (!notesCollection) {
-
-            return;
-
-        }
-
 
         const q =
             query(
-                notesCollection,
+                notesCollection(),
                 orderBy(
                     "updatedAt",
                     "desc"
@@ -1041,7 +722,7 @@ async function loadNotes() {
             await getDocs(q);
 
 
-        const cloudNotes = [];
+        notes = [];
 
 
         snapshot.forEach(
@@ -1051,7 +732,7 @@ async function loadNotes() {
                     item.data();
 
 
-                cloudNotes.push({
+                notes.push({
 
                     id:
                         item.id,
@@ -1079,12 +760,12 @@ async function loadNotes() {
                         ),
 
                     createdAt:
-                        convertTimestamp(
+                        timestampToMillis(
                             data.createdAt
                         ),
 
                     updatedAt:
-                        convertTimestamp(
+                        timestampToMillis(
                             data.updatedAt
                         )
 
@@ -1094,26 +775,16 @@ async function loadNotes() {
         );
 
 
-        notes =
-            cloudNotes;
-
-
-        saveLocalBackup();
-
         renderNotes();
 
 
     } catch (error) {
 
         console.error(
-            "Load notes error:",
+            "Load notes:",
             error
         );
 
-
-        /*
-            Local backup remains available.
-        */
 
         renderNotes();
 
@@ -1122,20 +793,14 @@ async function loadNotes() {
 }
 
 
-/* =========================================================
-   CONVERT FIREBASE TIMESTAMP
-========================================================= */
+/* =====================================================
+   TIMESTAMP
+===================================================== */
 
-function convertTimestamp(timestamp) {
-
-    if (!timestamp) {
-
-        return Date.now();
-
-    }
-
+function timestampToMillis(timestamp) {
 
     if (
+        timestamp &&
         typeof timestamp.toMillis ===
         "function"
     ) {
@@ -1150,76 +815,46 @@ function convertTimestamp(timestamp) {
 }
 
 
-/* =========================================================
+/* =====================================================
    OPEN NEW NOTE
-========================================================= */
+===================================================== */
 
 function openNewNote() {
 
-    currentEditingNoteId =
+    editingNoteId =
         null;
 
 
-    if (noteModalTitle) {
-
-        noteModalTitle.textContent =
-            "New Note";
-
-    }
+    noteModalTitle.textContent =
+        "New Note";
 
 
-    if (noteTitleInput) {
+    noteTitleInput.value =
+        "";
 
-        noteTitleInput.value =
-            "";
+    noteContentInput.value =
+        "";
 
-    }
+    noteMoodInput.value =
+        "😊";
 
-
-    if (noteContentInput) {
-
-        noteContentInput.value =
-            "";
-
-    }
+    noteColorInput.value =
+        "blue";
 
 
-    if (noteMoodInput) {
-
-        noteMoodInput.value =
-            "😊";
-
-    }
-
-
-    if (noteColorInput) {
-
-        noteColorInput.value =
-            "blue";
-
-    }
-
-
-    noteModal?.classList.remove(
+    noteModal.classList.remove(
         "hidden"
     );
 
 
-    setTimeout(
-        () => {
-
-            noteTitleInput?.focus();
-
-        },
-        100
-    );
+    noteTitleInput.focus();
 
 }
 
 
-/* =========================================================
-   OPEN EDIT NOTE
-========================================================= */
+/* =====================================================
+   OPEN EDIT
+===================================================== */
 
 function openEditNote(id) {
 
@@ -1237,7 +872,7 @@ function openEditNote(id) {
     }
 
 
-    currentEditingNoteId =
+    editingNoteId =
         id;
 
 
@@ -1246,193 +881,127 @@ function openEditNote(id) {
 
 
     noteTitleInput.value =
-        note.title || "";
-
+        note.title;
 
     noteContentInput.value =
-        note.content || "";
-
+        note.content;
 
     noteMoodInput.value =
-        note.mood || "😊";
-
+        note.mood;
 
     noteColorInput.value =
-        note.color || "blue";
+        note.color;
 
 
     noteModal.classList.remove(
         "hidden"
     );
 
-
-    noteTitleInput.focus();
-
 }
 
 
-/* =========================================================
-   CLOSE NOTE MODAL
-========================================================= */
+/* =====================================================
+   CLOSE NOTE
+===================================================== */
 
-function closeNoteEditor() {
+function closeNoteModalWindow() {
 
-    noteModal?.classList.add(
+    noteModal.classList.add(
         "hidden"
     );
 
-
-    currentEditingNoteId =
+    editingNoteId =
         null;
 
 }
 
 
-/* =========================================================
+/* =====================================================
    SAVE NOTE
-========================================================= */
+===================================================== */
 
-async function saveNote() {
+saveNoteBtn?.addEventListener(
+    "click",
+    async () => {
 
-    if (!currentUser) {
+        if (!currentUser) {
 
-        return;
+            return;
 
-    }
-
-
-    const title =
-        noteTitleInput.value.trim();
+        }
 
 
-    const content =
-        noteContentInput.value.trim();
+        const title =
+            noteTitleInput.value.trim();
+
+        const content =
+            noteContentInput.value.trim();
+
+        const mood =
+            noteMoodInput.value;
+
+        const color =
+            noteColorInput.value;
 
 
-    const mood =
-        noteMoodInput.value;
+        if (!title && !content) {
 
-
-    const color =
-        noteColorInput.value;
-
-
-    if (!title && !content) {
-
-        alert(
-            "Please enter a title or note content."
-        );
-
-        return;
-
-    }
-
-
-    saveNoteBtn.disabled =
-        true;
-
-
-    saveNoteBtn.textContent =
-        "Saving...";
-
-
-    try {
-
-        const now =
-            Date.now();
-
-
-        if (currentEditingNoteId) {
-
-            /*
-                EDIT
-            */
-
-            const noteRef =
-                doc(
-                    db,
-                    "users",
-                    currentUser.uid,
-                    "notes",
-                    currentEditingNoteId
-                );
-
-
-            await updateDoc(
-                noteRef,
-                {
-
-                    title:
-                        title,
-
-                    content:
-                        content,
-
-                    mood:
-                        mood,
-
-                    color:
-                        color,
-
-                    updatedAt:
-                        serverTimestamp()
-
-                }
+            alert(
+                "Please write something first."
             );
 
+            return;
 
-            const index =
-                notes.findIndex(
-                    item =>
-                        item.id ===
-                        currentEditingNoteId
+        }
+
+
+        saveNoteBtn.disabled =
+            true;
+
+        saveNoteBtn.textContent =
+            "Saving...";
+
+
+        try {
+
+            if (editingNoteId) {
+
+                const noteRef =
+                    doc(
+                        db,
+                        "users",
+                        currentUser.uid,
+                        "notes",
+                        editingNoteId
+                    );
+
+
+                await updateDoc(
+                    noteRef,
+                    {
+
+                        title,
+                        content,
+                        mood,
+                        color,
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    }
                 );
 
 
-            if (index !== -1) {
+            } else {
 
-                notes[index] = {
-
-                    ...notes[index],
-
-                    title,
-                    content,
-                    mood,
-                    color,
-
-                    updatedAt:
-                        now
-
-                };
-
-            }
-
-        } else {
-
-            /*
-                CREATE
-            */
-
-            const notesCollection =
-                getNotesCollection();
-
-
-            const docRef =
                 await addDoc(
-                    notesCollection,
+                    notesCollection(),
                     {
 
-                        title:
-                            title,
-
-                        content:
-                            content,
-
-                        mood:
-                            mood,
-
-                        color:
-                            color,
+                        title,
+                        content,
+                        mood,
+                        color,
 
                         favorite:
                             false,
@@ -1449,76 +1018,42 @@ async function saveNote() {
                     }
                 );
 
+            }
 
-            notes.unshift({
 
-                id:
-                    docRef.id,
+            closeNoteModalWindow();
 
-                title:
-                    title,
+            await loadNotes();
 
-                content:
-                    content,
 
-                mood:
-                    mood,
+        } catch (error) {
 
-                color:
-                    color,
+            console.error(
+                "Save note:",
+                error
+            );
 
-                favorite:
-                    false,
 
-                pinned:
-                    false,
-
-                createdAt:
-                    now,
-
-                updatedAt:
-                    now
-
-            });
+            alert(
+                "Unable to save note."
+            );
 
         }
 
 
-        saveLocalBackup();
+        saveNoteBtn.disabled =
+            false;
 
-        renderNotes();
-
-        closeNoteEditor();
-
-
-    } catch (error) {
-
-        console.error(
-            "Save note error:",
-            error
-        );
-
-
-        alert(
-            "Unable to save note. Please check Firebase Firestore."
-        );
+        saveNoteBtn.textContent =
+            "Save Note";
 
     }
+);
 
 
-    saveNoteBtn.disabled =
-        false;
-
-
-    saveNoteBtn.textContent =
-        "Save Note";
-
-}
-
-
-/* =========================================================
-   DELETE NOTE
-========================================================= */
+/* =====================================================
+   DELETE
+===================================================== */
 
 async function deleteNote(id) {
 
@@ -1536,13 +1071,11 @@ async function deleteNote(id) {
     }
 
 
-    const confirmed =
-        confirm(
-            `Delete "${note.title || "this note"}"?`
-        );
-
-
-    if (!confirmed) {
+    if (
+        !confirm(
+            "Delete this note?"
+        )
+    ) {
 
         return;
 
@@ -1551,51 +1084,31 @@ async function deleteNote(id) {
 
     try {
 
-        if (currentUser) {
-
-            const noteRef =
-                doc(
-                    db,
-                    "users",
-                    currentUser.uid,
-                    "notes",
-                    id
-                );
-
-
-            await deleteDoc(
-                noteRef
-            );
-
-        }
+        await deleteDoc(
+            doc(
+                db,
+                "users",
+                currentUser.uid,
+                "notes",
+                id
+            )
+        );
 
 
-        notes =
-            notes.filter(
-                item =>
-                    item.id !== id
-            );
-
-
-        saveLocalBackup();
-
-        renderNotes();
-
-        viewNoteModal?.classList.add(
+        viewNoteModal.classList.add(
             "hidden"
         );
 
 
+        await loadNotes();
+
+
     } catch (error) {
 
-        console.error(
-            "Delete note error:",
-            error
-        );
-
+        console.error(error);
 
         alert(
-            "Unable to delete this note."
+            "Unable to delete note."
         );
 
     }
@@ -1603,9 +1116,9 @@ async function deleteNote(id) {
 }
 
 
-/* =========================================================
-   TOGGLE FAVORITE
-========================================================= */
+/* =====================================================
+   FAVORITE
+===================================================== */
 
 async function toggleFavorite(id) {
 
@@ -1616,35 +1129,27 @@ async function toggleFavorite(id) {
         );
 
 
-    if (!note || !currentUser) {
+    if (!note) {
 
         return;
 
     }
 
 
-    const newValue =
-        !note.favorite;
-
-
     try {
 
-        const noteRef =
+        await updateDoc(
             doc(
                 db,
                 "users",
                 currentUser.uid,
                 "notes",
                 id
-            );
-
-
-        await updateDoc(
-            noteRef,
+            ),
             {
 
                 favorite:
-                    newValue,
+                    !note.favorite,
 
                 updatedAt:
                     serverTimestamp()
@@ -1653,38 +1158,21 @@ async function toggleFavorite(id) {
         );
 
 
-        note.favorite =
-            newValue;
-
-
-        note.updatedAt =
-            Date.now();
-
-
-        saveLocalBackup();
-
-        renderNotes();
+        await loadNotes();
 
 
     } catch (error) {
 
-        console.error(
-            "Favorite error:",
-            error
-        );
-
-        alert(
-            "Unable to update favorite."
-        );
+        console.error(error);
 
     }
 
 }
 
 
-/* =========================================================
-   TOGGLE PIN
-========================================================= */
+/* =====================================================
+   PIN
+===================================================== */
 
 async function togglePin(id) {
 
@@ -1695,35 +1183,27 @@ async function togglePin(id) {
         );
 
 
-    if (!note || !currentUser) {
+    if (!note) {
 
         return;
 
     }
 
 
-    const newValue =
-        !note.pinned;
-
-
     try {
 
-        const noteRef =
+        await updateDoc(
             doc(
                 db,
                 "users",
                 currentUser.uid,
                 "notes",
                 id
-            );
-
-
-        await updateDoc(
-            noteRef,
+            ),
             {
 
                 pinned:
-                    newValue,
+                    !note.pinned,
 
                 updatedAt:
                     serverTimestamp()
@@ -1732,143 +1212,21 @@ async function togglePin(id) {
         );
 
 
-        note.pinned =
-            newValue;
-
-
-        note.updatedAt =
-            Date.now();
-
-
-        saveLocalBackup();
-
-        renderNotes();
+        await loadNotes();
 
 
     } catch (error) {
 
-        console.error(
-            "Pin error:",
-            error
-        );
-
-        alert(
-            "Unable to update pinned status."
-        );
+        console.error(error);
 
     }
 
 }
 
 
-/* =========================================================
-   FILTER NOTES
-========================================================= */
-
-function getFilteredNotes() {
-
-    let result =
-        [...notes];
-
-
-    if (
-        currentFilter ===
-        "favorite"
-    ) {
-
-        result =
-            result.filter(
-                note =>
-                    note.favorite
-            );
-
-    }
-
-
-    if (
-        currentFilter ===
-        "pinned"
-    ) {
-
-        result =
-            result.filter(
-                note =>
-                    note.pinned
-            );
-
-    }
-
-
-    if (searchText) {
-
-        const search =
-            searchText.toLowerCase();
-
-
-        result =
-            result.filter(
-                note => {
-
-                    return (
-
-                        (note.title || "")
-                            .toLowerCase()
-                            .includes(search)
-
-                        ||
-
-                        (note.content || "")
-                            .toLowerCase()
-                            .includes(search)
-
-                    );
-
-                }
-            );
-
-    }
-
-
-    result.sort(
-        (a, b) => {
-
-            if (
-                a.pinned &&
-                !b.pinned
-            ) {
-
-                return -1;
-
-            }
-
-
-            if (
-                !a.pinned &&
-                b.pinned
-            ) {
-
-                return 1;
-
-            }
-
-
-            return (
-                (b.updatedAt || 0) -
-                (a.updatedAt || 0)
-            );
-
-        }
-    );
-
-
-    return result;
-
-}
-
-
-/* =========================================================
-   RENDER NOTES
-========================================================= */
+/* =====================================================
+   RENDER
+===================================================== */
 
 function renderNotes() {
 
@@ -1877,10 +1235,6 @@ function renderNotes() {
         return;
 
     }
-
-
-    const filtered =
-        getFilteredNotes();
 
 
     const oldCards =
@@ -1895,17 +1249,74 @@ function renderNotes() {
     );
 
 
+    let filtered =
+        [...notes];
+
+
+    if (
+        currentFilter ===
+        "favorite"
+    ) {
+
+        filtered =
+            filtered.filter(
+                note =>
+                    note.favorite
+            );
+
+    }
+
+
+    if (
+        currentFilter ===
+        "pinned"
+    ) {
+
+        filtered =
+            filtered.filter(
+                note =>
+                    note.pinned
+            );
+
+    }
+
+
+    if (searchText) {
+
+        const search =
+            searchText.toLowerCase();
+
+
+        filtered =
+            filtered.filter(
+                note =>
+
+                    note.title
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    note.content
+                        .toLowerCase()
+                        .includes(search)
+
+            );
+
+    }
+
+
     if (
         filtered.length === 0
     ) {
 
-        emptyNotes?.classList.remove(
+        emptyNotes.classList.remove(
             "hidden"
         );
 
     } else {
 
-        emptyNotes?.classList.add(
+        emptyNotes.classList.add(
             "hidden"
         );
 
@@ -1913,14 +1324,8 @@ function renderNotes() {
         filtered.forEach(
             note => {
 
-                const card =
-                    createNoteCard(
-                        note
-                    );
-
-
                 notesList.appendChild(
-                    card
+                    createNoteCard(note)
                 );
 
             }
@@ -1929,14 +1334,14 @@ function renderNotes() {
     }
 
 
-    updateStatistics();
+    updateStats();
 
 }
 
 
-/* =========================================================
-   CREATE NOTE CARD
-========================================================= */
+/* =====================================================
+   CREATE CARD
+===================================================== */
 
 function createNoteCard(note) {
 
@@ -1951,56 +1356,50 @@ function createNoteCard(note) {
 
 
     card.dataset.color =
-        note.color || "blue";
+        note.color;
 
 
-    const safeTitle =
+    const title =
         escapeHtml(
             note.title ||
             "Untitled Note"
         );
 
 
-    const safeContent =
+    const content =
         escapeHtml(
             note.content ||
-            ""
+            "No content"
         );
 
 
     const preview =
-        safeContent.length > 160
-            ? safeContent.slice(0, 160) + "..."
-            : safeContent;
-
-
-    const date =
-        formatDate(
-            note.updatedAt
-        );
+        content.length > 150
+            ? content.substring(0,150) + "..."
+            : content;
 
 
     card.innerHTML = `
 
-        <div class="note-card-top">
+        <div class="note-top">
 
             <span class="note-mood">
-                ${escapeHtml(note.mood || "😊")}
+                ${escapeHtml(note.mood)}
             </span>
 
-            <div class="note-card-actions">
+
+            <div class="note-actions">
 
                 <button
-                    class="icon-btn favorite-note-btn"
-                    title="Favorite"
+                    class="note-action favorite-button"
                     type="button"
                 >
                     ${note.favorite ? "⭐" : "☆"}
                 </button>
 
+
                 <button
-                    class="icon-btn pin-note-btn"
-                    title="Pin"
+                    class="note-action pin-button"
                     type="button"
                 >
                     ${note.pinned ? "📌" : "📍"}
@@ -2011,24 +1410,25 @@ function createNoteCard(note) {
         </div>
 
 
-        <h3 class="note-card-title">
-            ${safeTitle}
+        <h3 class="note-title">
+            ${title}
         </h3>
 
 
-        <p class="note-card-preview">
+        <p class="note-preview">
             ${preview}
         </p>
 
 
-        <div class="note-card-bottom">
+        <div class="note-bottom">
 
-            <small>
-                ${date}
-            </small>
+            <span class="note-date">
+                ${formatDate(note.updatedAt)}
+            </span>
+
 
             <button
-                class="view-note-btn"
+                class="view-btn"
                 type="button"
             >
                 View
@@ -2039,13 +1439,9 @@ function createNoteCard(note) {
     `;
 
 
-    const favoriteBtn =
-        card.querySelector(
-            ".favorite-note-btn"
-        );
-
-
-    favoriteBtn.addEventListener(
+    card.querySelector(
+        ".favorite-button"
+    ).addEventListener(
         "click",
         event => {
 
@@ -2059,13 +1455,9 @@ function createNoteCard(note) {
     );
 
 
-    const pinBtn =
-        card.querySelector(
-            ".pin-note-btn"
-        );
-
-
-    pinBtn.addEventListener(
+    card.querySelector(
+        ".pin-button"
+    ).addEventListener(
         "click",
         event => {
 
@@ -2079,13 +1471,9 @@ function createNoteCard(note) {
     );
 
 
-    const viewBtn =
-        card.querySelector(
-            ".view-note-btn"
-        );
-
-
-    viewBtn.addEventListener(
+    card.querySelector(
+        ".view-btn"
+    ).addEventListener(
         "click",
         event => {
 
@@ -2116,9 +1504,9 @@ function createNoteCard(note) {
 }
 
 
-/* =========================================================
-   OPEN VIEW NOTE
-========================================================= */
+/* =====================================================
+   VIEW NOTE
+===================================================== */
 
 function openViewNote(id) {
 
@@ -2136,7 +1524,7 @@ function openViewNote(id) {
     }
 
 
-    currentViewingNoteId =
+    viewingNoteId =
         id;
 
 
@@ -2146,7 +1534,7 @@ function openViewNote(id) {
 
 
     viewNoteMood.textContent =
-        note.mood || "😊";
+        note.mood;
 
 
     viewNoteContent.textContent =
@@ -2160,54 +1548,42 @@ function openViewNote(id) {
         );
 
 
-    viewNoteModal?.classList.remove(
+    viewNoteModal.classList.remove(
         "hidden"
     );
 
 }
 
 
-/* =========================================================
-   UPDATE STATISTICS
-========================================================= */
+/* =====================================================
+   STATS
+===================================================== */
 
-function updateStatistics() {
+function updateStats() {
 
-    if (totalNotes) {
-
-        totalNotes.textContent =
-            notes.length;
-
-    }
+    totalNotes.textContent =
+        notes.length;
 
 
-    if (favoriteNotes) {
-
-        favoriteNotes.textContent =
-            notes.filter(
-                note =>
-                    note.favorite
-            ).length;
-
-    }
+    favoriteNotes.textContent =
+        notes.filter(
+            note =>
+                note.favorite
+        ).length;
 
 
-    if (pinnedNotes) {
-
-        pinnedNotes.textContent =
-            notes.filter(
-                note =>
-                    note.pinned
-            ).length;
-
-    }
+    pinnedNotes.textContent =
+        notes.filter(
+            note =>
+                note.pinned
+        ).length;
 
 }
 
 
-/* =========================================================
-   DATE FORMAT
-========================================================= */
+/* =====================================================
+   DATE
+===================================================== */
 
 function formatDate(timestamp) {
 
@@ -2218,44 +1594,36 @@ function formatDate(timestamp) {
     }
 
 
-    try {
+    return new Date(
+        timestamp
+    ).toLocaleString(
+        "en-IN",
+        {
 
-        return new Date(
-            timestamp
-        ).toLocaleString(
-            "en-IN",
-            {
+            day:
+                "2-digit",
 
-                day:
-                    "2-digit",
+            month:
+                "short",
 
-                month:
-                    "short",
+            year:
+                "numeric",
 
-                year:
-                    "numeric",
+            hour:
+                "2-digit",
 
-                hour:
-                    "2-digit",
+            minute:
+                "2-digit"
 
-                minute:
-                    "2-digit"
-
-            }
-        );
-
-    } catch (error) {
-
-        return "";
-
-    }
+        }
+    );
 
 }
 
 
-/* =========================================================
+/* =====================================================
    ESCAPE HTML
-========================================================= */
+===================================================== */
 
 function escapeHtml(value) {
 
@@ -2284,63 +1652,159 @@ function escapeHtml(value) {
 }
 
 
-/* =========================================================
-   FILTER BUTTON UI
-========================================================= */
+/* =====================================================
+   NEW NOTE BUTTONS
+===================================================== */
 
-function setActiveFilter(
-    filter
-) {
+newNoteBtn?.addEventListener(
+    "click",
+    openNewNote
+);
+
+addNoteBtn?.addEventListener(
+    "click",
+    openNewNote
+);
+
+addNoteBtn2?.addEventListener(
+    "click",
+    openNewNote
+);
+
+emptyAddNoteBtn?.addEventListener(
+    "click",
+    openNewNote
+);
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+closeNoteModal?.addEventListener(
+    "click",
+    closeNoteModalWindow
+);
+
+
+cancelNoteBtn?.addEventListener(
+    "click",
+    closeNoteModalWindow
+);
+
+
+closeViewNoteModal?.addEventListener(
+    "click",
+    () => {
+
+        viewNoteModal.classList.add(
+            "hidden"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   EDIT
+===================================================== */
+
+editNoteBtn?.addEventListener(
+    "click",
+    () => {
+
+        viewNoteModal.classList.add(
+            "hidden"
+        );
+
+        openEditNote(
+            viewingNoteId
+        );
+
+    }
+);
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+deleteNoteBtn?.addEventListener(
+    "click",
+    () => {
+
+        deleteNote(
+            viewingNoteId
+        );
+
+    }
+);
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+noteSearchInput?.addEventListener(
+    "input",
+    () => {
+
+        searchText =
+            noteSearchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        renderNotes();
+
+    }
+);
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+function setFilter(filter) {
 
     currentFilter =
         filter;
 
 
-    allNotesFilter?.classList.remove(
+    allNotesFilter.classList.remove(
+        "active"
+    );
+
+    favoriteFilter.classList.remove(
+        "active"
+    );
+
+    pinnedFilter.classList.remove(
         "active"
     );
 
 
-    favoriteFilter?.classList.remove(
-        "active"
-    );
+    if (filter === "all") {
 
-
-    pinnedFilter?.classList.remove(
-        "active"
-    );
-
-
-    if (
-        filter ===
-        "all"
-    ) {
-
-        allNotesFilter?.classList.add(
+        allNotesFilter.classList.add(
             "active"
         );
 
     }
 
 
-    if (
-        filter ===
-        "favorite"
-    ) {
+    if (filter === "favorite") {
 
-        favoriteFilter?.classList.add(
+        favoriteFilter.classList.add(
             "active"
         );
 
     }
 
 
-    if (
-        filter ===
-        "pinned"
-    ) {
+    if (filter === "pinned") {
 
-        pinnedFilter?.classList.add(
+        pinnedFilter.classList.add(
             "active"
         );
 
@@ -2352,290 +1816,106 @@ function setActiveFilter(
 }
 
 
-/* =========================================================
-   BUTTON EVENTS
-========================================================= */
-
-newNoteBtn?.addEventListener(
-    "click",
-    openNewNote
-);
-
-
-addNoteBtn?.addEventListener(
-    "click",
-    openNewNote
-);
-
-
-emptyAddNoteBtn?.addEventListener(
-    "click",
-    openNewNote
-);
-
-
-closeNoteModal?.addEventListener(
-    "click",
-    closeNoteEditor
-);
-
-
-cancelNoteBtn?.addEventListener(
-    "click",
-    closeNoteEditor
-);
-
-
-saveNoteBtn?.addEventListener(
-    "click",
-    saveNote
-);
-
-
-/* =========================================================
-   CLOSE VIEW MODAL
-========================================================= */
-
-closeViewNoteModal?.addEventListener(
-    "click",
-    () => {
-
-        viewNoteModal?.classList.add(
-            "hidden"
-        );
-
-    }
-);
-
-
-/* =========================================================
-   EDIT VIEWED NOTE
-========================================================= */
-
-editNoteBtn?.addEventListener(
-    "click",
-    () => {
-
-        if (
-            currentViewingNoteId
-        ) {
-
-            viewNoteModal?.classList.add(
-                "hidden"
-            );
-
-
-            openEditNote(
-                currentViewingNoteId
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   DELETE VIEWED NOTE
-========================================================= */
-
-deleteNoteBtn?.addEventListener(
-    "click",
-    () => {
-
-        if (
-            currentViewingNoteId
-        ) {
-
-            deleteNote(
-                currentViewingNoteId
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-noteSearchInput?.addEventListener(
-    "input",
-    () => {
-
-        searchText =
-            noteSearchInput.value
-                .trim();
-
-
-        renderNotes();
-
-    }
-);
-
-
-/* =========================================================
-   SEARCH QUICK ACTION
-========================================================= */
-
-searchNotesBtn?.addEventListener(
-    "click",
-    () => {
-
-        noteSearchInput?.focus();
-
-        noteSearchInput?.scrollIntoView(
-            {
-
-                behavior:
-                    "smooth",
-
-                block:
-                    "center"
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================================================
-   FAVORITES QUICK ACTION
-========================================================= */
-
-favoritesBtn?.addEventListener(
-    "click",
-    () => {
-
-        setActiveFilter(
-            "favorite"
-        );
-
-
-        document
-            .getElementById(
-                "notesSection"
-            )
-            ?.scrollIntoView(
-                {
-
-                    behavior:
-                        "smooth"
-
-                }
-            );
-
-    }
-);
-
-
-/* =========================================================
-   PINNED QUICK ACTION
-========================================================= */
-
-pinnedBtn?.addEventListener(
-    "click",
-    () => {
-
-        setActiveFilter(
-            "pinned"
-        );
-
-
-        document
-            .getElementById(
-                "notesSection"
-            )
-            ?.scrollIntoView(
-                {
-
-                    behavior:
-                        "smooth"
-
-                }
-            );
-
-    }
-);
-
-
-/* =========================================================
-   FILTERS
-========================================================= */
-
 allNotesFilter?.addEventListener(
     "click",
-    () => {
-
-        setActiveFilter(
-            "all"
-        );
-
-    }
+    () => setFilter("all")
 );
 
 
 favoriteFilter?.addEventListener(
     "click",
-    () => {
-
-        setActiveFilter(
-            "favorite"
-        );
-
-    }
+    () => setFilter("favorite")
 );
 
 
 pinnedFilter?.addEventListener(
     "click",
-    () => {
-
-        setActiveFilter(
-            "pinned"
-        );
-
-    }
+    () => setFilter("pinned")
 );
 
 
-/* =========================================================
-   LOGOUT
-========================================================= */
+/* =====================================================
+   QUICK SEARCH
+===================================================== */
 
-logoutBtn?.addEventListener(
-    "click",
-    async () => {
+document
+    .getElementById("searchNotesBtn")
+    ?.addEventListener(
+        "click",
+        () => {
 
-        try {
+            noteSearchInput.focus();
 
-            await signOut(
-                auth
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Logout error:",
-                error
-            );
-
-            alert(
-                "Unable to logout. Please try again."
-            );
+            document
+                .getElementById(
+                    "notesSection"
+                )
+                .scrollIntoView({
+                    behavior:
+                        "smooth"
+                });
 
         }
-
-    }
-);
+    );
 
 
-/* =========================================================
-   CLOSE MODALS BY OUTSIDE CLICK
-========================================================= */
+/* =====================================================
+   QUICK FAVORITES
+===================================================== */
+
+document
+    .getElementById("favoritesBtn")
+    ?.addEventListener(
+        "click",
+        () => {
+
+            setFilter(
+                "favorite"
+            );
+
+            document
+                .getElementById(
+                    "notesSection"
+                )
+                .scrollIntoView({
+                    behavior:
+                        "smooth"
+                });
+
+        }
+    );
+
+
+/* =====================================================
+   QUICK PINNED
+===================================================== */
+
+document
+    .getElementById("pinnedBtn")
+    ?.addEventListener(
+        "click",
+        () => {
+
+            setFilter(
+                "pinned"
+            );
+
+            document
+                .getElementById(
+                    "notesSection"
+                )
+                .scrollIntoView({
+                    behavior:
+                        "smooth"
+                });
+
+        }
+    );
+
+
+/* =====================================================
+   OUTSIDE CLICK
+===================================================== */
 
 noteModal?.addEventListener(
     "click",
@@ -2646,7 +1926,7 @@ noteModal?.addEventListener(
             noteModal
         ) {
 
-            closeNoteEditor();
+            closeNoteModalWindow();
 
         }
 
@@ -2673,40 +1953,22 @@ viewNoteModal?.addEventListener(
 );
 
 
-/* =========================================================
-   ESCAPE KEY
-========================================================= */
+/* =====================================================
+   ESCAPE
+===================================================== */
 
 document.addEventListener(
     "keydown",
     event => {
 
         if (
-            event.key !==
+            event.key ===
             "Escape"
         ) {
 
-            return;
-
-        }
-
-
-        if (
-            !noteModal?.classList.contains(
+            noteModal.classList.add(
                 "hidden"
-            )
-        ) {
-
-            closeNoteEditor();
-
-        }
-
-
-        if (
-            !viewNoteModal?.classList.contains(
-                "hidden"
-            )
-        ) {
+            );
 
             viewNoteModal.classList.add(
                 "hidden"
@@ -2718,9 +1980,9 @@ document.addEventListener(
 );
 
 
-/* =========================================================
-   PASSWORD ENTER KEY
-========================================================= */
+/* =====================================================
+   ENTER LOGIN
+===================================================== */
 
 passwordInput?.addEventListener(
     "keydown",
@@ -2731,7 +1993,7 @@ passwordInput?.addEventListener(
             "Enter"
         ) {
 
-            emailLoginBtn?.click();
+            emailLoginBtn.click();
 
         }
 
@@ -2739,10 +2001,6 @@ passwordInput?.addEventListener(
 );
 
 
-/* =========================================================
-   INITIAL STATE
-========================================================= */
-
 console.log(
-    "LeoDiary initialized successfully."
+    "LeoDiary loaded successfully."
 );
