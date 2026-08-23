@@ -15,7 +15,9 @@ import {
     createUserWithEmailAndPassword,
     sendPasswordResetEmail,
     onAuthStateChanged,
-    signOut
+    signOut,
+    setPersistence,
+    browserSessionPersistence
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 import {
@@ -64,8 +66,12 @@ const firebaseConfig = {
 const app =
     initializeApp(firebaseConfig);
 
-const auth =
-    getAuth(app);
+const auth = getAuth(app);
+
+await setPersistence(
+    auth,
+    browserSessionPersistence
+);
 
 const db =
     getFirestore(app);
@@ -579,43 +585,33 @@ forgotPasswordBtn?.addEventListener(
    THIS CONTROLS LOGIN / DASHBOARD
 ===================================================== */
 
-onAuthStateChanged(
-    auth,
-    async (user) => {
+onAuthStateChanged(auth, async (user) => {
 
-        if (user) {
+    if (user) {
 
-            currentUser =
-                user;
+        currentUser = user;
 
-            showDiaryPage();
+        loginPage.classList.add("hidden");
+        diaryPage.classList.remove("hidden");
 
-            showUser(user);
+        showUser(user);
 
-            await loadNotes();
+        await loadNotes();
 
-        } else {
+    } else {
 
-            currentUser =
-                null;
+        currentUser = null;
+        notes = [];
+        editingNoteId = null;
+        viewingNoteId = null;
 
-            notes = [];
+        diaryPage.classList.add("hidden");
+        loginPage.classList.remove("hidden");
 
-            editingNoteId =
-                null;
-
-            viewingNoteId =
-                null;
-
-            showLoginPage();
-
-            renderNotes();
-
-        }
-
+        renderNotes();
     }
-);
 
+});
 
 /* =====================================================
    USER
