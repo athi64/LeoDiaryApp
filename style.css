@@ -1,33 +1,31 @@
-/* =========================================================
-   LeoDiary - Complete Professional CSS
-========================================================= */
+/* =====================================================
+   LeoDiary - Premium CSS
+===================================================== */
 
 :root {
+
     --primary: #1683ff;
-    --primary-dark: #0d6fe0;
+    --primary-dark: #0968d8;
+
     --secondary: #6c5ce7;
 
-    --bg: #f4f7fb;
+    --background: #f4f7fb;
     --surface: #ffffff;
-    --surface-2: #f8faff;
+    --surface-soft: #f8faff;
 
     --text: #172033;
-    --text-light: #687386;
-    --border: #e3e9f2;
+    --text-light: #697586;
 
-    --success: #19a974;
+    --border: #e4e9f1;
+
     --danger: #e74c3c;
 
     --shadow:
-        0 10px 30px rgba(20, 40, 80, 0.08);
+        0 10px 35px rgba(30, 60, 100, 0.08);
 
     --radius: 18px;
 }
 
-
-/* =========================================================
-   RESET
-========================================================= */
 
 * {
     margin: 0;
@@ -42,27 +40,27 @@ html {
 
 
 body {
+
     min-height: 100vh;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f7faff 0%,
+            #f1f5fb 100%
+        );
+
+    color: var(--text);
 
     font-family:
         Inter,
+        system-ui,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
-        Roboto,
-        Arial,
         sans-serif;
-
-    background: var(--bg);
-    color: var(--text);
-
-    line-height: 1.5;
 }
 
-
-/* =========================================================
-   COMMON
-========================================================= */
 
 button,
 input,
@@ -82,222 +80,236 @@ button {
 }
 
 
-/* =========================================================
-   LOGIN PAGE
-========================================================= */
+/* =====================================================
+   LOGIN
+===================================================== */
 
-.page {
-    min-height: calc(100vh - 80px);
+.login-page {
+
+    min-height: 100vh;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
-    padding: 30px 18px;
+    padding: 20px;
+
 }
 
 
 .login-card {
+
     width: 100%;
-    max-width: 440px;
+
+    max-width: 430px;
 
     background: var(--surface);
 
     padding: 38px 30px;
 
-    border-radius: 26px;
-
-    box-shadow:
-        0 20px 60px rgba(18, 45, 90, 0.12);
+    border-radius: 28px;
 
     text-align: center;
+
+    box-shadow:
+        0 25px 70px rgba(20, 50, 100, 0.13);
+
+    border: 1px solid var(--border);
+
 }
 
 
-/* =========================================================
-   LOGO
-========================================================= */
+.logo-box {
 
-.logo-container {
-    width: 92px;
-    height: 92px;
+    width: 95px;
+
+    height: 95px;
 
     margin: 0 auto 18px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 24px;
+    border-radius: 25px;
 
     overflow: hidden;
 
     background:
         linear-gradient(
             135deg,
-            #1683ff,
-            #6c5ce7
+            #101827,
+            #1683ff
         );
 
     box-shadow:
-        0 12px 30px rgba(22, 131, 255, 0.25);
+        0 12px 30px rgba(22, 131, 255, 0.22);
+
 }
 
 
-.logo-image {
+.main-logo {
+
     width: 100%;
+
     height: 100%;
 
     object-fit: cover;
+
 }
 
 
-.fallback-logo {
+.logo-fallback {
+
+    display: none;
+
     width: 100%;
+
     height: 100%;
 
     align-items: center;
+
     justify-content: center;
 
-    color: white;
-
-    font-size: 42px;
-    font-weight: 800;
+    font-size: 48px;
 }
 
 
 .login-card h1 {
-    font-size: 34px;
-    font-weight: 800;
 
-    letter-spacing: -0.8px;
+    font-size: 34px;
+
+    font-weight: 850;
+
+    letter-spacing: -1px;
+
 }
 
 
-.subtitle {
+.login-subtitle {
+
     color: var(--text-light);
 
     margin-top: 5px;
+
     margin-bottom: 28px;
 
-    font-size: 15px;
 }
 
 
-/* =========================================================
-   GOOGLE BUTTON
-========================================================= */
+/* GOOGLE */
 
-.google-btn {
+.google-login-btn {
+
     width: 100%;
 
     min-height: 52px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 12px;
 
-    gap: 12px;
+    border: 1px solid #d8dde5;
 
     background: white;
 
-    color: #202124;
-
-    border: 1px solid #dadce0;
-
-    border-radius: 12px;
-
-    font-weight: 600;
-
-    transition: 0.2s ease;
-}
-
-
-.google-btn:hover {
-    background: #f8f9fa;
-
-    box-shadow:
-        0 5px 15px rgba(0, 0, 0, 0.08);
-}
-
-
-.google-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-
-.google-icon {
-    width: 28px;
-    height: 28px;
-
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
-    font-size: 20px;
-    font-weight: 800;
+    gap: 12px;
 
-    color: #4285f4;
+    font-weight: 700;
+
+    color: #252525;
+
+    transition: .2s;
+
 }
 
 
-/* =========================================================
-   DIVIDER
-========================================================= */
+.google-login-btn:hover {
 
-.divider {
+    background: #f8f9fb;
+
+    transform: translateY(-1px);
+
+}
+
+
+.google-letter {
+
+    font-weight: 900;
+
+    font-size: 20px;
+
+    color: #4285f4;
+
+}
+
+
+/* DIVIDER */
+
+.or-divider {
+
     display: flex;
+
     align-items: center;
 
     gap: 12px;
 
-    margin: 25px 0;
+    margin: 24px 0;
 
-    color: #9aa4b2;
-
-    font-size: 12px;
 }
 
 
-.divider span {
-    flex: 1;
+.or-divider span {
 
     height: 1px;
 
     background: var(--border);
+
+    flex: 1;
+
 }
 
 
-/* =========================================================
-   EMAIL FORM
-========================================================= */
+.or-divider p {
 
-.email-auth-section {
+    color: #98a1af;
+
+    font-size: 12px;
+
+}
+
+
+/* AUTH */
+
+.email-form {
+
     text-align: left;
+
 }
 
 
-.email-auth-section label {
-    display: block;
+.email-form label {
 
-    margin: 14px 0 7px;
+    display: block;
 
     font-size: 13px;
 
-    font-weight: 600;
+    font-weight: 700;
 
-    color: #3e4858;
+    margin: 13px 0 7px;
+
 }
 
 
-.email-input,
-.password-input {
+.auth-input {
+
     width: 100%;
 
     height: 50px;
 
-    padding: 0 15px;
+    padding: 0 14px;
 
     border: 1px solid var(--border);
 
@@ -305,25 +317,24 @@ button {
 
     outline: none;
 
-    background: var(--surface);
+    background: white;
 
-    color: var(--text);
-
-    transition: 0.2s ease;
 }
 
 
-.email-input:focus,
-.password-input:focus {
+.auth-input:focus {
+
     border-color: var(--primary);
 
     box-shadow:
-        0 0 0 4px rgba(22, 131, 255, 0.10);
+        0 0 0 4px rgba(22,131,255,.10);
+
 }
 
 
-.email-login-btn,
-.email-signup-btn {
+.primary-auth-btn,
+.secondary-auth-btn {
+
     width: 100%;
 
     height: 50px;
@@ -334,40 +345,37 @@ button {
 
     border: none;
 
-    font-weight: 700;
+    font-weight: 750;
 
-    transition: 0.2s ease;
 }
 
 
-.email-login-btn {
+.primary-auth-btn {
+
     background: var(--primary);
+
     color: white;
+
 }
 
 
-.email-login-btn:hover {
+.primary-auth-btn:hover {
+
     background: var(--primary-dark);
 
-    transform: translateY(-1px);
 }
 
 
-.email-signup-btn {
+.secondary-auth-btn {
+
     background: #edf5ff;
+
     color: var(--primary);
+
 }
 
 
-.email-signup-btn:hover {
-    background: #e1efff;
-}
-
-
-.forgot-password-btn {
-    display: block;
-
-    margin: 16px auto 0;
+.forgot-btn {
 
     border: none;
 
@@ -377,144 +385,191 @@ button {
 
     font-size: 13px;
 
-    font-weight: 600;
+    font-weight: 650;
+
+    display: block;
+
+    margin: 16px auto;
+
 }
 
 
-.forgot-password-btn:hover {
-    text-decoration: underline;
-}
+.auth-error {
 
-
-.error-message {
     min-height: 20px;
-
-    margin-top: 12px;
 
     text-align: center;
 
     color: var(--danger);
 
     font-size: 13px;
+
 }
 
 
-.login-note {
+.login-footer-text {
+
+    color: #9aa3b0;
+
+    font-size: 11px;
+
     margin-top: 25px;
 
-    color: var(--text-light);
-
-    font-size: 12px;
 }
 
 
-/* =========================================================
-   DIARY HEADER
-========================================================= */
+/* =====================================================
+   HEADER
+===================================================== */
 
 .diary-page {
+
     min-height: 100vh;
+
 }
 
 
-.diary-header {
+.top-header {
+
     position: sticky;
+
     top: 0;
-    z-index: 50;
 
-    min-height: 74px;
+    z-index: 20;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    min-height: 75px;
 
     padding: 12px 5%;
 
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
     background:
-        rgba(255, 255, 255, 0.92);
+        rgba(255,255,255,.94);
 
     backdrop-filter: blur(15px);
 
     border-bottom: 1px solid var(--border);
+
 }
 
 
-.brand-area {
+.brand {
+
     display: flex;
+
     align-items: center;
 
-    gap: 12px;
+    gap: 11px;
+
 }
 
 
 .header-logo {
+
     width: 46px;
+
     height: 46px;
+
+    object-fit: cover;
 
     border-radius: 13px;
 
-    object-fit: cover;
 }
 
 
-.brand-area h1 {
-    font-size: 21px;
+.brand h2 {
 
-    font-weight: 800;
+    font-size: 20px;
+
 }
 
 
-.brand-area p {
+.brand p {
+
+    font-size: 11px;
+
+    color: var(--text-light);
+
+}
+
+
+.header-user {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+}
+
+
+.user-email {
+
     color: var(--text-light);
 
     font-size: 12px;
+
 }
 
 
 .logout-btn {
+
     border: none;
 
     background: #fff0ef;
 
     color: var(--danger);
 
-    padding: 10px 16px;
+    padding: 9px 14px;
 
     border-radius: 10px;
 
     font-weight: 700;
+
 }
 
 
-.logout-btn:hover {
-    background: #ffe2df;
-}
+/* =====================================================
+   MAIN
+===================================================== */
 
+.main-container {
 
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
-.dashboard {
     width: 90%;
+
     max-width: 1200px;
 
-    margin: 0 auto;
+    margin: auto;
 
-    padding: 35px 0 70px;
+    padding: 30px 0 60px;
+
 }
 
 
-/* =========================================================
-   WELCOME CARD
-========================================================= */
+/* =====================================================
+   WELCOME
+===================================================== */
 
 .welcome-card {
-    padding: 38px 25px;
 
-    text-align: center;
+    padding: 30px;
 
     border-radius: 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    color: white;
 
     background:
         linear-gradient(
@@ -523,317 +578,353 @@ button {
             #6c5ce7
         );
 
-    color: white;
-
     box-shadow:
-        0 15px 40px rgba(22, 131, 255, 0.20);
+        0 18px 45px rgba(22,131,255,.20);
+
 }
 
 
-.welcome-icon {
-    font-size: 42px;
+.welcome-small {
 
-    margin-bottom: 10px;
-}
+    opacity: .85;
 
-
-.welcome-card h2 {
-    font-size: 28px;
-
-    margin-bottom: 6px;
-}
-
-
-.welcome-card p {
-    opacity: 0.94;
-}
-
-
-.welcome-card .small-text {
     font-size: 13px;
 
-    margin-top: 5px;
-
-    opacity: 0.8;
 }
 
 
-/* =========================================================
-   QUICK ACTIONS
-========================================================= */
+.welcome-card h1 {
+
+    margin: 4px 0;
+
+    font-size: 29px;
+
+}
+
+
+.welcome-card p:last-child {
+
+    opacity: .92;
+
+    font-size: 13px;
+
+}
+
+
+.new-note-btn {
+
+    border: none;
+
+    background: white;
+
+    color: var(--primary);
+
+    padding: 13px 18px;
+
+    border-radius: 12px;
+
+    font-weight: 800;
+
+    white-space: nowrap;
+
+}
+
+
+.new-note-btn span {
+
+    font-size: 19px;
+
+}
+
+
+/* =====================================================
+   QUICK CARDS
+===================================================== */
 
 .quick-actions {
+
     display: grid;
 
     grid-template-columns:
-        repeat(4, 1fr);
+        repeat(4,1fr);
 
-    gap: 16px;
+    gap: 15px;
 
-    margin: 25px 0;
+    margin: 23px 0;
+
 }
 
 
-.action-card {
-    min-height: 105px;
-
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 8px;
-
-    background: var(--surface);
+.quick-card {
 
     border: 1px solid var(--border);
 
-    border-radius: var(--radius);
+    background: white;
 
-    color: var(--text);
+    border-radius: 17px;
 
-    font-weight: 700;
+    min-height: 120px;
+
+    padding: 18px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
 
     box-shadow: var(--shadow);
 
-    transition: 0.2s ease;
+    transition: .2s;
+
 }
 
 
-.action-card:hover {
+.quick-card:hover {
+
     transform: translateY(-4px);
 
-    border-color: #c9dcf7;
-
-    box-shadow:
-        0 15px 35px rgba(20, 40, 80, 0.12);
 }
 
 
-.action-icon {
-    font-size: 26px;
+.quick-icon {
+
+    font-size: 27px;
+
 }
 
 
-/* =========================================================
-   NOTES SECTION
-========================================================= */
+.quick-card strong {
+
+    font-size: 14px;
+
+}
+
+
+.quick-card small {
+
+    color: var(--text-light);
+
+    font-size: 11px;
+
+}
+
+
+/* =====================================================
+   NOTES
+===================================================== */
 
 .notes-section,
-.stats-section {
-    background: var(--surface);
+.statistics-section {
+
+    background: white;
+
+    border: 1px solid var(--border);
 
     border-radius: 22px;
 
     padding: 25px;
 
-    margin-top: 22px;
-
     box-shadow: var(--shadow);
 
-    border: 1px solid var(--border);
 }
 
 
-.section-header {
+.statistics-section {
+
+    margin-top: 22px;
+
+}
+
+
+.section-heading {
+
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
-    gap: 15px;
-
     margin-bottom: 20px;
+
 }
 
 
-.section-header h2,
-.stats-section h2 {
-    font-size: 22px;
+.section-heading h2,
+.statistics-section h2 {
+
+    font-size: 21px;
+
 }
 
 
-.section-header p {
+.section-heading p {
+
     color: var(--text-light);
 
-    font-size: 13px;
+    font-size: 12px;
+
+    margin-top: 3px;
+
 }
 
 
-.primary-btn {
+.small-primary-btn {
+
     border: none;
 
     background: var(--primary);
 
     color: white;
 
-    padding: 11px 18px;
+    padding: 10px 15px;
 
-    border-radius: 11px;
-
-    font-weight: 700;
-
-    transition: 0.2s ease;
-}
-
-
-.primary-btn:hover {
-    background: var(--primary-dark);
-
-    transform: translateY(-1px);
-}
-
-
-.secondary-btn {
-    border: 1px solid var(--border);
-
-    background: white;
-
-    color: var(--text);
-
-    padding: 11px 18px;
-
-    border-radius: 11px;
-
-    font-weight: 600;
-}
-
-
-.delete-btn {
-    border: none;
-
-    background: #fff0ef;
-
-    color: var(--danger);
-
-    padding: 11px 18px;
-
-    border-radius: 11px;
+    border-radius: 10px;
 
     font-weight: 700;
+
 }
 
 
-/* =========================================================
+/* =====================================================
    SEARCH
-========================================================= */
+===================================================== */
 
-.search-box {
-    margin-bottom: 16px;
+.search-container {
+
+    margin-bottom: 14px;
+
 }
 
 
-.search-box input {
+.search-container input {
+
     width: 100%;
 
     height: 48px;
 
     border: 1px solid var(--border);
 
-    border-radius: 12px;
+    border-radius: 11px;
 
-    padding: 0 15px;
+    padding: 0 14px;
 
     outline: none;
 
-    background: var(--surface-2);
 }
 
 
-.search-box input:focus {
+.search-container input:focus {
+
     border-color: var(--primary);
 
-    background: white;
-
-    box-shadow:
-        0 0 0 4px rgba(22, 131, 255, 0.08);
 }
 
 
-/* =========================================================
-   FILTERS
-========================================================= */
+/* FILTER */
 
-.filter-row {
+.filter-buttons {
+
     display: flex;
+
+    gap: 8px;
 
     flex-wrap: wrap;
 
-    gap: 9px;
-
     margin-bottom: 20px;
+
 }
 
 
 .filter-btn {
+
     border: 1px solid var(--border);
 
     background: white;
 
     color: var(--text-light);
 
-    padding: 8px 13px;
-
     border-radius: 20px;
 
-    font-size: 13px;
+    padding: 8px 13px;
 
-    font-weight: 600;
+    font-size: 12px;
+
+    font-weight: 700;
+
 }
 
 
 .filter-btn.active {
+
     background: var(--primary);
 
     border-color: var(--primary);
 
     color: white;
+
 }
 
 
-/* =========================================================
+/* =====================================================
    NOTES GRID
-========================================================= */
+===================================================== */
 
-.notes-list {
+.notes-grid {
+
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3,1fr);
 
-    gap: 16px;
+    gap: 15px;
+
 }
 
 
 .note-card {
-    position: relative;
 
-    padding: 19px;
+    position: relative;
 
     min-height: 190px;
 
-    display: flex;
-    flex-direction: column;
-
-    background: white;
+    padding: 18px;
 
     border: 1px solid var(--border);
 
     border-radius: 17px;
 
-    box-shadow:
-        0 7px 22px rgba(20, 40, 80, 0.06);
-
-    transition: 0.2s ease;
+    background: white;
 
     cursor: pointer;
 
+    display: flex;
+
+    flex-direction: column;
+
+    transition: .2s;
+
     overflow: hidden;
+
+}
+
+
+.note-card:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 15px 30px rgba(20,40,80,.10);
+
 }
 
 
 .note-card::before {
+
     content: "";
 
     position: absolute;
@@ -842,9 +933,11 @@ button {
     left: 0;
 
     width: 100%;
+
     height: 4px;
 
     background: var(--primary);
+
 }
 
 
@@ -854,34 +947,27 @@ button {
 
 
 .note-card[data-color="green"]::before {
-    background: #20b486;
+    background: #19a974;
 }
 
 
 .note-card[data-color="yellow"]::before {
-    background: #f5bd25;
+    background: #f3bd24;
 }
 
 
 .note-card[data-color="pink"]::before {
-    background: #ed6ba4;
+    background: #e76ba5;
 }
 
 
 .note-card[data-color="orange"]::before {
-    background: #f28a35;
+    background: #f28b35;
 }
 
 
-.note-card:hover {
-    transform: translateY(-4px);
+.note-top {
 
-    box-shadow:
-        0 14px 30px rgba(20, 40, 80, 0.12);
-}
-
-
-.note-card-top {
     display: flex;
 
     justify-content: space-between;
@@ -889,196 +975,223 @@ button {
     align-items: center;
 
     margin-bottom: 10px;
+
 }
 
 
 .note-mood {
+
     font-size: 24px;
+
 }
 
 
-.note-card-actions {
+.note-actions {
+
     display: flex;
 
-    gap: 3px;
+    gap: 4px;
+
 }
 
 
-.icon-btn {
-    width: 34px;
-    height: 34px;
+.note-action {
+
+    width: 32px;
+
+    height: 32px;
 
     border: none;
 
-    border-radius: 9px;
+    background: #f4f6fa;
 
-    background: #f5f7fb;
+    border-radius: 8px;
 
-    font-size: 17px;
 }
 
 
-.icon-btn:hover {
-    background: #eaf1fb;
-}
+.note-title {
 
-
-.note-card-title {
     font-size: 17px;
 
     margin-bottom: 7px;
 
     word-break: break-word;
+
 }
 
 
-.note-card-preview {
+.note-preview {
+
     color: var(--text-light);
 
     font-size: 13px;
 
-    line-height: 1.6;
+    line-height: 1.55;
 
     flex: 1;
 
     word-break: break-word;
+
 }
 
 
-.note-card-bottom {
+.note-bottom {
+
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
-    margin-top: 15px;
+    margin-top: 14px;
 
-    gap: 10px;
 }
 
 
-.note-card-bottom small {
-    color: #8a94a3;
+.note-date {
 
-    font-size: 11px;
+    color: #9aa3b0;
+
+    font-size: 10px;
+
 }
 
 
-.view-note-btn {
+.view-btn {
+
     border: none;
 
     background: #edf5ff;
 
     color: var(--primary);
 
-    padding: 7px 11px;
+    padding: 7px 10px;
 
     border-radius: 8px;
 
-    font-size: 12px;
+    font-size: 11px;
 
-    font-weight: 700;
+    font-weight: 750;
+
 }
 
 
-/* =========================================================
-   EMPTY NOTES
-========================================================= */
+/* =====================================================
+   EMPTY
+===================================================== */
 
 .empty-notes {
+
     grid-column: 1 / -1;
 
     text-align: center;
 
-    padding: 45px 20px;
+    padding: 50px 15px;
+
 }
 
 
 .empty-icon {
-    font-size: 52px;
 
-    margin-bottom: 12px;
+    font-size: 50px;
+
+    margin-bottom: 10px;
+
 }
 
 
 .empty-notes h3 {
-    font-size: 19px;
 
     margin-bottom: 5px;
+
 }
 
 
 .empty-notes p {
+
     color: var(--text-light);
 
-    margin-bottom: 18px;
-
     font-size: 13px;
+
+    margin-bottom: 15px;
+
 }
 
 
-/* =========================================================
+/* =====================================================
    STATISTICS
-========================================================= */
+===================================================== */
 
-.stats-section h2 {
-    margin-bottom: 18px;
+.statistics-section h2 {
+
+    margin-bottom: 17px;
+
 }
 
 
-.stats-grid {
+.statistics-grid {
+
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        repeat(3,1fr);
 
-    gap: 15px;
+    gap: 14px;
+
 }
 
 
 .stat-card {
+
+    background: var(--surface-soft);
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
     padding: 20px;
 
     text-align: center;
 
-    border-radius: 15px;
-
-    background: var(--surface-2);
-
-    border: 1px solid var(--border);
 }
 
 
 .stat-card span {
+
     display: block;
 
-    font-size: 25px;
+    font-size: 24px;
 
-    margin-bottom: 5px;
 }
 
 
 .stat-card strong {
+
     display: block;
 
     font-size: 26px;
 
     color: var(--primary);
+
 }
 
 
 .stat-card small {
+
     color: var(--text-light);
 
-    font-size: 12px;
+    font-size: 11px;
+
 }
 
 
-/* =========================================================
+/* =====================================================
    MODAL
-========================================================= */
+===================================================== */
 
 .modal {
+
     position: fixed;
 
     inset: 0;
@@ -1088,100 +1201,110 @@ button {
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    padding: 18px;
+    padding: 15px;
 
     background:
-        rgba(10, 20, 40, 0.55);
+        rgba(10,20,40,.55);
 
     backdrop-filter: blur(5px);
+
 }
 
 
-.modal-content {
+.modal-box {
+
     width: 100%;
+
     max-width: 620px;
 
-    max-height: 90vh;
+    max-height: 92vh;
 
     overflow-y: auto;
 
     background: white;
 
-    border-radius: 22px;
+    border-radius: 21px;
 
-    padding: 25px;
+    padding: 24px;
 
     box-shadow:
-        0 25px 70px rgba(0, 0, 0, 0.25);
+        0 25px 70px rgba(0,0,0,.25);
+
 }
 
 
 .modal-header {
+
     display: flex;
 
-    align-items: center;
     justify-content: space-between;
 
+    align-items: center;
+
     margin-bottom: 20px;
+
 }
 
 
 .modal-header h2 {
-    font-size: 22px;
+
+    font-size: 21px;
+
 }
 
 
-.close-btn {
+.close-modal {
+
     width: 38px;
+
     height: 38px;
 
     border: none;
 
+    background: #f1f3f7;
+
     border-radius: 10px;
 
-    background: #f2f4f8;
+    font-size: 25px;
 
-    color: #4b5563;
-
-    font-size: 26px;
-
-    line-height: 1;
 }
 
 
-.close-btn:hover {
-    background: #e8ecf2;
+.modal-box > label {
+
+    display: block;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    margin: 10px 0 6px;
+
 }
 
 
-/* =========================================================
-   NOTE INPUTS
-========================================================= */
+.note-title {
 
-.note-title-input {
     width: 100%;
 
-    height: 52px;
+    height: 50px;
 
     border: 1px solid var(--border);
 
-    border-radius: 12px;
+    border-radius: 11px;
 
-    padding: 0 15px;
+    padding: 0 13px;
 
     outline: none;
 
-    margin-bottom: 14px;
-
-    font-size: 17px;
-
-    font-weight: 600;
 }
 
 
-.note-content-input {
+.note-content {
+
     width: 100%;
 
     min-height: 190px;
@@ -1190,312 +1313,364 @@ button {
 
     border: 1px solid var(--border);
 
-    border-radius: 12px;
+    border-radius: 11px;
 
-    padding: 14px;
+    padding: 13px;
 
     outline: none;
 
-    margin-bottom: 15px;
 }
 
 
-.note-title-input:focus,
-.note-content-input:focus {
+.note-title:focus,
+.note-content:focus,
+.note-select:focus {
+
     border-color: var(--primary);
 
     box-shadow:
-        0 0 0 4px rgba(22, 131, 255, 0.08);
+        0 0 0 4px rgba(22,131,255,.08);
+
 }
 
 
-.modal-content > label {
-    display: block;
+.note-options {
 
-    margin: 10px 0 6px;
+    display: grid;
 
-    font-size: 13px;
+    grid-template-columns: 1fr 1fr;
 
-    font-weight: 700;
+    gap: 14px;
+
 }
 
 
 .note-select {
+
     width: 100%;
 
-    height: 46px;
+    height: 45px;
 
     border: 1px solid var(--border);
 
-    border-radius: 11px;
+    border-radius: 10px;
 
-    padding: 0 12px;
+    padding: 0 10px;
 
     background: white;
 
-    outline: none;
 }
 
 
-.modal-actions {
+.modal-buttons {
+
     display: flex;
 
     justify-content: flex-end;
 
-    gap: 10px;
+    gap: 9px;
 
     margin-top: 20px;
+
 }
 
 
-/* =========================================================
-   VIEW NOTE
-========================================================= */
+.cancel-btn,
+.save-btn,
+.delete-btn {
 
-.view-note-mood {
-    font-size: 45px;
+    border: none;
 
-    margin-bottom: 15px;
+    padding: 11px 16px;
+
+    border-radius: 10px;
+
+    font-weight: 750;
+
 }
 
 
-.view-note-content {
+.cancel-btn {
+
+    background: #f1f3f7;
+
+    color: var(--text);
+
+}
+
+
+.save-btn {
+
+    background: var(--primary);
+
+    color: white;
+
+}
+
+
+.delete-btn {
+
+    background: #fff0ef;
+
+    color: var(--danger);
+
+}
+
+
+/* VIEW */
+
+.view-mood {
+
+    font-size: 48px;
+
+    margin-bottom: 13px;
+
+}
+
+
+.view-content {
+
     min-height: 150px;
 
-    padding: 17px;
+    padding: 16px;
 
-    background: var(--surface-2);
+    background: var(--surface-soft);
 
     border: 1px solid var(--border);
 
-    border-radius: 13px;
+    border-radius: 12px;
 
     white-space: pre-wrap;
 
+    line-height: 1.7;
+
     word-break: break-word;
 
-    line-height: 1.75;
 }
 
 
-.view-note-date {
-    margin-top: 12px;
+.view-date {
+
+    margin-top: 10px;
 
     color: var(--text-light);
 
-    font-size: 12px;
+    font-size: 11px;
+
 }
 
 
-/* =========================================================
+/* =====================================================
    FOOTER
-========================================================= */
+===================================================== */
 
-.site-footer {
-    padding: 25px 18px;
+.footer {
 
     text-align: center;
 
+    padding: 25px;
+
     color: var(--text-light);
 
-    font-size: 12px;
+    font-size: 11px;
+
 }
 
 
-.site-footer p + p {
-    margin-top: 4px;
-}
-
-
-/* =========================================================
+/* =====================================================
    TABLET
-========================================================= */
+===================================================== */
 
 @media (max-width: 900px) {
 
     .quick-actions {
+
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2,1fr);
+
     }
 
 
-    .notes-list {
+    .notes-grid {
+
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2,1fr);
+
     }
 
 }
 
 
-/* =========================================================
+/* =====================================================
    MOBILE
-========================================================= */
+===================================================== */
 
 @media (max-width: 600px) {
 
-    .page {
-        padding: 18px 12px;
-    }
-
-
     .login-card {
+
         padding: 30px 20px;
 
-        border-radius: 21px;
     }
 
 
-    .login-card h1 {
-        font-size: 30px;
-    }
+    .top-header {
 
-
-    .diary-header {
         padding: 10px 15px;
+
     }
 
 
-    .brand-area h1 {
+    .brand h2 {
+
         font-size: 18px;
+
     }
 
 
-    .brand-area p {
-        max-width: 180px;
+    .brand p {
 
-        white-space: nowrap;
+        display: none;
 
-        overflow: hidden;
-
-        text-overflow: ellipsis;
     }
 
 
-    .logout-btn {
-        padding: 9px 12px;
+    .user-email {
 
-        font-size: 12px;
+        display: none;
+
     }
 
 
-    .dashboard {
+    .main-container {
+
         width: 94%;
 
         padding-top: 20px;
+
     }
 
 
     .welcome-card {
-        padding: 30px 18px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding: 24px;
+
     }
 
 
-    .welcome-card h2 {
-        font-size: 23px;
+    .welcome-card h1 {
+
+        font-size: 24px;
+
+    }
+
+
+    .new-note-btn {
+
+        width: 100%;
+
     }
 
 
     .quick-actions {
+
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2,1fr);
 
         gap: 10px;
+
     }
 
 
-    .action-card {
-        min-height: 88px;
+    .quick-card {
 
-        font-size: 13px;
-    }
+        min-height: 100px;
 
-
-    .action-icon {
-        font-size: 23px;
     }
 
 
     .notes-section,
-    .stats-section {
+    .statistics-section {
+
         padding: 17px;
 
-        border-radius: 17px;
     }
 
 
-    .section-header {
+    .section-heading {
+
+        flex-direction: column;
+
         align-items: flex-start;
 
-        flex-direction: column;
     }
 
 
-    .section-header .primary-btn {
+    .small-primary-btn {
+
         width: 100%;
+
     }
 
 
-    .notes-list {
+    .notes-grid {
+
         grid-template-columns: 1fr;
+
     }
 
 
-    .stats-grid {
+    .statistics-grid {
+
         grid-template-columns: 1fr;
+
     }
 
 
-    .modal {
-        padding: 10px;
+    .note-options {
+
+        grid-template-columns: 1fr;
+
     }
 
 
-    .modal-content {
-        padding: 19px;
+    .modal-buttons {
 
-        border-radius: 18px;
-
-        max-height: 94vh;
-    }
-
-
-    .modal-actions {
         flex-direction: column;
+
     }
 
 
-    .modal-actions button {
+    .modal-buttons button {
+
         width: 100%;
+
     }
 
 }
 
 
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
+/* =====================================================
+   SMALL PHONE
+===================================================== */
 
 @media (max-width: 380px) {
 
-    .login-card {
-        padding: 25px 16px;
-    }
-
-
     .quick-actions {
+
         grid-template-columns: 1fr;
+
     }
 
 
-    .filter-row {
-        gap: 6px;
+    .login-card {
+
+        padding: 25px 15px;
+
     }
 
-
-    .filter-btn {
-        font-size: 11px;
-
-        padding: 7px 10px;
-    }
-
-                     }
+           }
