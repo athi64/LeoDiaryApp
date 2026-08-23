@@ -1,686 +1,938 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
+    <!-- =========================================
+         BASIC META
+    ========================================== -->
+
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <meta name="theme-color"
-          content="#1683ff">
+    <meta
+        name="theme-color"
+        content="#1683ff"
+    >
 
-    <meta name="description"
-          content="LeoDiary - Your private digital diary">
+    <meta
+        name="robots"
+        content="index, follow"
+    >
 
-    <title>LeoDiary</title>
+    <!-- =========================================
+         GOOGLE SEARCH VERIFICATION
+    ========================================== -->
 
-    <link rel="stylesheet" href="style.css">
+    <meta
+        name="google-site-verification"
+        content="IuPeVZWGodyjFH7UlvmCZedkTWleUSf-fXJrEoVYQxM"
+    >
+
+    <!-- =========================================
+         SEO
+    ========================================== -->
+
+    <title>
+        LeoDiary - Your Private Digital Diary
+    </title>
+
+    <meta
+        name="description"
+        content="LeoDiary is your private digital diary to write, organize and manage your personal notes, memories and thoughts securely."
+    >
+
+    <meta
+        name="keywords"
+        content="LeoDiary, Leo Diary, digital diary, private diary, online diary, personal diary, notes app, private notes"
+    >
+
+    <meta
+        name="author"
+        content="LeoDiary"
+    >
+
+    <link
+        rel="canonical"
+        href="https://athi64.github.io/LeoDiaryApp/"
+    >
+
+    <!-- =========================================
+         FAVICON / LOGO
+    ========================================== -->
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="logo.png"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="logo.png"
+    >
+
+    <!-- =========================================
+         OPEN GRAPH
+    ========================================== -->
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:title"
+        content="LeoDiary - Your Private Digital Diary"
+    >
+
+    <meta
+        property="og:description"
+        content="Write, organize and manage your personal notes and memories with LeoDiary."
+    >
+
+    <meta
+        property="og:url"
+        content="https://athi64.github.io/LeoDiaryApp/"
+    >
+
+    <meta
+        property="og:image"
+        content="https://athi64.github.io/LeoDiaryApp/logo.png"
+    >
+
+    <meta
+        property="og:site_name"
+        content="LeoDiary"
+    >
+
+    <!-- =========================================
+         TWITTER / X
+    ========================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary"
+    >
+
+    <meta
+        name="twitter:title"
+        content="LeoDiary - Your Private Digital Diary"
+    >
+
+    <meta
+        name="twitter:description"
+        content="Your private digital diary for notes, memories and thoughts."
+    >
+
+    <meta
+        name="twitter:image"
+        content="https://athi64.github.io/LeoDiaryApp/logo.png"
+    >
+
+    <!-- =========================================
+         STYLESHEET
+    ========================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
-<!-- =====================================================
-     AUTH
-===================================================== -->
+    <!-- =========================================
+         LOGIN PAGE
+    ========================================== -->
 
-<section id="authPage" class="auth-page">
+    <main
+        id="loginPage"
+        class="page"
+    >
 
-    <div class="auth-card">
+        <div class="login-card">
 
-        <div class="logo">L</div>
+            <!-- LOGO -->
 
-        <h1>LeoDiary</h1>
+            <div class="logo-container">
 
-        <p class="subtitle">
-            Your private digital diary
-        </p>
+                <img
+                    src="logo.png"
+                    alt="LeoDiary logo"
+                    class="logo-image"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                >
+
+                <div
+                    class="logo fallback-logo"
+                    style="display:none;"
+                >
+                    L
+                </div>
+
+            </div>
 
 
-        <!-- GOOGLE -->
+            <!-- BRAND -->
 
-        <button id="googleLoginBtn"
+            <h1>
+                LeoDiary
+            </h1>
+
+            <p class="subtitle">
+                Your private digital diary
+            </p>
+
+
+            <!-- =====================================
+                 GOOGLE LOGIN
+            ====================================== -->
+
+            <button
+                id="googleLoginBtn"
                 class="google-btn"
-                type="button">
-
-            <span class="google-icon">G</span>
-
-            <span>Continue with Google</span>
-
-        </button>
-
-
-        <div class="divider">
-            <span></span>
-            <b>OR</b>
-            <span></span>
-        </div>
-
-
-        <!-- EMAIL LOGIN -->
-
-        <form id="loginForm">
-
-            <label>Email address</label>
-
-            <input id="loginEmail"
-                   type="email"
-                   placeholder="Enter your email"
-                   autocomplete="email"
-                   required>
-
-
-            <label>Password</label>
-
-            <input id="loginPassword"
-                   type="password"
-                   placeholder="Enter your password"
-                   autocomplete="current-password"
-                   required>
-
-
-            <button id="loginBtn"
-                    class="primary-btn"
-                    type="submit">
-
-                Sign In
-
-            </button>
-
-        </form>
-
-
-        <button id="forgotPasswordBtn"
-                class="text-btn"
-                type="button">
-
-            Forgot Password?
-
-        </button>
-
-
-        <div class="signup-row">
-
-            <span>Don't have an account?</span>
-
-            <button id="showSignupBtn"
-                    class="link-btn"
-                    type="button">
-
-                Create Account
-
-            </button>
-
-        </div>
-
-
-        <p id="authMessage"
-           class="message">
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     SIGN UP
-===================================================== -->
-
-<section id="signupPage"
-         class="auth-page hidden">
-
-    <div class="auth-card">
-
-        <div class="logo">L</div>
-
-        <h1>Create Account</h1>
-
-        <p class="subtitle">
-            Start your private diary
-        </p>
-
-
-        <form id="signupForm">
-
-            <label>Name</label>
-
-            <input id="signupName"
-                   type="text"
-                   placeholder="Your name"
-                   required>
-
-
-            <label>Email address</label>
-
-            <input id="signupEmail"
-                   type="email"
-                   placeholder="Enter your email"
-                   required>
-
-
-            <label>Password</label>
-
-            <input id="signupPassword"
-                   type="password"
-                   placeholder="Minimum 6 characters"
-                   minlength="6"
-                   required>
-
-
-            <button class="primary-btn"
-                    type="submit">
-
-                Create Account
-
-            </button>
-
-        </form>
-
-
-        <button id="backToLoginBtn"
-                class="text-btn"
-                type="button">
-
-            ← Back to Login
-
-        </button>
-
-
-        <p id="signupMessage"
-           class="message">
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     APP
-===================================================== -->
-
-<section id="appPage"
-         class="app-page hidden">
-
-
-    <!-- HEADER -->
-
-    <header class="app-header">
-
-        <div class="brand">
-
-            <div class="small-logo">
-                L
-            </div>
-
-            <div>
-                <h1>LeoDiary</h1>
-
-                <p id="welcomeUser">
-                    Welcome
-                </p>
-            </div>
-
-        </div>
-
-
-        <div class="header-actions">
-
-            <button id="themeBtn"
-                    class="icon-btn"
-                    type="button">
-
-                🌙
-
-            </button>
-
-
-            <button id="logoutBtn"
-                    class="logout-btn"
-                    type="button">
-
-                Logout
-
-            </button>
-
-        </div>
-
-    </header>
-
-
-    <!-- NAVIGATION -->
-
-    <nav class="app-nav">
-
-        <button class="nav-btn active"
-                data-section="home"
-                type="button">
-
-            🏠
-            <span>Home</span>
-
-        </button>
-
-
-        <button class="nav-btn"
-                data-section="favorites"
-                type="button">
-
-            ⭐
-            <span>Favorites</span>
-
-        </button>
-
-
-        <button class="nav-btn"
-                data-section="pinned"
-                type="button">
-
-            📌
-            <span>Pinned</span>
-
-        </button>
-
-
-        <button class="nav-btn"
-                data-section="stats"
-                type="button">
-
-            📊
-            <span>Stats</span>
-
-        </button>
-
-    </nav>
-
-
-    <!-- HOME -->
-
-    <main id="homeSection"
-          class="content-section">
-
-        <div class="dashboard-top">
-
-            <div>
-
-                <h2>My Diary</h2>
-
-                <p>
-                    Write your thoughts and memories.
-                </p>
-
-            </div>
-
-
-            <button id="addNoteBtn"
-                    class="add-btn"
-                    type="button">
-
-                + New Note
-
-            </button>
-
-        </div>
-
-
-        <div class="search-box">
-
-            <span>🔍</span>
-
-            <input id="searchInput"
-                   type="search"
-                   placeholder="Search your notes...">
-
-        </div>
-
-
-        <div class="filters">
-
-            <button class="filter-btn active"
-                    data-filter="all">
-
-                All
-
-            </button>
-
-            <button class="filter-btn"
-                    data-filter="recent">
-
-                Recent
-
-            </button>
-
-            <button class="filter-btn"
-                    data-filter="favorite">
-
-                Favorites
-
-            </button>
-
-            <button class="filter-btn"
-                    data-filter="pinned">
-
-                Pinned
-
-            </button>
-
-        </div>
-
-
-        <div id="notesGrid"
-             class="notes-grid">
-        </div>
-
-
-        <div id="emptyState"
-             class="empty-state">
-
-            <div class="empty-icon">
-                📝
-            </div>
-
-            <h3>No notes yet</h3>
-
-            <p>
-                Create your first diary note.
-            </p>
-
-            <button id="emptyAddBtn"
-                    class="add-btn">
-
-                Create Note
-
-            </button>
-
-        </div>
-
-    </main>
-
-
-    <!-- FAVORITES -->
-
-    <main id="favoritesSection"
-          class="content-section hidden">
-
-        <div class="section-heading">
-
-            <h2>⭐ Favorites</h2>
-
-            <p>
-                Your favorite memories.
-            </p>
-
-        </div>
-
-        <div id="favoriteGrid"
-             class="notes-grid">
-        </div>
-
-    </main>
-
-
-    <!-- PINNED -->
-
-    <main id="pinnedSection"
-          class="content-section hidden">
-
-        <div class="section-heading">
-
-            <h2>📌 Pinned Notes</h2>
-
-            <p>
-                Your important notes.
-            </p>
-
-        </div>
-
-        <div id="pinnedGrid"
-             class="notes-grid">
-        </div>
-
-    </main>
-
-
-    <!-- STATS -->
-
-    <main id="statsSection"
-          class="content-section hidden">
-
-        <div class="section-heading">
-
-            <h2>📊 Statistics</h2>
-
-            <p>
-                Your diary activity.
-            </p>
-
-        </div>
-
-
-        <div class="stats-grid">
-
-            <div class="stat-card">
-
-                <span>📝</span>
-
-                <strong id="totalNotes">
-                    0
-                </strong>
-
-                <small>Total Notes</small>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <span>⭐</span>
-
-                <strong id="totalFavorites">
-                    0
-                </strong>
-
-                <small>Favorites</small>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <span>📌</span>
-
-                <strong id="totalPinned">
-                    0
-                </strong>
-
-                <small>Pinned</small>
-
-            </div>
-
-
-            <div class="stat-card">
-
-                <span>❤️</span>
-
-                <strong id="currentMood">
-                    —
-                </strong>
-
-                <small>Latest Mood</small>
-
-            </div>
-
-        </div>
-
-    </main>
-
-</section>
-
-
-<!-- =====================================================
-     NOTE MODAL
-===================================================== -->
-
-<div id="noteModal"
-     class="modal hidden">
-
-    <div class="modal-card">
-
-        <div class="modal-header">
-
-            <h2 id="modalTitle">
-                New Note
-            </h2>
-
-            <button id="closeModalBtn"
-                    class="close-btn">
-
-                ×
-
-            </button>
-
-        </div>
-
-
-        <input id="noteTitle"
-               class="note-title-input"
-               placeholder="Note title..."
-               maxlength="100">
-
-
-        <textarea id="noteContent"
-                  class="note-content-input"
-                  placeholder="Write your thoughts..."></textarea>
-
-
-        <label>Mood</label>
-
-        <select id="noteMood">
-
-            <option value="😊">😊 Happy</option>
-            <option value="😍">😍 Loved</option>
-            <option value="😎">😎 Excited</option>
-            <option value="😌">😌 Calm</option>
-            <option value="😢">😢 Sad</option>
-            <option value="😡">😡 Angry</option>
-            <option value="😴">😴 Tired</option>
-
-        </select>
-
-
-        <label>Note Color</label>
-
-        <div class="color-options">
-
-            <button class="color-option active"
-                    data-color="blue"></button>
-
-            <button class="color-option"
-                    data-color="purple"></button>
-
-            <button class="color-option"
-                    data-color="green"></button>
-
-            <button class="color-option"
-                    data-color="yellow"></button>
-
-            <button class="color-option"
-                    data-color="pink"></button>
-
-        </div>
-
-
-        <div class="modal-actions">
-
-            <button id="cancelNoteBtn"
-                    class="secondary-btn">
-
-                Cancel
-
-            </button>
-
-            <button id="saveNoteBtn"
-                    class="primary-btn">
-
-                Save Note
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     VIEW MODAL
-===================================================== -->
-
-<div id="viewModal"
-     class="modal hidden">
-
-    <div class="modal-card">
-
-        <div class="modal-header">
-
-            <div>
-
-                <span id="viewMood">
-                    😊
+                type="button"
+            >
+
+                <span class="google-icon">
+                    G
                 </span>
 
-                <h2 id="viewTitle">
-                    Note
-                </h2>
+                <span>
+                    Continue with Google
+                </span>
+
+            </button>
+
+
+            <!-- =====================================
+                 DIVIDER
+            ====================================== -->
+
+            <div class="divider">
+
+                <span></span>
+
+                <strong>
+                    OR
+                </strong>
+
+                <span></span>
 
             </div>
 
-            <button id="closeViewBtn"
-                    class="close-btn">
 
-                ×
+            <!-- =====================================
+                 EMAIL LOGIN AREA
+            ====================================== -->
 
+            <section
+                id="emailAuthSection"
+                class="email-auth-section"
+            >
+
+                <label
+                    for="emailInput"
+                >
+                    Email Address
+                </label>
+
+                <input
+                    id="emailInput"
+                    class="email-input"
+                    type="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                >
+
+
+                <label
+                    for="passwordInput"
+                >
+                    Password
+                </label>
+
+                <input
+                    id="passwordInput"
+                    class="password-input"
+                    type="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                >
+
+
+                <!-- LOGIN -->
+
+                <button
+                    id="emailLoginBtn"
+                    class="email-login-btn"
+                    type="button"
+                >
+                    Login
+                </button>
+
+
+                <!-- SIGN UP -->
+
+                <button
+                    id="emailSignupBtn"
+                    class="email-signup-btn"
+                    type="button"
+                >
+                    Create Account
+                </button>
+
+
+                <!-- FORGOT PASSWORD -->
+
+                <button
+                    id="forgotPasswordBtn"
+                    class="forgot-password-btn"
+                    type="button"
+                >
+                    Forgot Password?
+                </button>
+
+
+                <!-- EMAIL ERROR -->
+
+                <p
+                    id="emailError"
+                    class="error-message"
+                ></p>
+
+            </section>
+
+
+            <!-- =====================================
+                 LOGIN NOTE
+            ====================================== -->
+
+            <p class="login-note">
+                Login is required to use LeoDiary.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================
+         DIARY PAGE
+    ========================================== -->
+
+    <main
+        id="diaryPage"
+        class="diary-page hidden"
+    >
+
+        <!-- =====================================
+             HEADER
+        ====================================== -->
+
+        <header class="diary-header">
+
+            <div class="brand-area">
+
+                <img
+                    src="logo.png"
+                    alt="LeoDiary"
+                    class="header-logo"
+                    onerror="this.style.display='none';"
+                >
+
+                <div>
+
+                    <h1>
+                        LeoDiary
+                    </h1>
+
+                    <p id="userEmail">
+                        Welcome
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="logoutBtn"
+                class="logout-btn"
+                type="button"
+            >
+                Logout
             </button>
 
+        </header>
+
+
+        <!-- =====================================
+             DASHBOARD
+        ====================================== -->
+
+        <section
+            class="dashboard"
+            id="dashboard"
+        >
+
+            <div class="welcome-card">
+
+                <div class="welcome-icon">
+                    📝
+                </div>
+
+                <h2>
+                    Welcome to LeoDiary
+                </h2>
+
+                <p>
+                    Your private digital diary is ready.
+                </p>
+
+                <p class="small-text">
+                    Write your thoughts, memories and personal notes.
+                </p>
+
+            </div>
+
+
+            <!-- =================================
+                 QUICK ACTIONS
+            ================================== -->
+
+            <div class="quick-actions">
+
+                <button
+                    id="newNoteBtn"
+                    class="action-card"
+                    type="button"
+                >
+
+                    <span class="action-icon">
+                        ➕
+                    </span>
+
+                    <span>
+                        New Note
+                    </span>
+
+                </button>
+
+
+                <button
+                    id="searchNotesBtn"
+                    class="action-card"
+                    type="button"
+                >
+
+                    <span class="action-icon">
+                        🔍
+                    </span>
+
+                    <span>
+                        Search
+                    </span>
+
+                </button>
+
+
+                <button
+                    id="favoritesBtn"
+                    class="action-card"
+                    type="button"
+                >
+
+                    <span class="action-icon">
+                        ⭐
+                    </span>
+
+                    <span>
+                        Favorites
+                    </span>
+
+                </button>
+
+
+                <button
+                    id="pinnedBtn"
+                    class="action-card"
+                    type="button"
+                >
+
+                    <span class="action-icon">
+                        📌
+                    </span>
+
+                    <span>
+                        Pinned
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <!-- =================================
+                 NOTES AREA
+            ================================== -->
+
+            <section
+                class="notes-section"
+                id="notesSection"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            My Notes
+                        </h2>
+
+                        <p>
+                            Your personal diary entries
+                        </p>
+
+                    </div>
+
+                    <button
+                        id="addNoteBtn"
+                        class="primary-btn"
+                        type="button"
+                    >
+                        + New Note
+                    </button>
+
+                </div>
+
+
+                <!-- SEARCH -->
+
+                <div
+                    class="search-box"
+                    id="searchBox"
+                >
+
+                    <input
+                        id="noteSearchInput"
+                        type="search"
+                        placeholder="Search your notes..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <!-- FILTER -->
+
+                <div class="filter-row">
+
+                    <button
+                        id="allNotesFilter"
+                        class="filter-btn active"
+                        type="button"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        id="favoriteFilter"
+                        class="filter-btn"
+                        type="button"
+                    >
+                        ⭐ Favorites
+                    </button>
+
+                    <button
+                        id="pinnedFilter"
+                        class="filter-btn"
+                        type="button"
+                    >
+                        📌 Pinned
+                    </button>
+
+                </div>
+
+
+                <!-- NOTES LIST -->
+
+                <div
+                    id="notesList"
+                    class="notes-list"
+                >
+
+                    <div
+                        id="emptyNotes"
+                        class="empty-notes"
+                    >
+
+                        <div class="empty-icon">
+                            📖
+                        </div>
+
+                        <h3>
+                            No notes yet
+                        </h3>
+
+                        <p>
+                            Start writing your first diary entry.
+                        </p>
+
+                        <button
+                            id="emptyAddNoteBtn"
+                            class="primary-btn"
+                            type="button"
+                        >
+                            Create Your First Note
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 STATISTICS
+            ================================== -->
+
+            <section
+                class="stats-section"
+                id="statsSection"
+            >
+
+                <h2>
+                    Your Diary Statistics
+                </h2>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <span>
+                            📝
+                        </span>
+
+                        <strong id="totalNotes">
+                            0
+                        </strong>
+
+                        <small>
+                            Total Notes
+                        </small>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <span>
+                            ⭐
+                        </span>
+
+                        <strong id="favoriteNotes">
+                            0
+                        </strong>
+
+                        <small>
+                            Favorites
+                        </small>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <span>
+                            📌
+                        </span>
+
+                        <strong id="pinnedNotes">
+                            0
+                        </strong>
+
+                        <small>
+                            Pinned
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- =====================================
+             NOTE EDITOR MODAL
+        ====================================== -->
+
+        <div
+            id="noteModal"
+            class="modal hidden"
+        >
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h2 id="noteModalTitle">
+                        New Note
+                    </h2>
+
+                    <button
+                        id="closeNoteModal"
+                        class="close-btn"
+                        type="button"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <input
+                    id="noteTitleInput"
+                    class="note-title-input"
+                    type="text"
+                    placeholder="Note title"
+                    maxlength="100"
+                >
+
+
+                <textarea
+                    id="noteContentInput"
+                    class="note-content-input"
+                    placeholder="Write your thoughts..."
+                    rows="10"
+                ></textarea>
+
+
+                <!-- MOOD -->
+
+                <label>
+                    Mood
+                </label>
+
+                <select
+                    id="noteMoodInput"
+                    class="note-select"
+                >
+
+                    <option value="😊">
+                        😊 Happy
+                    </option>
+
+                    <option value="😍">
+                        😍 Loved
+                    </option>
+
+                    <option value="😌">
+                        😌 Calm
+                    </option>
+
+                    <option value="😢">
+                        😢 Sad
+                    </option>
+
+                    <option value="😡">
+                        😡 Angry
+                    </option>
+
+                    <option value="😴">
+                        😴 Tired
+                    </option>
+
+                    <option value="🤔">
+                        🤔 Thinking
+                    </option>
+
+                    <option value="🔥">
+                        🔥 Excited
+                    </option>
+
+                </select>
+
+
+                <!-- NOTE COLOR -->
+
+                <label>
+                    Note Color
+                </label>
+
+                <select
+                    id="noteColorInput"
+                    class="note-select"
+                >
+
+                    <option value="blue">
+                        Blue
+                    </option>
+
+                    <option value="purple">
+                        Purple
+                    </option>
+
+                    <option value="green">
+                        Green
+                    </option>
+
+                    <option value="yellow">
+                        Yellow
+                    </option>
+
+                    <option value="pink">
+                        Pink
+                    </option>
+
+                    <option value="orange">
+                        Orange
+                    </option>
+
+                </select>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        id="cancelNoteBtn"
+                        class="secondary-btn"
+                        type="button"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        id="saveNoteBtn"
+                        class="primary-btn"
+                        type="button"
+                    >
+                        Save Note
+                    </button>
+
+                </div>
+
+            </div>
+
         </div>
 
 
-        <div id="viewContent"
-             class="view-content">
+        <!-- =====================================
+             VIEW NOTE MODAL
+        ====================================== -->
+
+        <div
+            id="viewNoteModal"
+            class="modal hidden"
+        >
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h2 id="viewNoteTitle">
+                        Note
+                    </h2>
+
+                    <button
+                        id="closeViewNoteModal"
+                        class="close-btn"
+                        type="button"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="viewNoteMood"
+                    class="view-note-mood"
+                >
+                </div>
+
+
+                <div
+                    id="viewNoteContent"
+                    class="view-note-content"
+                >
+                </div>
+
+
+                <div
+                    id="viewNoteDate"
+                    class="view-note-date"
+                >
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        id="editNoteBtn"
+                        class="primary-btn"
+                        type="button"
+                    >
+                        Edit
+                    </button>
+
+                    <button
+                        id="deleteNoteBtn"
+                        class="delete-btn"
+                        type="button"
+                    >
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+
         </div>
 
 
-        <p id="viewDate"
-           class="view-date">
+    </main>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer
+        id="siteFooter"
+        class="site-footer"
+    >
+
+        <p>
+            © 2026 LeoDiary. All rights reserved.
         </p>
 
+        <p>
+            Your private digital diary.
+        </p>
 
-        <div class="modal-actions">
-
-            <button id="viewEditBtn"
-                    class="secondary-btn">
-
-                ✏️ Edit
-
-            </button>
-
-            <button id="viewDeleteBtn"
-                    class="danger-btn">
-
-                🗑 Delete
-
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
+    </footer>
 
 
-<script type="module"
-        src="script.js"></script>
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script
+        type="module"
+        src="script.js"
+    ></script>
 
 </body>
-                </html>
+
+    </html>
