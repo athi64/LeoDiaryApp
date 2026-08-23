@@ -152,37 +152,20 @@ button {
     position: relative;
     z-index: 2;
 }
-
 .app-logo {
     width: 90px;
     height: 90px;
 
     margin: 0 auto 17px;
 
-    border-radius: 27px;
+    border-radius: 22px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
 
-    background:
-        linear-gradient(
-            135deg,
-            #4f7cff,
-            #8b5cf6,
-            #ec4899
-        );
+    object-fit: cover;
 
     box-shadow:
         0 15px 30px rgba(79,124,255,.25);
-
-    transform: rotate(-3deg);
-}
-
-.app-logo span {
-    font-size: 47px;
-
-    transform: rotate(3deg);
 }
 
 .login-card h1 {
@@ -1893,8 +1876,11 @@ button {
         border-radius: 22px;
     }
 
-    .app-logo span {
-        font-size: 39px;
+    .app-logo {
+    width: 78px;
+    height: 78px;
+    border-radius: 20px;
+    object-fit: cover;
     }
 
     .login-card h1 {
